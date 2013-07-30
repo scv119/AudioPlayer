@@ -35,6 +35,7 @@
 		23E04BE617A67C4300012192 /* AFXMLRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 23E04BDC17A67C4300012192 /* AFXMLRequestOperation.m */; };
 		23E04BE717A67C4300012192 /* UIImageView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 23E04BDE17A67C4300012192 /* UIImageView+AFNetworking.m */; };
 		23E04BEB17A681A200012192 /* APAudioTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 23E04BEA17A681A200012192 /* APAudioTableCell.m */; };
+		23E04BF517A794F900012192 /* APDownloadManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 23E04BF417A794F900012192 /* APDownloadManager.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -85,6 +86,8 @@
 		23E04BDE17A67C4300012192 /* UIImageView+AFNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+AFNetworking.m"; sourceTree = "<group>"; };
 		23E04BE917A681A200012192 /* APAudioTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APAudioTableCell.h; sourceTree = "<group>"; };
 		23E04BEA17A681A200012192 /* APAudioTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APAudioTableCell.m; sourceTree = "<group>"; };
+		23E04BF317A794F900012192 /* APDownloadManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APDownloadManager.h; sourceTree = "<group>"; };
+		23E04BF417A794F900012192 /* APDownloadManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APDownloadManager.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -131,6 +134,7 @@
 		23E04B8317A663EC00012192 /* AudioPlayerDemo */ = {
 			isa = PBXGroup;
 			children = (
+				23E04BEC17A780B400012192 /* download */,
 				23E04BE817A6816000012192 /* view */,
 				23E04BB217A67A2D00012192 /* model */,
 				23E04BAB17A6748D00012192 /* controller */,
@@ -216,6 +220,15 @@
 				23E04BEA17A681A200012192 /* APAudioTableCell.m */,
 			);
 			name = view;
+			sourceTree = "<group>";
+		};
+		23E04BEC17A780B400012192 /* download */ = {
+			isa = PBXGroup;
+			children = (
+				23E04BF317A794F900012192 /* APDownloadManager.h */,
+				23E04BF417A794F900012192 /* APDownloadManager.m */,
+			);
+			name = download;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -305,6 +318,7 @@
 				23E04BE617A67C4300012192 /* AFXMLRequestOperation.m in Sources */,
 				23E04BE717A67C4300012192 /* UIImageView+AFNetworking.m in Sources */,
 				23E04BEB17A681A200012192 /* APAudioTableCell.m in Sources */,
+				23E04BF517A794F900012192 /* APDownloadManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -427,6 +441,7 @@
 				23E04BAA17A663EC00012192 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
