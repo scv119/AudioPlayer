@@ -11,7 +11,8 @@
 typedef enum APDownloadStatus{
     QUEUED,
     STARTED,
-    PAUSED,
+    CANCELED,
+    FAILED,
     FINISHED
 } APDownloadStatus;
 
@@ -22,8 +23,8 @@ typedef enum APDownloadStatus{
 @protocol APDownloadTask <NSObject>
 
 
-@property (nonatomic) int fileSize;
-@property (nonatomic) int finishedSize;
+@property (nonatomic) unsigned long long fileSize;
+@property (nonatomic) unsigned long long finishedSize;
 @property (nonatomic, strong) NSString *url;
 @property (nonatomic, strong) NSString *path;
 
@@ -40,14 +41,12 @@ typedef enum APDownloadStatus{
 
 -(void) start;
 -(void) start:(int)threadNum;
--(void) stop;
--(BOOL) isRunning;
-
 
 -(void) pushTask:(id<APDownloadTask>) task;
 -(void) removeTask:(id<APDownloadTask>) task;
--(int)  taskCount;
--(id<APDownloadTask>) taskAtIndex:(int) index;
+
+-(NSArray *) cancelAllTask;
+
 
 @end
 

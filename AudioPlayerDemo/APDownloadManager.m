@@ -18,6 +18,8 @@
 @property (atomic, strong) NSURLConnection *connection;
 @property (atomic, strong) NSURLRequest *request;
 @property (atomic, strong) NSLock *connectionLock;
+@property (atomic, strong) NSFileHandle *file;
+@property (atomic) APDownloadStatus status;
 
 @end
 
@@ -26,23 +28,89 @@
 -(void) setTask:(id<APDownloadTask>)task
 {
     self.task = task;
-    self.request = [NSURLRequest requestWithURL:[NSURL URLWithString: task.url ]];
-    self.connection = [NSURLConnection alloc];}
+    [self prepareFile];
+    [self prepareURLRequest];
+    self.connection = [NSURLConnection alloc];
+    self.connectionLock = [[NSLock alloc] init];
+    self.status = QUEUED;
+}
+
+-(void) prepareURLRequest
+{
+    NSMutableURLRequest *request =[NSMutableURLRequest requestWithURL:[NSURL URLWithString: self.task.url ]];
+    NSDictionary *oldHeader = [request allHTTPHeaderFields];
+    NSMutableDictionary *newHeader = [[NSMutableDictionary alloc] initWithDictionary:oldHeader copyItems:YES];
+    [newHeader setObject:[NSString stringWithFormat:@"%lld", self.task.finishedSize] forKey:@"Range"];
+    [request setAllHTTPHeaderFields:newHeader];
+    NSLog(@"the request now is %@", [request description]);
+    self.request = request;
+}
+
+-(void) prepareFile
+{
+//    NSFileManager *manager = [NSFileManager defaultManager];
+    NSFileHandle * file = [NSFileHandle fileHandleForUpdatingAtPath: self.task.path];
+    self.task.finishedSize = [file seekToEndOfFile];
+    self.file = file;
+}
+
+
+#pragma NSOperation
 
 -(void) main
 {
     if (![self isCancelled]) {
         self.connection = [self.connection initWithRequest:self.request delegate:self];
+        [self.connectionLock lock];
         [self.connection start];
+        [self.connectionLock lock];
+        [self.connectionLock unlock];
     }
 }
 
 -(void) cancel
 {
-    [self.connection cancel];
-    [self.task statusChanged: PAUSED];
+    if (self.status == STARTED) {
+        self.status = CANCELED;
+        [self.connection cancel];
+        [self.task statusChanged: self.status];
+    }
+    
     [super cancel];
 }
+
+#pragma NSURLConnectionDataDelegate
+
+
+- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
+{
+    if (self.status != CANCELED)
+        self.status = FAILED;
+    [self.file closeFile];
+    [self.connectionLock unlock];
+}
+
+- (NSURLRequest *)connection:(NSURLConnection *)connection willSendRequest:(NSURLRequest *)request redirectResponse:(NSURLResponse *)response
+{
+    self.status = STARTED;
+    return request;
+}
+
+
+- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
+{
+    [self.file writeData:data];
+    self.task.finishedSize += [data length];
+    [self.task statusChanged: self.status];
+}
+
+- (void)connectionDidFinishLoading:(NSURLConnection *)connection
+{
+    self.status = FINISHED;
+    [self.file closeFile];
+    [self.connectionLock unlock];
+}
+
 
 @end
 
@@ -68,8 +136,7 @@ static id sharedInstance;
     }
     self = [super init];
     self.taskArray = [[NSMutableArray alloc] init];
-    self.queue = [[NSOperationQueue alloc] init];
-    
+    self.queue = [[NSOperationQueue alloc] init];    
     return self;
 }
 
@@ -84,32 +151,53 @@ static id sharedInstance;
     return sharedInstance;
 }
 
--(void) pushTask:(id<APDownloadTask>) task {}
-
 -(void) start
 {
-    
+    return [self start:1];
 }
 
--(void) stop
+-(void) start:(int) threadNum
 {
-    
+    [self.queue setMaxConcurrentOperationCount:threadNum];
 }
 
--(int)  count
+
+
+-(void) pushTask:(id<APDownloadTask>) task
 {
-    
+    APDownloadOperation *operation = [[APDownloadOperation alloc] init];
+    operation.task = task;
+    [self.queue addOperation:operation];
 }
 
--(id<APDownloadTask>) taskAtIndex:(int) index
+-(void) removeTask:(id<APDownloadTask>) task
 {
-    
+    NSArray* operations = self.queue.operations;
+    for (APDownloadOperation* operation in operations) {
+            if (operation.task == task)
+                [operation cancel];
+    }
 }
 
--(id<APDownloadTask>) popTask
+-(int) taskCount
 {
-    
+    return [self.queue operationCount];
 }
+
+
+-(NSArray *) cancelAllTask
+{
+    NSMutableArray *ret = [[NSMutableArray alloc] init];
+    NSArray *operations = self.queue.operations;
+    [self.queue  cancelAllOperations];
+    [self.queue waitUntilAllOperationsAreFinished];
+    for (APDownloadOperation *op in operations) {
+        if (op.status != FINISHED)
+            [ret addObject:op];
+    }
+    return ret;
+}
+
 
 
 @end
