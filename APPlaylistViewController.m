@@ -10,6 +10,8 @@
 
 @interface APPlaylistViewController ()
 
+@property (nonatomic, strong) NSMutableArray *audioList;
+
 @end
 
 @implementation APPlaylistViewController
@@ -26,6 +28,19 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.audioList = [[NSMutableArray alloc] init];
+    for (int i = 0; i < 5; ++ i) {
+        APAudioFile *file = [[APAudioFile alloc] init];
+        file.name = [NSString stringWithFormat:@"测试数据 %d", i];
+        file.created = [[NSDate alloc] init];
+        file.coverUrl = [[NSURL alloc] initWithString: @"http://124.205.11.211/static/cover.gif"];
+        file.fileUrl  = [[NSURL alloc] initWithString: @"http://124.205.11.211/static/1.mp3"];
+        file.fileSize = 808639;
+        file.detail = @"这是一个测试数据咿呀咿呀哟哟哟哟哦哟哟哟哟哟哟哟哟哟哟哟哦哟哟哟哟哟哟哟哟哟哟哟哦哟哟哟哟哟哟哟";
+        file.timeSpan = 101;
+        [self.audioList addObject: file];
+    }
 
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -46,23 +61,31 @@
 {
 #warning Potentially incomplete method implementation.
     // Return the number of sections.
-    return 0;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
 #warning Incomplete method implementation.
     // Return the number of rows in the section.
-    return 0;
+    return [self.audioList count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"Cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    APAudioTableCell *cell;
+  //  APAudioTableCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
     // Configure the cell...
     
+    if (cell == nil) {
+        cell = [[APAudioTableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"Cell"];
+    }
+    
+    APAudioFile *file = [self.audioList objectAtIndex:indexPath.row];
+    
+    [cell setAudio:file withDownloadBar:NO];
     return cell;
 }
 
@@ -116,6 +139,11 @@
      // Pass the selected object to the new view controller.
      [self.navigationController pushViewController:detailViewController animated:YES];
      */
+    
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
+    APAudioPlayerViewController *playerView = [storyboard instantiateViewControllerWithIdentifier:@"APAudioPlayerViewController"];
+    [playerView setAudioFile: [self.audioList objectAtIndex:indexPath.row] withLocalStorage:nil];
+    [self.navigationController pushViewController:playerView animated:YES];
 }
 
 @end

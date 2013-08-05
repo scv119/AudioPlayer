@@ -7,6 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "APAudioFile.h"
+#import "APAudioTableCell.h"
+#import "APAudioPlayerViewController.h"
 
 @interface APPlaylistViewController : UITableViewController
 

@@ -12,8 +12,7 @@
 
 @interface APAudioTableCell : UITableViewCell
 
-@property (nonatomic, strong) APAudioFile *audio;
-@property (nonatomic, retain) UILabel *fileSizeLabel;
-@property (nonatomic, retain) UILabel *timeSpanLabel;
+
+- (void) setAudio:(APAudioFile *)audio withDownloadBar:(BOOL) flag;
 
 @end

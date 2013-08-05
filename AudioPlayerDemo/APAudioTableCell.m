@@ -10,6 +10,14 @@
 
 static UIImage *coverPlaceholderImage;
 
+@interface APAudioTableCell ()
+
+@property (nonatomic, strong) APAudioFile *audio;
+@property (nonatomic, retain) UILabel *fileSizeLabel;
+@property (nonatomic, retain) UILabel *timeSpanLabel;
+
+@end
+
 @implementation APAudioTableCell {
     
 }
@@ -19,7 +27,7 @@ static UIImage *coverPlaceholderImage;
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (!coverPlaceholderImage)
-        coverPlaceholderImage = [UIImage imageNamed:@"default-cover-placeholder"];
+        coverPlaceholderImage = [UIImage imageNamed:@"first"];
     
     self.fileSizeLabel = [[UILabel alloc] init];
     self.timeSpanLabel = [[UILabel alloc] init];
@@ -38,7 +46,9 @@ static UIImage *coverPlaceholderImage;
 - (void) setAudio:(APAudioFile *)audio withDownloadBar:(BOOL) flag
 {
     self.audio = audio;
+    NSLog(@"%@", [audio.coverUrl description]);
     [self.imageView setImageWithURL:self.audio.coverUrl placeholderImage:coverPlaceholderImage];
+    NSLog(@"%@", [self.imageView.image description]);
     self.textLabel.text = self.audio.name;
     [self setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
     
@@ -51,6 +61,7 @@ static UIImage *coverPlaceholderImage;
 - (void) layoutSubviews
 {
     [super layoutSubviews];
+    self.imageView.frame = CGRectMake(0, 0, 10, 10);
 }
 
 
