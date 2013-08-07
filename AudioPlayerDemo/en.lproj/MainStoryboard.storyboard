@@ -27,17 +27,18 @@
                         <rect key="frame" x="0.0" y="20" width="320" height="548"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="uO7-ZS-CQ7">
+                            <progressView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ejh-XN-Z5G">
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="255" id="gHF-Jy-ybo"/>
+                                    <constraint firstAttribute="width" constant="237" id="snh-lA-ZHl"/>
                                 </constraints>
+                            </progressView>
+                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="uO7-ZS-CQ7">
                                 <connections>
                                     <action selector="sliderRelease:" destination="KpU-P6-ClL" eventType="touchUpInside" id="I5c-Oa-Thd"/>
                                     <action selector="sliderRelease:" destination="KpU-P6-ClL" eventType="touchUpOutside" id="Ikf-0p-H1Z"/>
                                     <action selector="sliderTouched:" destination="KpU-P6-ClL" eventType="touchDown" id="ADV-hD-i0V"/>
                                 </connections>
                             </slider>
-                            <progressView opaque="NO" contentMode="scaleToFill" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="ejh-XN-Z5G"/>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rvO-Pb-W9N">
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                 <state key="normal" title="Play">
@@ -61,15 +62,15 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="vEc-c5-W2O" firstAttribute="top" secondItem="gyQ-Jh-vdC" secondAttribute="top" constant="20" symbolic="YES" type="default" id="3Sn-FD-19w"/>
-                            <constraint firstItem="uO7-ZS-CQ7" firstAttribute="trailing" secondItem="ejh-XN-Z5G" secondAttribute="trailing" type="default" id="6Ik-qK-0NO"/>
-                            <constraint firstItem="ejh-XN-Z5G" firstAttribute="top" secondItem="uO7-ZS-CQ7" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="I2t-jh-k82"/>
+                            <constraint firstAttribute="bottom" secondItem="rvO-Pb-W9N" secondAttribute="bottom" constant="37" id="6Ww-an-lqT"/>
+                            <constraint firstItem="rvO-Pb-W9N" firstAttribute="centerX" secondItem="vEc-c5-W2O" secondAttribute="centerX" type="default" id="JJR-cK-rA8"/>
+                            <constraint firstAttribute="bottom" secondItem="ejh-XN-Z5G" secondAttribute="bottom" constant="95" id="TMU-zx-VMI"/>
                             <constraint firstAttribute="trailing" secondItem="vEc-c5-W2O" secondAttribute="trailing" constant="20" symbolic="YES" type="default" id="bZX-wh-Szz"/>
-                            <constraint firstItem="ejh-XN-Z5G" firstAttribute="leading" secondItem="uO7-ZS-CQ7" secondAttribute="leading" type="default" id="bi8-LE-f6A"/>
-                            <constraint firstItem="rvO-Pb-W9N" firstAttribute="centerX" secondItem="ejh-XN-Z5G" secondAttribute="centerX" type="default" id="hlo-MN-a63"/>
-                            <constraint firstItem="rvO-Pb-W9N" firstAttribute="top" secondItem="ejh-XN-Z5G" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="k3C-Pd-mjm"/>
+                            <constraint firstItem="ejh-XN-Z5G" firstAttribute="leading" secondItem="gyQ-Jh-vdC" secondAttribute="leading" constant="40" id="lDd-vg-zFW"/>
+                            <constraint firstItem="uO7-ZS-CQ7" firstAttribute="leading" secondItem="ejh-XN-Z5G" secondAttribute="leading" type="default" id="mct-kS-ARE"/>
                             <constraint firstItem="vEc-c5-W2O" firstAttribute="leading" secondItem="gyQ-Jh-vdC" secondAttribute="leading" constant="20" symbolic="YES" type="default" id="mwc-Ai-lft"/>
-                            <constraint firstItem="vEc-c5-W2O" firstAttribute="centerX" secondItem="uO7-ZS-CQ7" secondAttribute="centerX" type="default" id="vPv-KK-i4p"/>
-                            <constraint firstAttribute="bottom" secondItem="rvO-Pb-W9N" secondAttribute="bottom" constant="148" id="xYg-hA-ZDP"/>
+                            <constraint firstItem="rvO-Pb-W9N" firstAttribute="top" secondItem="uO7-ZS-CQ7" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="oTc-3q-IhX"/>
+                            <constraint firstItem="ejh-XN-Z5G" firstAttribute="trailing" secondItem="uO7-ZS-CQ7" secondAttribute="trailing" type="default" id="qqr-jA-OqS"/>
                         </constraints>
                     </view>
                     <connections>

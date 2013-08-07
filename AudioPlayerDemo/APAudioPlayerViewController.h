@@ -23,4 +23,6 @@
 
 -(void) setAudioFile:(APAudioFile *)file withLocalStorage:(NSURL *) path;
 
++(id) getInstance;
+
 @end

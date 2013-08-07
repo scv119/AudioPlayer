@@ -7,9 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		23AC667A17AF904A00ECDD79 /* APAudioPlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 23AC667917AF904A00ECDD79 /* APAudioPlayerViewController.m */; };
 		23AC667C17AF90A300ECDD79 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23AC667B17AF90A300ECDD79 /* AVFoundation.framework */; };
 		23AC667E17AF9A1D00ECDD79 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23AC667D17AF9A1D00ECDD79 /* CoreMedia.framework */; };
+		23C1441917B2365700AD90E2 /* APAudioPlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 23C1441817B2365700AD90E2 /* APAudioPlayerViewController.m */; };
+		23C1441C17B2436E00AD90E2 /* APDownloadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 23C1441B17B2436E00AD90E2 /* APDownloadViewController.m */; };
 		23E04B7E17A663EC00012192 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23E04B7D17A663EC00012192 /* UIKit.framework */; };
 		23E04B8017A663EC00012192 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23E04B7F17A663EC00012192 /* Foundation.framework */; };
 		23E04B8217A663EC00012192 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23E04B8117A663EC00012192 /* CoreGraphics.framework */; };
@@ -43,9 +44,11 @@
 
 /* Begin PBXFileReference section */
 		23AC667817AF904A00ECDD79 /* APAudioPlayerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APAudioPlayerViewController.h; sourceTree = "<group>"; };
-		23AC667917AF904A00ECDD79 /* APAudioPlayerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APAudioPlayerViewController.m; sourceTree = "<group>"; };
 		23AC667B17AF90A300ECDD79 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		23AC667D17AF9A1D00ECDD79 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
+		23C1441817B2365700AD90E2 /* APAudioPlayerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APAudioPlayerViewController.m; sourceTree = "<group>"; };
+		23C1441A17B2436E00AD90E2 /* APDownloadViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APDownloadViewController.h; sourceTree = "<group>"; };
+		23C1441B17B2436E00AD90E2 /* APDownloadViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APDownloadViewController.m; sourceTree = "<group>"; };
 		23E04B7A17A663EC00012192 /* AudioPlayerDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AudioPlayerDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		23E04B7D17A663EC00012192 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		23E04B7F17A663EC00012192 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -186,7 +189,9 @@
 				23E04BAC17A674BC00012192 /* APSettingController.h */,
 				23E04BAD17A674BC00012192 /* APSettingController.m */,
 				23AC667817AF904A00ECDD79 /* APAudioPlayerViewController.h */,
-				23AC667917AF904A00ECDD79 /* APAudioPlayerViewController.m */,
+				23C1441817B2365700AD90E2 /* APAudioPlayerViewController.m */,
+				23C1441A17B2436E00AD90E2 /* APDownloadViewController.h */,
+				23C1441B17B2436E00AD90E2 /* APDownloadViewController.m */,
 			);
 			name = controller;
 			sourceTree = "<group>";
@@ -332,7 +337,8 @@
 				23E04BE717A67C4300012192 /* UIImageView+AFNetworking.m in Sources */,
 				23E04BEB17A681A200012192 /* APAudioTableCell.m in Sources */,
 				23E04BF517A794F900012192 /* APDownloadManager.m in Sources */,
-				23AC667A17AF904A00ECDD79 /* APAudioPlayerViewController.m in Sources */,
+				23C1441917B2365700AD90E2 /* APAudioPlayerViewController.m in Sources */,
+				23C1441C17B2436E00AD90E2 /* APDownloadViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

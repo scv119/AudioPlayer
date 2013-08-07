@@ -15,6 +15,7 @@ static UIImage *coverPlaceholderImage;
 @property (nonatomic, strong) APAudioFile *audio;
 @property (nonatomic, retain) UILabel *fileSizeLabel;
 @property (nonatomic, retain) UILabel *timeSpanLabel;
+@property (nonatomic, strong) UIButton *downloadButton;
 
 @end
 
@@ -31,6 +32,9 @@ static UIImage *coverPlaceholderImage;
     
     self.fileSizeLabel = [[UILabel alloc] init];
     self.timeSpanLabel = [[UILabel alloc] init];
+    self.downloadButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    self.downloadButton.imageView.image = [UIImage imageNamed:@"first"];
+    
     if (!self)
         return nil;
     return self;
@@ -54,6 +58,7 @@ static UIImage *coverPlaceholderImage;
     
     [self addSubview:self.fileSizeLabel];
     [self addSubview:self.timeSpanLabel];
+    [self addSubview:self.downloadButton];
 
     [self setNeedsLayout];
 }
@@ -62,6 +67,7 @@ static UIImage *coverPlaceholderImage;
 {
     [super layoutSubviews];
     self.imageView.frame = CGRectMake(0, 0, 10, 10);
+    self.downloadButton.frame = CGRectMake(200, 0, 30, 30);
 }
 
 

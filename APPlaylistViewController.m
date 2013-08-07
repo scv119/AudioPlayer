@@ -140,8 +140,7 @@
      [self.navigationController pushViewController:detailViewController animated:YES];
      */
     
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
-    APAudioPlayerViewController *playerView = [storyboard instantiateViewControllerWithIdentifier:@"APAudioPlayerViewController"];
+    APAudioPlayerViewController *playerView = [APAudioPlayerViewController getInstance];
     [playerView setAudioFile: [self.audioList objectAtIndex:indexPath.row] withLocalStorage:nil];
     [self.navigationController pushViewController:playerView animated:YES];
 }
