@@ -113,7 +113,7 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                             </button>
-                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="i5o-fs-RYP">
+                            <navigationBar opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="i5o-fs-RYP">
                                 <color key="backgroundColor" red="0.97265620750000004" green="1" blue="0.98315123429999995" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="tintColor" red="0.97265620750000004" green="1" blue="0.98315123429999995" alpha="1" colorSpace="calibratedRGB"/>
                                 <items>
@@ -158,18 +158,12 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="icon_playscreen.png" translatesAutoresizingMaskIntoConstraints="NO" id="SGk-bs-ygC">
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="314" id="TBl-4a-gbm"/>
-                                </constraints>
-                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="i5o-fs-RYP" firstAttribute="trailing" secondItem="gyQ-Jh-vdC" secondAttribute="trailing" type="default" id="01q-Sb-KBA"/>
                             <constraint firstItem="GXW-cM-LQc" firstAttribute="bottom" secondItem="rvO-Pb-W9N" secondAttribute="bottom" type="default" id="0w7-Sb-Z2S"/>
                             <constraint firstItem="eee-fQ-bkE" firstAttribute="leading" secondItem="bHT-i2-Hxz" secondAttribute="leading" type="default" id="2Ef-te-NUn"/>
-                            <constraint firstItem="SGk-bs-ygC" firstAttribute="top" secondItem="i5o-fs-RYP" secondAttribute="bottom" type="default" id="5Gy-As-S8u"/>
                             <constraint firstItem="JwN-hZ-Qvc" firstAttribute="bottom" secondItem="gyQ-Jh-vdC" secondAttribute="bottom" type="default" id="Dvr-lf-4MF"/>
                             <constraint firstItem="bHT-i2-Hxz" firstAttribute="trailing" secondItem="GXW-cM-LQc" secondAttribute="trailing" type="default" id="EG2-7b-V5y"/>
                             <constraint firstItem="GXW-cM-LQc" firstAttribute="top" secondItem="rvO-Pb-W9N" secondAttribute="top" type="default" id="Fyi-Hv-52V"/>
@@ -182,8 +176,6 @@
                             <constraint firstItem="bHT-i2-Hxz" firstAttribute="centerY" secondItem="wWr-bz-wGI" secondAttribute="centerY" type="default" id="RVN-h7-ZXJ"/>
                             <constraint firstItem="rvO-Pb-W9N" firstAttribute="centerX" secondItem="U6A-mI-1Ez" secondAttribute="centerX" type="default" id="VVT-y1-rtP"/>
                             <constraint firstItem="JwN-hZ-Qvc" firstAttribute="top" secondItem="wWr-bz-wGI" secondAttribute="top" type="default" id="aGW-nE-Nti"/>
-                            <constraint firstItem="SGk-bs-ygC" firstAttribute="leading" secondItem="gyQ-Jh-vdC" secondAttribute="leading" type="default" id="bWB-GO-3WK"/>
-                            <constraint firstItem="SGk-bs-ygC" firstAttribute="trailing" secondItem="gyQ-Jh-vdC" secondAttribute="trailing" type="default" id="ckI-Nq-n5D"/>
                             <constraint firstItem="wWr-bz-wGI" firstAttribute="leading" secondItem="gyQ-Jh-vdC" secondAttribute="leading" type="default" id="dQq-Pv-aWc"/>
                             <constraint firstItem="uO7-ZS-CQ7" firstAttribute="trailing" secondItem="gyQ-Jh-vdC" secondAttribute="trailing" type="default" id="dck-E2-bWV"/>
                             <constraint firstItem="i5o-fs-RYP" firstAttribute="leading" secondItem="gyQ-Jh-vdC" secondAttribute="leading" type="default" id="fEw-cf-nIa"/>
@@ -539,7 +531,6 @@
         <image name="icon_forward.png" width="77" height="77"/>
         <image name="icon_play.png" width="72" height="72"/>
         <image name="icon_playlist.png" width="79" height="62"/>
-        <image name="icon_playscreen.png" width="640" height="649"/>
         <image name="icon_return.png" width="79" height="62"/>
         <image name="icon_share.png" width="66" height="66"/>
     </resources>
@@ -552,6 +543,7 @@
                 <relationship kind="action" name="sliderRelease:"/>
                 <relationship kind="action" name="sliderTouched:"/>
                 <relationship kind="action" name="volumSliderChange:"/>
+                <relationship kind="outlet" name="imageView" candidateClass="UIImageView"/>
                 <relationship kind="outlet" name="navBar" candidateClass="UINavigationBar"/>
                 <relationship kind="outlet" name="progressView" candidateClass="UIProgressView"/>
                 <relationship kind="outlet" name="slider" candidateClass="UISlider"/>

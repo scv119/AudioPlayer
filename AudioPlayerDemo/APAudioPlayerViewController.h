@@ -22,6 +22,7 @@
 @property (nonatomic, strong) IBOutlet UISlider *volumeSlider;
 @property (nonatomic, strong) IBOutlet UINavigationBar *navBar;
 @property (nonatomic, strong) IBOutlet UILabel *titleLabel;
+@property (nonatomic, strong) IBOutlet UIImageView *imageView;
 
 
 @property (weak) UINavigationController *previousNav;

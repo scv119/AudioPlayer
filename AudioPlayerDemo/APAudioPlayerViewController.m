@@ -39,6 +39,11 @@ static id sharedInstance;
 {
 
     [super viewDidLoad];
+    CGSize result = [[UIScreen mainScreen] bounds].size;
+    NSLog(@"size is %f, %f", result.width, result.height);
+    self.imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon_playscreen"]];
+    [self.imageView setFrame:CGRectMake(0 - (result.height - 480)/2, 42, result.height - 160, result.height - 160)];
+    [self.view addSubview:self.imageView];
 	// Do any additional setup after loading the view.
     self.slider.maximumTrackTintColor = [UIColor clearColor];
     self.slider.minimumTrackTintColor = UIColorFromRGB(0x0099ff);
