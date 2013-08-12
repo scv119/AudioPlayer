@@ -32,7 +32,7 @@
     self.audioList = [[NSMutableArray alloc] init];
     for (int i = 0; i < 5; ++ i) {
         APAudioFile *file = [[APAudioFile alloc] init];
-        file.name = [NSString stringWithFormat:@"测试数据 %d", i];
+        file.name = [NSString stringWithFormat:@"化性谈第%d期", i];
         file.created = [[NSDate alloc] init];
         file.coverUrl = [[NSURL alloc] initWithString: @"http://124.205.11.211/static/cover.gif"];
         file.fileUrl  = [[NSURL alloc] initWithString: @"http://124.205.11.211/static/1.mp3"];
@@ -80,7 +80,7 @@
     // Configure the cell...
     
     if (cell == nil) {
-        cell = [[APAudioTableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"Cell"];
+        cell = [[APAudioTableCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"Cell"];
     }
     
     APAudioFile *file = [self.audioList objectAtIndex:indexPath.row];
@@ -141,8 +141,9 @@
      */
     
     APAudioPlayerViewController *playerView = [APAudioPlayerViewController getInstance];
+    playerView.previousNav = [self navigationController];
     [playerView setAudioFile: [self.audioList objectAtIndex:indexPath.row] withLocalStorage:nil];
-    [self.navigationController pushViewController:playerView animated:YES];
+    [[self navigationController] presentViewController:playerView animated:YES completion:nil];
 }
 
 @end

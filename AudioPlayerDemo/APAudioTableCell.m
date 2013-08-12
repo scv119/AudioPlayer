@@ -16,6 +16,8 @@ static UIImage *coverPlaceholderImage;
 @property (nonatomic, retain) UILabel *fileSizeLabel;
 @property (nonatomic, retain) UILabel *timeSpanLabel;
 @property (nonatomic, strong) UIButton *downloadButton;
+@property (nonatomic, strong) UIProgressView *progressView;
+@property (nonatomic) BOOL inDownloadTab;
 
 @end
 
@@ -34,6 +36,7 @@ static UIImage *coverPlaceholderImage;
     self.timeSpanLabel = [[UILabel alloc] init];
     self.downloadButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     self.downloadButton.imageView.image = [UIImage imageNamed:@"first"];
+    self.progressView = [[UIProgressView alloc] initWithProgressViewStyle:UIProgressViewStyleDefault];
     
     if (!self)
         return nil;
@@ -42,6 +45,7 @@ static UIImage *coverPlaceholderImage;
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {
+//[self setNeedsLayout];
     [super setSelected:selected animated:animated];
 
     // Configure the view for the selected state
@@ -58,7 +62,13 @@ static UIImage *coverPlaceholderImage;
     
     [self addSubview:self.fileSizeLabel];
     [self addSubview:self.timeSpanLabel];
-    [self addSubview:self.downloadButton];
+   
+    self.inDownloadTab = NO;
+    if (flag) {
+        self.inDownloadTab = YES;
+        [self addSubview:self.progressView];
+        [self addSubview:self.downloadButton];
+    }
 
     [self setNeedsLayout];
 }
@@ -66,8 +76,11 @@ static UIImage *coverPlaceholderImage;
 - (void) layoutSubviews
 {
     [super layoutSubviews];
-    self.imageView.frame = CGRectMake(0, 0, 10, 10);
+    self.imageView.frame = CGRectMake(2, 2, 40, 40);
     self.downloadButton.frame = CGRectMake(200, 0, 30, 30);
+    if (self.inDownloadTab) {
+        self.progressView.frame = CGRectMake(150, 10, 100, 10);
+    }
 }
 
 

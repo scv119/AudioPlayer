@@ -15,6 +15,8 @@
 @property (nonatomic, strong) AVPlayer *player;
 @property (nonatomic, strong) NSTimer *timer;
 @property BOOL slideWithProgress;
+@property MPMusicPlayerController* musicPlayer;
+@property UILabel *timeLabel;
 
 
 @end
@@ -28,16 +30,35 @@ static id sharedInstance;
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        
+
     }
     return self;
 }
 
 - (void)viewDidLoad
 {
+
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     self.slider.maximumTrackTintColor = [UIColor clearColor];
+    self.slider.minimumTrackTintColor = UIColorFromRGB(0x0099ff);
+    self.progressView.progressTintColor = UIColorFromRGB(0x525a68);
+    [self.volumeSlider setThumbImage:[UIImage imageNamed:@"icon_volumn1"] forState:UIControlStateNormal];
+    self.volumeSlider.maximumValue = 1;
+    self.musicPlayer = [MPMusicPlayerController applicationMusicPlayer];
+    [[NSNotificationCenter defaultCenter]
+     addObserver:self
+     selector:@selector(volumeChanged:)
+     name:@"AVSystemController_SystemVolumeDidChangeNotification"
+     object:nil];
+    self.timeLabel = [[UILabel alloc] initWithFrame:(CGRectMake(0, 0, 35, 20))];
+    self.timeLabel.font = [UIFont systemFontOfSize:12];
+    [self.timeLabel setBackgroundColor:[UIColor clearColor]];
+    [self adjustLabelForSlider:self.slider];
+    [[self.slider superview] addSubview: self.timeLabel];
+    [self.slider addTarget:self action:@selector(adjustLabelForSlider:) forControlEvents:UIControlEventValueChanged];
+    [self.slider setThumbImage:[UIImage imageNamed:@"slider-icon"] forState:UIControlStateNormal];
+
     NSLog(@"%@", [[self.slider minimumTrackTintColor] description]);
 }
 
@@ -47,6 +68,16 @@ static id sharedInstance;
     // Dispose of any resources that can be recreated.
 }
 
+- (void) viewWillAppear:(BOOL)animated
+{
+    if (self.audioFile != nil) {
+        NSLog(@"called");
+        self.titleLabel.text = self.audioFile.name;
+        self.titleLabel.font = [UIFont systemFontOfSize:20];
+    }
+    self.volumeSlider.value = self.musicPlayer.volume;
+    [super viewWillAppear:animated];
+}
 
 -(void) setAudioFile:(APAudioFile *)file withLocalStorage:(NSURL *) path
 {
@@ -89,9 +120,11 @@ static id sharedInstance;
     if (CMTimeCompare(endTime, kCMTimeZero) != 0) {
         double normalizedTime = (double) self.player.currentTime.value / (double) endTime.value;
         // NSLog(@"%f", normalizedTime);
-        if (self.slideWithProgress)
-            [self.slider setValue:normalizedTime animated:YES];
-        NSLog(@"%f %f", [self availableDuration], endTime.value);
+        if (self.slideWithProgress) {
+            [self.slider setValue:normalizedTime animated:NO];
+            [self adjustLabelForSlider:self.slider];
+        }
+        NSLog(@"%f %f", [self availableDuration], (double)self.player.currentTime.value);
     }
 }
 
@@ -127,6 +160,43 @@ static id sharedInstance;
     [self.player seekToTime:CMTimeMultiplyByFloat64(self.player.currentItem.duration, self.slider.value) completionHandler: ^(BOOL finished){
         self.slideWithProgress = YES;
     }];
+}
+
+
+-(IBAction) backClicked:(id)sender
+{
+    NSLog(@"back clicked");
+    [self.previousNav dismissViewControllerAnimated:YES completion:nil];
+//    [[self navigationController] popViewControllerAnimated:YES];
+}
+
+
+-(IBAction) volumSliderChange:(id)sender
+{
+    self.musicPlayer.volume = self.volumeSlider.value;
+}
+
+
+
+- (void)volumeChanged:(NSNotification *)notification
+{
+    self.volumeSlider.value =
+    [[[notification userInfo]
+      objectForKey:@"AVSystemController_AudioVolumeNotificationParameter"]
+     floatValue];
+    
+}
+
+-(void)adjustLabelForSlider:(id)slider
+{
+    CGRect trackRect = [self.slider trackRectForBounds:self.slider.bounds];
+    CGRect thumbRect = [self.slider thumbRectForBounds:self.slider.bounds
+                                             trackRect:trackRect
+                                                 value:self.slider.value];
+    int second = (int)([self availableDuration] * self.slider.value);
+    NSString *sstr = second%60 < 10 ? [NSString stringWithFormat:@"0%d", second%60] : [NSString stringWithFormat:@"%d", second%60];
+    self.timeLabel.text = [NSString stringWithFormat:@"%d:%@", second/60, sstr];
+    self.timeLabel.center = CGPointMake(thumbRect.origin.x + self.slider.frame.origin.x + 25,  self.slider.frame.origin.y + 9);
 }
 
 @end
