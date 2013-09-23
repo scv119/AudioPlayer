@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "APAudioFile.h"
-#import "AFNetworking.h"
+
 
 @interface APAudioTableCell : UITableViewCell
 

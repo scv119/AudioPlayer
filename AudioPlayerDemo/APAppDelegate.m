@@ -14,6 +14,15 @@
 {
     // Override point for customization after application launch.
     [TestFlight takeOff:@"351c4264-ba3e-46fc-969b-69d0c4aa5b06"];
+    [self listAllFonts];
+    
+    UIImage *image = imageWithColor(UIColorFromRGB(0x3e3e47));
+    UIImage *navBackground = [image resizableImageWithCapInsets:UIEdgeInsetsMake(0, 0, 0, 0)];
+    [[UINavigationBar appearance] setTitleTextAttributes:
+     [NSDictionary dictionaryWithObjectsAndKeys:
+      [UIColor whiteColor], UITextAttributeTextColor,
+      [UIFont fontWithName:@"STLiti" size:20], UITextAttributeFont,nil]];
+    [[UINavigationBar appearance] setBackgroundImage:navBackground forBarMetrics:UIBarMetricsDefault];
     return YES;
 }
 							
@@ -42,6 +51,24 @@
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+- (void)listAllFonts
+{
+    NSArray *familyNames =[[NSArray alloc]initWithArray:[UIFont familyNames]];
+    NSArray *fontNames;
+    NSInteger indFamily, indFont;
+
+    
+    for(indFamily=0;indFamily<[familyNames count];++indFamily)     
+	{
+		NSLog(@"Family name: %@", [familyNames objectAtIndex:indFamily]);
+        fontNames =[[NSArray alloc]initWithArray:[UIFont fontNamesForFamilyName:[familyNames objectAtIndex:indFamily]]];
+		for(indFont=0; indFont<[fontNames count]; ++indFont)            
+		{
+			NSLog(@"    Font name: %@",[fontNames objectAtIndex:indFont]);
+        }
+	}
 }
 
 @end
