@@ -30,6 +30,7 @@
     [dict setObject:[NSString stringWithFormat:@"%lld", self.fileId] forKey:@"id"];
     [dict setObject:[NSString stringWithFormat:@"%lld", self.finishedSize] forKey:@"finishedSize"];
     [dict setObject:self.path forKey:@"path"];
+    [dict setObject:[NSString stringWithFormat:@"%d", self.status] forKey:@"status"];
     return dict;
 }
 
@@ -40,7 +41,6 @@
     file.author = [dict objectForKey:@"author"];
     file.serialName = [dict objectForKey:@"serialName"];
     file.serialNO = [dict objectForKey:@"serialNO"];
-//    file.created = [[NSDate alloc] init];
     file.fileUrl  = [[NSURL alloc] initWithString: [dict objectForKey:@"fileUrl"]];
     file.fileSize = [[dict objectForKey:@"fileSize"] longLongValue];
     file.hasLyric = [@"yes" isEqualToString:[dict objectForKey:@"hasLyric"]] ? YES:NO;
@@ -54,6 +54,10 @@
         file.path = [dict objectForKey:@"path"];
     else
         file.path = @"";
+    if ([dict objectForKey:@"status"] != nil)
+        file.status = [[dict objectForKey:@"status"] integerValue];
+    else
+        file.path = STOPED;
     
     return file;
 }
@@ -71,6 +75,7 @@
     self.fileId = item.fileId;
     self.finishedSize = item.finishedSize;
     self.path = item.path;
+    self.status = item.status;
 }
 
 @end

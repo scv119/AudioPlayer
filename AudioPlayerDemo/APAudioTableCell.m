@@ -29,6 +29,7 @@ static UIImage *coverPlaceholderImage;
 @property (nonatomic, retain) UILabel *lyricLabel;
 @property (nonatomic, retain) UIView *lineView;
 @property (nonatomic, strong) UIButton *downloadButton;
+@property (nonatomic, strong) UIButton *downloadFinishButton;
 @property (nonatomic, strong) UILabel *downloadLabel;
 @property (nonatomic, strong) UIView *iconView;
 @property (nonatomic) BOOL inDownloadTab;
@@ -95,6 +96,10 @@ static UIImage *coverPlaceholderImage;
     [self.downloadButton setFrame:CGRectMake(279, 20, 30, 30)];
     [self.downloadButton setImage:self.downloadImage forState:UIControlStateNormal];
     
+    self.downloadFinishButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [self.downloadFinishButton setFrame:CGRectMake(279, 20, 30, 30)];
+    [self.downloadFinishButton setImage:self.downloadFinishImage forState:UIControlStateNormal];
+    
     self.downloadLabel = [[UILabel alloc] initWithFrame:CGRectMake(279, 46, 30, 15)];
     [self.downloadLabel setBackgroundColor:[UIColor clearColor]];
     [self.downloadLabel setTextColor:[UIColor blackColor]];
@@ -131,6 +136,7 @@ static UIImage *coverPlaceholderImage;
     [self addSubview:self.iconView];
     [self addSubview:self.lineView];
     [self addSubview:self.downloadButton];
+    [self addSubview:self.downloadFinishButton];
     [self addSubview:self.downloadLabel];
     NSLog(@"%@", [audio.coverUrl description]);
     NSLog(@"%@", [self.imageView.image description]);
@@ -150,6 +156,7 @@ static UIImage *coverPlaceholderImage;
     [self addSubview:self.timeSpanLabel];
    
     self.inDownloadTab = NO;
+    [self statusChanged];
 
     [self setNeedsLayout];
 }
@@ -173,8 +180,25 @@ static UIImage *coverPlaceholderImage;
 -(void) statusChanged
 {
     
-    if (self.audio.status == QUEUED) {
-        
+    switch (self.audio.status) {
+        case STOPED:
+            [self.downloadLabel setHidden:YES];
+            [self.downloadButton setHidden:NO];
+            [self.downloadFinishButton setHidden:YES];
+            break;
+        case STARTED:
+        case QUEUED:
+            [self.downloadLabel setHidden:NO];
+            [self.downloadButton setHidden:NO];
+            [self.downloadFinishButton setHidden:YES];
+            break;
+        case FINISHED:
+            [self.downloadLabel setHidden:YES];
+            [self.downloadButton setHidden:YES];
+            [self.downloadFinishButton setHidden:NO];
+            break;
+        default:
+            break;
     }
 }
 
