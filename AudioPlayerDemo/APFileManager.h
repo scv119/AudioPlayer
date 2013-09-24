@@ -16,4 +16,6 @@
 -(void) deleteFile:(APAudioFile *)file;
 -(void) flush;
 
++(APFileManager *) instance;
+
 @end

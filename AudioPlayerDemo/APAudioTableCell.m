@@ -10,6 +10,9 @@
 #import "APAudioTableCell.h"
 #import "AFNetworking.h"
 #import "util.h"
+#import "APDownloadManager.h"
+
+extern enum APDownloadStatus;
 
 
 static UIImage *coverPlaceholderImage;
@@ -103,6 +106,10 @@ static UIImage *coverPlaceholderImage;
 
     if (!self)
         return nil;
+    
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(downloadStatusChanged:) name:@"DOWNLOAD_STATUS_CHANGED" object:nil];
+    
     return self;
 }
 
@@ -154,5 +161,21 @@ static UIImage *coverPlaceholderImage;
 
 }
 
+-(void) downloadStatusChanged:(NSNotification *)notification
+{
+    APAudioFile *file = notification.object;
+    if(file.fileId == self.audio.fileId) {
+        [self.audio updateByItem:file];
+        [self statusChanged];
+    }
+}
+
+-(void) statusChanged
+{
+    
+    if (self.audio.status == QUEUED) {
+        
+    }
+}
 
 @end

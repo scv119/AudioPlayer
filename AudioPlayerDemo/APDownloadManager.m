@@ -17,9 +17,7 @@
 @property (nonatomic, strong) id<APDownloadTask> task;
 @property (atomic, strong) NSURLConnection *connection;
 @property (atomic, strong) NSURLRequest *request;
-@property (atomic, strong) NSLock *connectionLock;
 @property (atomic, strong) NSFileHandle *file;
-@property (atomic) APDownloadStatus status;
 
 @end
 
@@ -31,8 +29,8 @@
     [self prepareFile];
     [self prepareURLRequest];
     self.connection = [NSURLConnection alloc];
-    self.connectionLock = [[NSLock alloc] init];
-    self.status = QUEUED;
+    self.task.status = QUEUED;
+    [self notifyStatusChanged];
 }
 
 -(void) prepareURLRequest
@@ -61,22 +59,19 @@
 {
     if (![self isCancelled]) {
         self.connection = [self.connection initWithRequest:self.request delegate:self];
-        [self.connectionLock lock];
         [self.connection start];
-        [self.connectionLock lock];
-        [self.connectionLock unlock];
     }
 }
 
 -(void) cancel
 {
-    if (self.status == STARTED) {
-        self.status = CANCELED;
+    if (self.task.status == STARTED) {
         [self.connection cancel];
-        [self.task statusChanged: self.status];
     }
     
     [super cancel];
+    self.task.status = STOPED;
+    [self notifyStatusChanged];
 }
 
 #pragma NSURLConnectionDataDelegate
@@ -84,15 +79,15 @@
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
 {
-    if (self.status != CANCELED)
-        self.status = FAILED;
+    self.task.status = STOPED;
+    [self notifyStatusChanged];
     [self.file closeFile];
-    [self.connectionLock unlock];
 }
 
 - (NSURLRequest *)connection:(NSURLConnection *)connection willSendRequest:(NSURLRequest *)request redirectResponse:(NSURLResponse *)response
 {
-    self.status = STARTED;
+    self.task.status = STARTED;
+    [self notifyStatusChanged];
     return request;
 }
 
@@ -101,16 +96,21 @@
 {
     [self.file writeData:data];
     self.task.finishedSize += [data length];
-    [self.task statusChanged: self.status];
+    self.task.status = STARTED;
+    [self notifyStatusChanged];
 }
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection
 {
-    self.status = FINISHED;
+    self.task.status = FINISHED;
+    [self notifyStatusChanged];
     [self.file closeFile];
-    [self.connectionLock unlock];
 }
 
+-(void) notifyStatusChanged
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"DOWNLOAD_STATUS_CHANGED" object:self.task];
+}
 
 @end
 
@@ -134,6 +134,7 @@ static id sharedInstance;
         NSAssert(NO, @"should never be called");
         return nil;
     }
+    NSLog(@"download manager started");
     self = [super init];
     self.taskArray = [[NSMutableArray alloc] init];
     self.queue = [[NSOperationQueue alloc] init];    
@@ -189,15 +190,13 @@ static id sharedInstance;
 {
     NSMutableArray *ret = [[NSMutableArray alloc] init];
     NSArray *operations = self.queue.operations;
-    [self.queue  cancelAllOperations];
+    [self.queue cancelAllOperations];
     [self.queue waitUntilAllOperationsAreFinished];
     for (APDownloadOperation *op in operations) {
-        if (op.status != FINISHED)
+        if (op.task.status != FINISHED)
             [ret addObject:op];
     }
     return ret;
 }
-
-
 
 @end

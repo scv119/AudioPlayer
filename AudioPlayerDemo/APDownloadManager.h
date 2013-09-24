@@ -9,10 +9,9 @@
 #import <Foundation/Foundation.h>
 
 typedef enum APDownloadStatus{
+    STOPED,
     QUEUED,
     STARTED,
-    CANCELED,
-    FAILED,
     FINISHED
 } APDownloadStatus;
 
@@ -26,8 +25,8 @@ typedef enum APDownloadStatus{
 @property (nonatomic) long long fileSize;
 @property (nonatomic) long long finishedSize;
 @property (nonatomic, strong) NSString *path;
+@property APDownloadStatus status;
 
--(void) statusChanged:(APDownloadStatus)status;
 @end
 
 #pragma manager

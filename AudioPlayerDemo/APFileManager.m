@@ -29,10 +29,11 @@ static id stringsPlistPath;
         return nil;
     }
     self = [super init];
-    
+    NSLog(@"file manager started");
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     stringsPlistPath = [[paths objectAtIndex:0] stringByAppendingPathComponent:@"downloadFile.plist"];
     [self readFile];
+    return self;
 }
 
 +(APFileManager *) instance
@@ -126,7 +127,7 @@ static id stringsPlistPath;
 -(void) maySaveFile
 {
     BOOL save = NO;
-    if (self.timeStamp == NO)
+    if (self.timeStamp == nil)
         save = YES;
     else {
         if ([[[NSDate alloc] init] timeIntervalSinceDate:self.timeStamp] > 10)

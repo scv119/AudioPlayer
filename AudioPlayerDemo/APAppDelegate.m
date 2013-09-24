@@ -7,6 +7,8 @@
 //
 
 #import "APAppDelegate.h"
+#import "APDownloadManager.h"
+#import "APFileManager.h"
 
 @implementation APAppDelegate
 
@@ -24,6 +26,9 @@
 //      [UIFont fontWithName:@"STLiti" size:20], UITextAttributeFont,nil]];
 //    [[UINavigationBar appearance] setBackgroundImage:navBackground forBarMetrics:UIBarMetricsDefault];
     [[UINavigationBar appearance] setTintColor:[UIColor darkTextColor]];
+    APDownloadManager *downloadManager = [APDownloadManager instance];
+    APFileManager *fileManager = [APFileManager instance];
+    [downloadManager start];
     return YES;
 }
 							
@@ -52,6 +57,9 @@
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+    
+    APFileManager *fileManager = [APFileManager instance];
+    [fileManager flush];
 }
 
 - (void)listAllFonts
@@ -67,7 +75,7 @@
         fontNames =[[NSArray alloc]initWithArray:[UIFont fontNamesForFamilyName:[familyNames objectAtIndex:indFamily]]];
 		for(indFont=0; indFont<[fontNames count]; ++indFont)            
 		{
-			NSLog(@"    Font name: %@",[fontNames objectAtIndex:indFont]);
+			NSLog(@"\tFont name: %@",[fontNames objectAtIndex:indFont]);
         }
 	}
 }
