@@ -130,7 +130,7 @@ static UIImage *coverPlaceholderImage;
     self.titleLabel.text = self.audio.name;
     self.authorLabel.text = [NSString stringWithFormat:@"主讲人: %@", self.audio.author];
     self.serialNameLabel.text = self.audio.serialName;
-    self.serialNoLabel.text = self.audio.serialNo;
+    self.serialNoLabel.text = self.audio.serialNO;
     self.lyricLabel.text = @"字幕";
     
     

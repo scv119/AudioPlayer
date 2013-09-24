@@ -14,15 +14,16 @@
 {
     // Override point for customization after application launch.
     [TestFlight takeOff:@"351c4264-ba3e-46fc-969b-69d0c4aa5b06"];
-    [self listAllFonts];
+//    [self listAllFonts];
     
-    UIImage *image = imageWithColor(UIColorFromRGB(0x3e3e47));
-    UIImage *navBackground = [image resizableImageWithCapInsets:UIEdgeInsetsMake(0, 0, 0, 0)];
-    [[UINavigationBar appearance] setTitleTextAttributes:
-     [NSDictionary dictionaryWithObjectsAndKeys:
-      [UIColor whiteColor], UITextAttributeTextColor,
-      [UIFont fontWithName:@"STLiti" size:20], UITextAttributeFont,nil]];
-    [[UINavigationBar appearance] setBackgroundImage:navBackground forBarMetrics:UIBarMetricsDefault];
+//    UIImage *image = imageWithColor(UIColorFromRGB(0x3e3e47));
+//    UIImage *navBackground = [image resizableImageWithCapInsets:UIEdgeInsetsMake(0, 0, 0, 0)];
+//    [[UINavigationBar appearance] setTitleTextAttributes:
+//     [NSDictionary dictionaryWithObjectsAndKeys:
+//      [UIColor whiteColor], UITextAttributeTextColor,
+//      [UIFont fontWithName:@"STLiti" size:20], UITextAttributeFont,nil]];
+//    [[UINavigationBar appearance] setBackgroundImage:navBackground forBarMetrics:UIBarMetricsDefault];
+    [[UINavigationBar appearance] setTintColor:[UIColor darkTextColor]];
     return YES;
 }
 							

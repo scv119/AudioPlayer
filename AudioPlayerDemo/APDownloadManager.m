@@ -37,7 +37,7 @@
 
 -(void) prepareURLRequest
 {
-    NSMutableURLRequest *request =[NSMutableURLRequest requestWithURL:[NSURL URLWithString: self.task.url ]];
+    NSMutableURLRequest *request =[NSMutableURLRequest requestWithURL:self.task.fileUrl];
     NSDictionary *oldHeader = [request allHTTPHeaderFields];
     NSMutableDictionary *newHeader = [[NSMutableDictionary alloc] initWithDictionary:oldHeader copyItems:YES];
     [newHeader setObject:[NSString stringWithFormat:@"%lld", self.task.finishedSize] forKey:@"Range"];

@@ -22,10 +22,9 @@ typedef enum APDownloadStatus{
 
 @protocol APDownloadTask <NSObject>
 
-
-@property (nonatomic) unsigned long long fileSize;
-@property (nonatomic) unsigned long long finishedSize;
-@property (nonatomic, strong) NSString *url;
+@property (nonatomic, strong) NSURL *fileUrl;
+@property (nonatomic) long long fileSize;
+@property (nonatomic) long long finishedSize;
 @property (nonatomic, strong) NSString *path;
 
 -(void) statusChanged:(APDownloadStatus)status;

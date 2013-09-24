@@ -7,6 +7,7 @@
 //
 
 #import "APPlaylistViewController.h"
+#import "AFJSONRequestOperation.h"
 
 @interface APPlaylistViewController ()
 
@@ -29,29 +30,14 @@
 {
     [super viewDidLoad];
     UINavigationBar *navigationBar = self.navigationController.navigationBar;
-    navigationBar.topItem.title = @"化性谈——我的随身播经机";
+    navigationBar.topItem.title = @"化性谈";
     UIBarButtonItem *buttionItem = [navigationBar.topItem rightBarButtonItem];
     [self.tableView setSeparatorColor:UIColorFromRGB(0xc1c1c2)];
     [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
 
     
     self.audioList = [[NSMutableArray alloc] init];
-    for (int i = 0; i < 5; ++ i) {
-        APAudioFile *file = [[APAudioFile alloc] init];
-        file.name = [NSString stringWithFormat:@"2013北京化性谈讲座第%d讲", i];
-        file.author = @"孙景华居士";
-        file.serialName = @"北京";
-        file.serialNo = @"01";
-        file.created = [[NSDate alloc] init];
-        file.coverUrl = [[NSURL alloc] initWithString: @"http://124.205.11.211/static/cover.gif"];
-        file.fileUrl  = [[NSURL alloc] initWithString: @"http://huaxingtan.cn/mp3/20130923/130801_001.mp3"];
-        file.fileSize = 808639;
-        file.detail = @"这是一个测试数据咿呀咿呀哟哟哟哟哦哟哟哟哟哟哟哟哟哟哟哟哦哟哟哟哟哟哟哟哟哟哟哟哦哟哟哟哟哟哟哟";
-        file.hasLyric = (i%2 == 0);
-        file.timeSpan = 10;
-        [self.audioList addObject: file];
-    }
-
+    [self loadFeed];
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
  
@@ -142,14 +128,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // Navigation logic may go here. Create and push another view controller.
-    /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
-     */
-    
+    NSLog(@"clicked");
     APAudioPlayerViewController *playerView = [APAudioPlayerViewController getInstance];
     playerView.previousNav = [self navigationController];
     [playerView setAudioFile: [self.audioList objectAtIndex:indexPath.row] withLocalStorage:nil];
@@ -159,6 +138,29 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return 69;
+}
+
+-(void) loadFeed
+{
+    NSURL *url = [NSURL URLWithString:@"http://huaxingtan.cn/api/"];
+    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+    
+    AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+        NSLog(@"fetch feed success");
+        NSArray *array = (NSArray *)JSON;
+        [self.audioList removeAllObjects];
+        for (id item in array) {
+            NSDictionary *dict = (NSDictionary*) item;
+            APAudioFile *file = [APAudioFile instanceByDict:dict];
+            [self.audioList addObject: file];
+        }
+        [self.tableView reloadData];
+    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+        NSLog(@"fetch feed failed");
+    }];
+    
+    [operation start];
+    
 }
 
 @end

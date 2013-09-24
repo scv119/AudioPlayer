@@ -14,4 +14,63 @@
 
 @implementation APAudioFile
 
+
+
+-(NSDictionary *) toDict
+{
+    NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
+    [dict setObject:self.name forKey:@"name"];
+    [dict setObject:self.author forKey:@"author"];
+    [dict setObject:self.serialName forKey:@"serialName"];
+    [dict setObject:self.serialNO forKey:@"serialNO"];
+    [dict setObject:[self.fileUrl absoluteString] forKey:@"fileUrl"];
+    [dict setObject:[NSString stringWithFormat:@"%lld", self.fileSize] forKey:@"fileSize"];
+    [dict setObject:self.hasLyric ? @"yes":@"no" forKey:@"hasLyric"];
+    [dict setObject:[NSString stringWithFormat:@"%d", self.duration] forKey:@"duration"];
+    [dict setObject:[NSString stringWithFormat:@"%lld", self.fileId] forKey:@"id"];
+    [dict setObject:[NSString stringWithFormat:@"%lld", self.finishedSize] forKey:@"finishedSize"];
+    [dict setObject:self.path forKey:@"path"];
+    return dict;
+}
+
++(APAudioFile *) instanceByDict:(NSDictionary *) dict
+{
+    APAudioFile *file = [[APAudioFile alloc] init];
+    file.name = [dict objectForKey:@"name"];
+    file.author = [dict objectForKey:@"author"];
+    file.serialName = [dict objectForKey:@"serialName"];
+    file.serialNO = [dict objectForKey:@"serialNO"];
+//    file.created = [[NSDate alloc] init];
+    file.fileUrl  = [[NSURL alloc] initWithString: [dict objectForKey:@"fileUrl"]];
+    file.fileSize = [[dict objectForKey:@"fileSize"] longLongValue];
+    file.hasLyric = [@"yes" isEqualToString:[dict objectForKey:@"hasLyric"]] ? YES:NO;
+    file.duration = (int)[[dict objectForKey:@"duration"] floatValue];
+    file.fileId = [[dict objectForKey:@"id"] longLongValue];
+    if ([dict objectForKey:@"finishedSize"]!=nil)
+        file.finishedSize = [[dict objectForKey:@"finishedSize"] longLongValue];
+    else
+        file.finishedSize = 0;
+    if ([dict objectForKey:@"path"] != nil)
+        file.path = [dict objectForKey:@"path"];
+    else
+        file.path = @"";
+    
+    return file;
+}
+
+-(void) updateByItem:(APAudioFile *)item
+{
+    self.name = item.name;
+    self.author = item.author;
+    self.serialName = item.serialName;
+    self.serialNO = item.serialNO;
+    self.fileUrl = [item.fileUrl copy];
+    self.fileSize = item.fileSize;
+    self.hasLyric = item.hasLyric;
+    self.duration = item.duration;
+    self.fileId = item.fileId;
+    self.finishedSize = item.finishedSize;
+    self.path = item.path;
+}
+
 @end

@@ -37,6 +37,8 @@
 		232F316717E72DDC00A01C45 /* APTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 232F316617E72DDC00A01C45 /* APTabBarController.m */; };
 		23AC667C17AF90A300ECDD79 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23AC667B17AF90A300ECDD79 /* AVFoundation.framework */; };
 		23AC667E17AF9A1D00ECDD79 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23AC667D17AF9A1D00ECDD79 /* CoreMedia.framework */; };
+		23BF9A0017F19122002B66A9 /* downloadFile.plist in Resources */ = {isa = PBXBuildFile; fileRef = 23BF99FF17F19122002B66A9 /* downloadFile.plist */; };
+		23BF9A0317F1935E002B66A9 /* APFileManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 23BF9A0217F1935E002B66A9 /* APFileManager.m */; };
 		23C1441917B2365700AD90E2 /* APAudioPlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 23C1441817B2365700AD90E2 /* APAudioPlayerViewController.m */; };
 		23C1441C17B2436E00AD90E2 /* APDownloadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 23C1441B17B2436E00AD90E2 /* APDownloadViewController.m */; };
 		23E04B7E17A663EC00012192 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23E04B7D17A663EC00012192 /* UIKit.framework */; };
@@ -124,6 +126,9 @@
 		23AC667817AF904A00ECDD79 /* APAudioPlayerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APAudioPlayerViewController.h; sourceTree = "<group>"; };
 		23AC667B17AF90A300ECDD79 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		23AC667D17AF9A1D00ECDD79 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
+		23BF99FF17F19122002B66A9 /* downloadFile.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = downloadFile.plist; sourceTree = "<group>"; };
+		23BF9A0117F1935E002B66A9 /* APFileManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APFileManager.h; sourceTree = "<group>"; };
+		23BF9A0217F1935E002B66A9 /* APFileManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APFileManager.m; sourceTree = "<group>"; };
 		23C1441817B2365700AD90E2 /* APAudioPlayerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APAudioPlayerViewController.m; sourceTree = "<group>"; };
 		23C1441A17B2436E00AD90E2 /* APDownloadViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APDownloadViewController.h; sourceTree = "<group>"; };
 		23C1441B17B2436E00AD90E2 /* APDownloadViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APDownloadViewController.m; sourceTree = "<group>"; };
@@ -283,6 +288,14 @@
 			name = Resources;
 			sourceTree = "<group>";
 		};
+		23BF99FE17F190DE002B66A9 /* storage */ = {
+			isa = PBXGroup;
+			children = (
+				23BF99FF17F19122002B66A9 /* downloadFile.plist */,
+			);
+			name = storage;
+			sourceTree = "<group>";
+		};
 		23E04B7117A663EB00012192 = {
 			isa = PBXGroup;
 			children = (
@@ -319,6 +332,7 @@
 		23E04B8317A663EC00012192 /* AudioPlayerDemo */ = {
 			isa = PBXGroup;
 			children = (
+				23BF99FE17F190DE002B66A9 /* storage */,
 				232F314F17E6FB2900A01C45 /* Resources */,
 				23E04BEC17A780B400012192 /* download */,
 				23E04BE817A6816000012192 /* view */,
@@ -410,6 +424,8 @@
 			children = (
 				23E04BF317A794F900012192 /* APDownloadManager.h */,
 				23E04BF417A794F900012192 /* APDownloadManager.m */,
+				23BF9A0117F1935E002B66A9 /* APFileManager.h */,
+				23BF9A0217F1935E002B66A9 /* APFileManager.m */,
 			);
 			name = download;
 			sourceTree = "<group>";
@@ -562,6 +578,7 @@
 				2316318217F01CFD003028BD /* setting_blue@2x.png in Resources */,
 				2316318317F01CFD003028BD /* setting_grey.png in Resources */,
 				2316318417F01CFD003028BD /* setting_grey@2x.png in Resources */,
+				23BF9A0017F19122002B66A9 /* downloadFile.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -592,6 +609,7 @@
 				23C1441C17B2436E00AD90E2 /* APDownloadViewController.m in Sources */,
 				232F315617E6FE9A00A01C45 /* APNavigationBar.m in Sources */,
 				232F316717E72DDC00A01C45 /* APTabBarController.m in Sources */,
+				23BF9A0317F1935E002B66A9 /* APFileManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
