@@ -23,6 +23,7 @@
 @property (nonatomic) int duration;
 @property (nonatomic) BOOL hasLyric;
 @property (nonatomic) long long fileId;
+@property (nonatomic) long long taskId;
 @property (nonatomic) long long finishedSize;
 @property (nonatomic, strong) NSString *path;
 @property APDownloadStatus status;

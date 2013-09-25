@@ -204,7 +204,7 @@ static UIImage *coverPlaceholderImage;
 -(void) startDownload
 {
     APDownloadManager *manager = [APDownloadManager instance];
-    [manager pushTask:[self.audio copy]];
+    [manager add:[self.audio copy]];
 }
 
 @end

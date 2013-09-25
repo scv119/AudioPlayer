@@ -26,6 +26,7 @@ typedef enum APDownloadStatus{
 @property (nonatomic) long long finishedSize;
 @property (nonatomic, strong) NSString *path;
 @property APDownloadStatus status;
+@property long long taskId;
 
 @end
 
@@ -38,12 +39,11 @@ typedef enum APDownloadStatus{
 
 
 -(void) start;
--(void) start:(int)threadNum;
+-(void) stop;
+-(BOOL) isInRunningStatus;
 
--(void) pushTask:(id<APDownloadTask>) task;
--(void) removeTask:(id<APDownloadTask>) task;
-
--(NSArray *) cancelAllTask;
+-(void) add:(id<APDownloadTask>)task;
+-(void) remove:(long long) taskId;
 
 
 @end

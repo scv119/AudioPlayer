@@ -39,6 +39,7 @@
 		23BF9A1917F26E08002B66A9 /* setting_blue@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 23BF9A0D17F26E08002B66A9 /* setting_blue@2x.png */; };
 		23BF9A1A17F26E08002B66A9 /* setting_grey.png in Resources */ = {isa = PBXBuildFile; fileRef = 23BF9A0E17F26E08002B66A9 /* setting_grey.png */; };
 		23BF9A1B17F26E08002B66A9 /* setting_grey@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 23BF9A0F17F26E08002B66A9 /* setting_grey@2x.png */; };
+		23BF9A1E17F3012B002B66A9 /* AFDownloadRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 23BF9A1D17F3012B002B66A9 /* AFDownloadRequestOperation.m */; };
 		23C1441917B2365700AD90E2 /* APAudioPlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 23C1441817B2365700AD90E2 /* APAudioPlayerViewController.m */; };
 		23C1441C17B2436E00AD90E2 /* APDownloadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 23C1441B17B2436E00AD90E2 /* APDownloadViewController.m */; };
 		23E04B7E17A663EC00012192 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23E04B7D17A663EC00012192 /* UIKit.framework */; };
@@ -129,6 +130,8 @@
 		23BF9A0D17F26E08002B66A9 /* setting_blue@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "setting_blue@2x.png"; sourceTree = "<group>"; };
 		23BF9A0E17F26E08002B66A9 /* setting_grey.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = setting_grey.png; sourceTree = "<group>"; };
 		23BF9A0F17F26E08002B66A9 /* setting_grey@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "setting_grey@2x.png"; sourceTree = "<group>"; };
+		23BF9A1C17F3012B002B66A9 /* AFDownloadRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFDownloadRequestOperation.h; sourceTree = "<group>"; };
+		23BF9A1D17F3012B002B66A9 /* AFDownloadRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFDownloadRequestOperation.m; sourceTree = "<group>"; };
 		23C1441817B2365700AD90E2 /* APAudioPlayerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APAudioPlayerViewController.m; sourceTree = "<group>"; };
 		23C1441A17B2436E00AD90E2 /* APDownloadViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APDownloadViewController.h; sourceTree = "<group>"; };
 		23C1441B17B2436E00AD90E2 /* APDownloadViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APDownloadViewController.m; sourceTree = "<group>"; };
@@ -403,6 +406,8 @@
 				23E04BDC17A67C4300012192 /* AFXMLRequestOperation.m */,
 				23E04BDD17A67C4300012192 /* UIImageView+AFNetworking.h */,
 				23E04BDE17A67C4300012192 /* UIImageView+AFNetworking.m */,
+				23BF9A1C17F3012B002B66A9 /* AFDownloadRequestOperation.h */,
+				23BF9A1D17F3012B002B66A9 /* AFDownloadRequestOperation.m */,
 			);
 			name = AFNetworking;
 			path = AudioPlayerDemo;
@@ -610,6 +615,7 @@
 				232F315617E6FE9A00A01C45 /* APNavigationBar.m in Sources */,
 				232F316717E72DDC00A01C45 /* APTabBarController.m in Sources */,
 				23BF9A0317F1935E002B66A9 /* APFileManager.m in Sources */,
+				23BF9A1E17F3012B002B66A9 /* AFDownloadRequestOperation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

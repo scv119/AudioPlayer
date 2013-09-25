@@ -46,6 +46,7 @@
     file.hasLyric = [@"yes" isEqualToString:[dict objectForKey:@"hasLyric"]] ? YES:NO;
     file.duration = (int)[[dict objectForKey:@"duration"] floatValue];
     file.fileId = [[dict objectForKey:@"id"] longLongValue];
+    file.taskId = file.fileId;
     if ([dict objectForKey:@"finishedSize"]!=nil)
         file.finishedSize = [[dict objectForKey:@"finishedSize"] longLongValue];
     else
@@ -73,6 +74,7 @@
     self.hasLyric = item.hasLyric;
     self.duration = item.duration;
     self.fileId = item.fileId;
+    self.taskId = item.taskId;
     self.finishedSize = item.finishedSize;
     self.path = item.path;
     self.status = item.status;
