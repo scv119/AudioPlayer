@@ -54,11 +54,11 @@
     if ([dict objectForKey:@"path"] != nil)
         file.path = [dict objectForKey:@"path"];
     else
-        file.path = @"";
+        file.path = [NSString stringWithFormat:@"%lld.mp3", file.taskId];
     if ([dict objectForKey:@"status"] != nil)
         file.status = [[dict objectForKey:@"status"] integerValue];
     else
-        file.path = STOPED;
+        file.status = STOPED;
     
     return file;
 }

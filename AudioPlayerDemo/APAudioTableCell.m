@@ -11,6 +11,7 @@
 #import "AFNetworking.h"
 #import "util.h"
 #import "APDownloadManager.h"
+#import "APFileManager.h"
 
 extern enum APDownloadStatus;
 
@@ -35,6 +36,7 @@ static UIImage *coverPlaceholderImage;
 @property (nonatomic) BOOL inDownloadTab;
 @property UIImage* downloadImage;
 @property UIImage* downloadFinishImage;
+@property APFileManager *fileManager;
 @end
 
 @implementation APAudioTableCell {
@@ -113,6 +115,7 @@ static UIImage *coverPlaceholderImage;
     
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(downloadStatusChanged:) name:@"DOWNLOAD_STATUS_CHANGED" object:nil];
+    self.fileManager = [APFileManager instance];
     
     return self;
 }
@@ -203,8 +206,9 @@ static UIImage *coverPlaceholderImage;
 
 -(void) startDownload
 {
-    APDownloadManager *manager = [APDownloadManager instance];
-    [manager add:[self.audio copy]];
+    
+    NSLog(@"triggled");
+    [self.fileManager startDownloadFile:self.audio];
 }
 
 @end

@@ -11,9 +11,10 @@
 
 @interface APFileManager : NSObject
 
--(NSArray *) listFiles;
--(void) updateFile:(APAudioFile *)file;
+-(void) startDownloadFile:(APAudioFile *)file;
+-(void) stopDownloadFiles:(APAudioFile *)file;
 -(void) deleteFile:(APAudioFile *)file;
+-(APAudioFile *) getFile:(long long )fileId;
 -(void) flush;
 
 +(APFileManager *) instance;

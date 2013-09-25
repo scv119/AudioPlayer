@@ -17,6 +17,7 @@
 @property id<APDownloadTask> currentTask;
 @property NSDate *lastNoti;
 @property NSMutableArray *queue;
+@property long long cancelId;
 
 @end
 
@@ -61,6 +62,7 @@ static id DOWNLOAD_NOTIFICATION;
         if (self.isRunning)
             return;
         self.isRunning = YES;
+        self.cancelId = -1;
         [self notifyStartDownload];
     }
 }
@@ -72,6 +74,7 @@ static id DOWNLOAD_NOTIFICATION;
             return;
         self.isRunning = NO;
         if (self.operation != nil) {
+            self.cancelId = self.currentTask.taskId;
             [self.operation cancel];
         }
     }
@@ -85,7 +88,17 @@ static id DOWNLOAD_NOTIFICATION;
 
 -(void) add:(id<APDownloadTask>)task
 {
+    if (task.status == FINISHED)
+        return;
     @synchronized(self) {
+        
+        for (int i = 0; i < [self.queue count]; i++) {
+            id<APDownloadTask> item = [self.queue objectAtIndex:i];
+            if (item.taskId == task.taskId) {
+                return;
+            }
+        }
+        
         [self.queue addObject:task];
         task.status = QUEUED;
         [self notifyTaskStatus:task noDelay:YES];
@@ -112,11 +125,25 @@ static id DOWNLOAD_NOTIFICATION;
 
 -(void) startTask:(id<APDownloadTask>) task
 {
-    NSURLRequest *request = [NSURLRequest requestWithURL:task.fileUrl];
+    
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *path = [[paths objectAtIndex:0] stringByAppendingPathComponent:task.path];
+    
+    NSURLRequest *request = [NSURLRequest requestWithURL:task.fileUrl];
     self.operation = [[AFDownloadRequestOperation alloc] initWithRequest:request targetPath:path shouldResume:YES];
     self.currentTask = task;
+    
+    BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:path];
+    NSLog(@"%d", fileExists);
+    if (fileExists) {
+        task.status = FINISHED;
+        [self notifyTaskStatus:task noDelay:YES];
+        [self finishOperation];
+        [self notifyStartDownload];
+        return;
+    }
+    
+
     [self.operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"Successfully downloaded file to %@", path);
         APDownloadManager *downloadManager = [APDownloadManager instance];
@@ -128,6 +155,8 @@ static id DOWNLOAD_NOTIFICATION;
         NSLog(@"Error: %@", error);
         APDownloadManager *downloadManager = [APDownloadManager instance];
         task.status = STOPED;
+        if (downloadManager.cancelId == task.taskId)
+            task.status = QUEUED;
         [downloadManager notifyTaskStatus:task noDelay:YES];
         [downloadManager finishOperation];
         [downloadManager notifyStartDownload];
@@ -185,7 +214,8 @@ static id DOWNLOAD_NOTIFICATION;
     @synchronized(self) {
         if (self.operation != nil) {
             self.operation = nil;
-            [self remove:self.currentTask.taskId];
+            if (self.currentTask.status == FINISHED || self.currentTask.status == STOPED)
+                [self remove:self.currentTask.taskId];
             self.currentTask = nil;
         }
     }

@@ -8,10 +8,12 @@
 
 #import "APPlaylistViewController.h"
 #import "AFJSONRequestOperation.h"
+#import "APFileManager.h"
 
 @interface APPlaylistViewController ()
 
 @property (nonatomic, strong) NSMutableArray *audioList;
+@property (nonatomic, strong) APFileManager *fileManager;
 
 @end
 
@@ -37,6 +39,7 @@
 
     
     self.audioList = [[NSMutableArray alloc] init];
+    self.fileManager = [APFileManager instance];
     [self loadFeed];
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -152,6 +155,10 @@
         for (id item in array) {
             NSDictionary *dict = (NSDictionary*) item;
             APAudioFile *file = [APAudioFile instanceByDict:dict];
+            APAudioFile *managedFile = [self.fileManager getFile:file.fileId];
+            if (managedFile != nil) {
+                [file updateByItem:managedFile];
+            }
             [self.audioList addObject: file];
         }
         [self.tableView reloadData];
