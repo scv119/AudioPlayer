@@ -106,8 +106,7 @@ static UIImage *coverPlaceholderImage;
     [self.downloadLabel setText:@"下载中"];
     [self.downloadLabel setFont:[UIFont fontWithName:@"STHeitiSC-Medium" size:9]];
     [self.downloadLabel setTextAlignment:NSTextAlignmentCenter];
-    
-    
+    [self.downloadButton addTarget:self action:@selector(startDownload) forControlEvents:UIControlEventTouchUpInside];
 
     if (!self)
         return nil;
@@ -200,6 +199,12 @@ static UIImage *coverPlaceholderImage;
         default:
             break;
     }
+}
+
+-(void) startDownload
+{
+    APDownloadManager *manager = [APDownloadManager instance];
+    [manager pushTask:[self.audio copy]];
 }
 
 @end

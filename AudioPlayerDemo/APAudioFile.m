@@ -78,4 +78,10 @@
     self.status = item.status;
 }
 
+- (id)copyWithZone:(NSZone *)zone {
+    APAudioFile *file = [[[self class] allocWithZone:zone] init];
+    [file updateByItem:self];
+    return file;
+}
+
 @end

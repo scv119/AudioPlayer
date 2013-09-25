@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "APDownloadManager.h"
 
-@interface APAudioFile : NSObject<APDownloadTask>
+@interface APAudioFile : NSObject<APDownloadTask, NSCopying>
 
 @property (nonatomic, strong) NSString *name;
 @property (nonatomic, strong) NSString *detail;

@@ -23,14 +23,17 @@
 
 @implementation APDownloadOperation
 
--(void) setTask:(id<APDownloadTask>)task
+-(id) initWithTask:(id<APDownloadTask>)task
 {
+    self = [super init];
+    NSLog(@"start task %@", [task description]);
     self.task = task;
     [self prepareFile];
     [self prepareURLRequest];
     self.connection = [NSURLConnection alloc];
     self.task.status = QUEUED;
     [self notifyStatusChanged];
+    return self;
 }
 
 -(void) prepareURLRequest
@@ -47,8 +50,10 @@
 -(void) prepareFile
 {
 //    NSFileManager *manager = [NSFileManager defaultManager];
+    NSLog(@"%@", self.task.path);
     NSFileHandle * file = [NSFileHandle fileHandleForUpdatingAtPath: self.task.path];
     self.task.finishedSize = [file seekToEndOfFile];
+    [self notifyStatusChanged];
     self.file = file;
 }
 
@@ -58,8 +63,10 @@
 -(void) main
 {
     if (![self isCancelled]) {
+        NSLog(@"connection begin");
         self.connection = [self.connection initWithRequest:self.request delegate:self];
         [self.connection start];
+        NSLog(@"connection started");
     }
 }
 
@@ -79,6 +86,8 @@
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
 {
+    
+    NSLog(@"request failed");
     self.task.status = STOPED;
     [self notifyStatusChanged];
     [self.file closeFile];
@@ -86,6 +95,7 @@
 
 - (NSURLRequest *)connection:(NSURLConnection *)connection willSendRequest:(NSURLRequest *)request redirectResponse:(NSURLResponse *)response
 {
+    NSLog(@"request will send");
     self.task.status = STARTED;
     [self notifyStatusChanged];
     return request;
@@ -102,6 +112,8 @@
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection
 {
+    
+    NSLog(@"request done");
     self.task.status = FINISHED;
     [self notifyStatusChanged];
     [self.file closeFile];
@@ -109,6 +121,7 @@
 
 -(void) notifyStatusChanged
 {
+    NSLog(@"status notified %d", self.task.status);
     [[NSNotificationCenter defaultCenter] postNotificationName:@"DOWNLOAD_STATUS_CHANGED" object:self.task];
 }
 
@@ -166,8 +179,8 @@ static id sharedInstance;
 
 -(void) pushTask:(id<APDownloadTask>) task
 {
-    APDownloadOperation *operation = [[APDownloadOperation alloc] init];
-    operation.task = task;
+    NSLog(@"task pushed");
+    APDownloadOperation *operation = [[APDownloadOperation alloc] initWithTask:task];
     [self.queue addOperation:operation];
 }
 
