@@ -16,6 +16,8 @@
 
 
 static UIImage *coverPlaceholderImage;
+static UIImage *downloadAlphaImage;
+static UIImage *downloadFinishAlphaImage;
 
 @interface APAudioTableCell ()
 
@@ -54,6 +56,14 @@ static UIImage *coverPlaceholderImage;
     
     self.downloadImage = [UIImage imageNamed:@"download.png"];
     self.downloadFinishImage = [UIImage imageNamed:@"downloadfinish.png"];
+    
+    if (downloadAlphaImage == nil) {
+        downloadAlphaImage = imageByApplyingAlpha(self.downloadImage, 0.2);
+    }
+    
+    if (downloadFinishAlphaImage == nil) {
+        downloadFinishAlphaImage = imageByApplyingAlpha(self.downloadFinishImage, 0.2);
+    }
     
     self.titleLabel = [[UILabel alloc] init];
     [self.titleLabel setFrame:CGRectMake(69+14, 22, 180, 13)];
@@ -94,20 +104,23 @@ static UIImage *coverPlaceholderImage;
     [self.iconView addSubview:self.serialNoLabel];
     
     self.downloadButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [self.downloadButton setFrame:CGRectMake(279, 20, 30, 30)];
+    [self.downloadButton setFrame:CGRectMake(264, 10, 50, 50)];
     [self.downloadButton setImage:self.downloadImage forState:UIControlStateNormal];
+    [self.downloadButton setImage:downloadAlphaImage forState:UIControlStateHighlighted];
     
     self.downloadFinishButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [self.downloadFinishButton setFrame:CGRectMake(279, 20, 30, 30)];
+    [self.downloadFinishButton setFrame:CGRectMake(264, 10, 50, 50)];
     [self.downloadFinishButton setImage:self.downloadFinishImage forState:UIControlStateNormal];
+    [self.downloadFinishButton setImage:downloadFinishAlphaImage forState:UIControlStateHighlighted];
     
-    self.downloadLabel = [[UILabel alloc] initWithFrame:CGRectMake(279, 46, 30, 15)];
+    self.downloadLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 36, 50, 15)];
     [self.downloadLabel setBackgroundColor:[UIColor clearColor]];
     [self.downloadLabel setTextColor:[UIColor blackColor]];
-    [self.downloadLabel setText:@"下载中"];
+    [self.downloadLabel setText:@"下载中  0%"];
     [self.downloadLabel setFont:[UIFont fontWithName:@"STHeitiSC-Medium" size:9]];
     [self.downloadLabel setTextAlignment:NSTextAlignmentCenter];
-    [self.downloadButton addTarget:self action:@selector(startDownload) forControlEvents:UIControlEventTouchUpInside];
+    [self.downloadButton addTarget:self action:@selector(downloadButtonClicked) forControlEvents:UIControlEventTouchUpInside];
+    [self.downloadFinishButton addTarget:self action:@selector(downloadButtonClicked) forControlEvents:UIControlEventTouchUpInside];
 
     if (!self)
         return nil;
@@ -115,6 +128,7 @@ static UIImage *coverPlaceholderImage;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(downloadStatusChanged:) name:downloadStatusNotification object:nil];
     self.fileManager = [APFileManager instance];
+    
     
     return self;
 }
@@ -139,7 +153,7 @@ static UIImage *coverPlaceholderImage;
     [self addSubview:self.lineView];
     [self addSubview:self.downloadButton];
     [self addSubview:self.downloadFinishButton];
-    [self addSubview:self.downloadLabel];
+    [self.downloadButton addSubview:self.downloadLabel];
     NSLog(@"%@", [audio.coverUrl description]);
     NSLog(@"%@", [self.imageView.image description]);
     self.titleLabel.text = self.audio.name;
@@ -181,7 +195,12 @@ static UIImage *coverPlaceholderImage;
 
 -(void) statusChanged
 {
-    
+    int percentage = (int)(1.0f * self.audio.finishedSize/self.audio.fileSize * 100);
+    NSString *labelText = nil;
+    if (percentage < 10)
+        labelText = [NSString stringWithFormat:@"下载中  %d%%", percentage];
+    else
+        labelText = [NSString stringWithFormat:@"下载中 %d%%", percentage];
     switch (self.audio.status) {
         case STOPED:
             [self.downloadLabel setHidden:YES];
@@ -189,13 +208,22 @@ static UIImage *coverPlaceholderImage;
             [self.downloadFinishButton setHidden:YES];
             break;
         case STARTED:
+
+            [self.downloadLabel setText:labelText];
+            [self.downloadLabel setHidden:NO];
+            [self.downloadButton setHidden:NO];
+            [self.downloadFinishButton setHidden:YES];
+            break;
+            
         case QUEUED:
+            [self.downloadLabel setText:@"等待中"];
             [self.downloadLabel setHidden:NO];
             [self.downloadButton setHidden:NO];
             [self.downloadFinishButton setHidden:YES];
             break;
         case FINISHED:
-            [self.downloadLabel setHidden:YES];
+            [self.downloadLabel setText:@"已下载"];
+            [self.downloadLabel setHidden:NO];
             [self.downloadButton setHidden:YES];
             [self.downloadFinishButton setHidden:NO];
             break;
@@ -204,22 +232,28 @@ static UIImage *coverPlaceholderImage;
     }
 }
 
--(void) startDownload
+-(void) downloadButtonClicked
 {
 
     NSLog(@"triggled");
     if (self.audio.status == STOPED) {
         [self.fileManager startDownloadFile:self.audio];
-        [self displayHud];
+        [self displayHud:@"已加入下载队列" withMode:MBProgressHUDModeText];
+    } else if (self.audio.status == STARTED || self.audio.status == QUEUED) {
+        [self.fileManager stopDownloadFiles:self.audio];
+        [self displayHud:@"已停止下载" withMode:MBProgressHUDModeText];
+    } else {
+        [self displayHud:@"已下载" withMode:MBProgressHUDModeText];
     }
 
 }
 
--(void) displayHud
+-(void) displayHud:(NSString *)text withMode:(MBProgressHUDMode) mode
 {
     MBProgressHUD *hud =[MBProgressHUD showHUDAddedTo:self.superview animated:YES];
-    hud.labelText = @"加入下载队列";
-    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, 0.4 * NSEC_PER_SEC);
+    hud.mode = mode;
+    hud.labelText = text;
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, 0.3 * NSEC_PER_SEC);
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
         // Do something...
         [MBProgressHUD hideHUDForView:self.superview animated:YES];

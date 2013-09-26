@@ -107,9 +107,11 @@ static id sharedInstance;
 -(void) remove:(long long) taskId
 {
     @synchronized(self) {
+        id<APDownloadTask> removedTask;
         for (int i = 0; i < [self.queue count]; i++) {
             id<APDownloadTask> item = [self.queue objectAtIndex:i];
             if (item.taskId == taskId) {
+                removedTask = item;
                 [self.queue removeObjectAtIndex:i];
                 break;
             }
@@ -118,6 +120,9 @@ static id sharedInstance;
         if (self.currentTask != nil && self.currentTask.taskId == taskId) {
             self.removeId = self.currentTask.taskId;
             [self.operation cancel];
+        } else {
+            removedTask.status = STOPED;
+            [self notifyTaskStatus:removedTask noDelay:YES];
         }
     }
 }
@@ -147,8 +152,6 @@ static id sharedInstance;
         NSLog(@"Successfully downloaded file to %@", path);
         APDownloadManager *downloadManager = [APDownloadManager instance];
         task.status = FINISHED;
-        if (task.taskId == downloadManager.removeId)
-            task.status = STOPED;
         [downloadManager notifyTaskStatus:task noDelay:YES];
         [downloadManager finishOperation];
         [downloadManager notifyStartDownload];
@@ -156,6 +159,8 @@ static id sharedInstance;
         
         APDownloadManager *downloadManager = [APDownloadManager instance];
         task.status = QUEUED;
+        if (task.taskId == downloadManager.removeId)
+            task.status = STOPED;
         
         NSLog(@"Error: %@ Task status changed: %d", error, task.status);
         [downloadManager notifyTaskStatus:task noDelay:YES];
@@ -166,8 +171,7 @@ static id sharedInstance;
         NSLog(@"Operation%i: bytesRead: %d", 1, bytesRead);
         NSLog(@"Operation%i: totalBytesRead: %lld", 1, totalBytesRead);
         NSLog(@"Operation%i: totalBytesExpectedToRead: %lld", 1, totalBytesExpectedToRead);
-        task.fileSize = totalBytesExpectedToRead;
-        task.finishedSize = totalBytesRead;
+        task.finishedSize = task.fileSize - (totalBytesExpectedToRead - totalBytesRead);
         APDownloadManager *downloadManager = [APDownloadManager instance];
         task.status = STARTED;
         [downloadManager notifyTaskStatus:task noDelay:NO];

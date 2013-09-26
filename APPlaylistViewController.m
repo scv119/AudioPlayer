@@ -191,8 +191,7 @@
         [self performSelector:@selector(doneLoadingTableViewData) withObject:nil afterDelay:0.2];
         
         if (firstTime) {
-            hud.labelText = @"加载完成";
-            dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, 0.8 * NSEC_PER_SEC);
+            dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, 0.2 * NSEC_PER_SEC);
             dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
                 // Do something...
                 [MBProgressHUD hideHUDForView:self.view animated:YES];
@@ -203,8 +202,9 @@
         MBProgressHUD *hud1 = hud;
         if (hud1 == nil)
             hud1 =[MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        hud1.mode = MBProgressHUDModeText;
         hud1.labelText = @"加载失败";
-        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, 0.8 * NSEC_PER_SEC);
+        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, 1 * NSEC_PER_SEC);
         dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
             // Do something...
             [MBProgressHUD hideHUDForView:self.view animated:YES];

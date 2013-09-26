@@ -11,6 +11,7 @@
 #import "APFileManager.h"
 #import "APNetworkManager.h"
 #import "APSetting.h"
+#import "MobClick.h"
 
 @implementation APAppDelegate{
     APDownloadManager *downloadManager;
@@ -23,6 +24,7 @@
 {
     // Override point for customization after application launch.
     [TestFlight takeOff:@"351c4264-ba3e-46fc-969b-69d0c4aa5b06"];
+    [MobClick startWithAppkey:@"5243fcf056240bea3500cfab"];
 //    [self listAllFonts];
     
 //    UIImage *image = imageWithColor(UIColorFromRGB(0x3e3e47));

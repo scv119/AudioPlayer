@@ -13,6 +13,7 @@
 //@property (nonatomic, strong) IBOutlet UISwitch *audioSwitch;
 @property (nonatomic, strong) IBOutlet UISwitch *cellularSwitch;
 @property (nonatomic, strong) IBOutlet UISwitch *backgroundSwitch;
+@property (nonatomic, strong) IBOutlet UITableViewCell *feedBackCell;
 
 
 //-(IBAction) toggleAudioQuality:(id)sender;

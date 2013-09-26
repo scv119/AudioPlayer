@@ -8,6 +8,7 @@
 
 #import "APSettingController.h"
 #import "APSetting.h"
+#import "UMFeedback.h"
 
 @interface APSettingController ()
 
@@ -45,12 +46,22 @@
 //    self.setting.enablehighQuality = self.audioSwitch.on;
 //}
 
--(IBAction) toggleCellularData:(id)sender {
+-(IBAction) toggleCellularData:(id)sender
+{
     self.setting.enableCelluarData = self.cellularSwitch.on;
     
 }
--(IBAction) toggleBackgroundDownload:(id)sender {
+-(IBAction) toggleBackgroundDownload:(id)sender
+{
     self.setting.enableBackground = self.backgroundSwitch.on;
+}
+
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UITableViewCell *theCellClicked = [self.tableView cellForRowAtIndexPath:indexPath];
+    if (theCellClicked == self.feedBackCell)
+        [UMFeedback showFeedback:self withAppkey:@"5243fcf056240bea3500cfab"];
 }
 
 

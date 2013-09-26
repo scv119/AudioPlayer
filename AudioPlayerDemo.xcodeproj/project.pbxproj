@@ -27,6 +27,10 @@
 		231E95F617F4328A00D8ED36 /* grayArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 231E95EE17F4328A00D8ED36 /* grayArrow@2x.png */; };
 		231E95F717F4328A00D8ED36 /* whiteArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 231E95EF17F4328A00D8ED36 /* whiteArrow.png */; };
 		231E95F817F4328A00D8ED36 /* whiteArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 231E95F017F4328A00D8ED36 /* whiteArrow@2x.png */; };
+		231E95FD17F434B700D8ED36 /* libMobClickLibrary_armv6.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 231E95FA17F434B700D8ED36 /* libMobClickLibrary_armv6.a */; };
+		231E95FE17F434B700D8ED36 /* libMobClickLibrary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 231E95FB17F434B700D8ED36 /* libMobClickLibrary.a */; };
+		231E960217F435E400D8ED36 /* libUMFeedback.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 231E95FF17F435E400D8ED36 /* libUMFeedback.a */; };
+		231E960317F435E400D8ED36 /* umFeedback.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 231E960017F435E400D8ED36 /* umFeedback.bundle */; };
 		232F315317E6FD0800A01C45 /* STLiti.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 232F315217E6FCFE00A01C45 /* STLiti.ttf */; };
 		232F315617E6FE9A00A01C45 /* APNavigationBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 232F315517E6FE9A00A01C45 /* APNavigationBar.m */; };
 		232F315817E705A900A01C45 /* icon_playnow.png in Resources */ = {isa = PBXBuildFile; fileRef = 232F315717E705A900A01C45 /* icon_playnow.png */; };
@@ -133,6 +137,12 @@
 		231E95EE17F4328A00D8ED36 /* grayArrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "grayArrow@2x.png"; sourceTree = "<group>"; };
 		231E95EF17F4328A00D8ED36 /* whiteArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = whiteArrow.png; sourceTree = "<group>"; };
 		231E95F017F4328A00D8ED36 /* whiteArrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "whiteArrow@2x.png"; sourceTree = "<group>"; };
+		231E95FA17F434B700D8ED36 /* libMobClickLibrary_armv6.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libMobClickLibrary_armv6.a; sourceTree = "<group>"; };
+		231E95FB17F434B700D8ED36 /* libMobClickLibrary.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libMobClickLibrary.a; sourceTree = "<group>"; };
+		231E95FC17F434B700D8ED36 /* MobClick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobClick.h; sourceTree = "<group>"; };
+		231E95FF17F435E400D8ED36 /* libUMFeedback.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libUMFeedback.a; sourceTree = "<group>"; };
+		231E960017F435E400D8ED36 /* umFeedback.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = umFeedback.bundle; sourceTree = "<group>"; };
+		231E960117F435E400D8ED36 /* UMFeedback.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMFeedback.h; sourceTree = "<group>"; };
 		232F314B17E6F07400A01C45 /* util.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = util.h; sourceTree = "<group>"; };
 		232F315217E6FCFE00A01C45 /* STLiti.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = STLiti.ttf; sourceTree = "<group>"; };
 		232F315417E6FE9A00A01C45 /* APNavigationBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APNavigationBar.h; sourceTree = "<group>"; };
@@ -245,9 +255,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				23F0635717B93DAE00231675 /* libz.dylib in Frameworks */,
 				231E95E717F42C0B00D8ED36 /* QuartzCore.framework in Frameworks */,
 				231E95DE17F3D5B100D8ED36 /* SystemConfiguration.framework in Frameworks */,
-				23F0635717B93DAE00231675 /* libz.dylib in Frameworks */,
 				23F0634517B9284500231675 /* MediaPlayer.framework in Frameworks */,
 				23AC667E17AF9A1D00ECDD79 /* CoreMedia.framework in Frameworks */,
 				23AC667C17AF90A300ECDD79 /* AVFoundation.framework in Frameworks */,
@@ -256,6 +266,9 @@
 				23E04B8217A663EC00012192 /* CoreGraphics.framework in Frameworks */,
 				23F0635317B93D7400231675 /* libTestFlight.a in Frameworks */,
 				7E2C377B802C41C4AD97CC7A /* libPods.a in Frameworks */,
+				231E95FD17F434B700D8ED36 /* libMobClickLibrary_armv6.a in Frameworks */,
+				231E95FE17F434B700D8ED36 /* libMobClickLibrary.a in Frameworks */,
+				231E960217F435E400D8ED36 /* libUMFeedback.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -330,6 +343,19 @@
 			name = egotableview;
 			sourceTree = "<group>";
 		};
+		231E95F917F434AA00D8ED36 /* umeng */ = {
+			isa = PBXGroup;
+			children = (
+				231E95FF17F435E400D8ED36 /* libUMFeedback.a */,
+				231E960017F435E400D8ED36 /* umFeedback.bundle */,
+				231E960117F435E400D8ED36 /* UMFeedback.h */,
+				231E95FA17F434B700D8ED36 /* libMobClickLibrary_armv6.a */,
+				231E95FB17F434B700D8ED36 /* libMobClickLibrary.a */,
+				231E95FC17F434B700D8ED36 /* MobClick.h */,
+			);
+			name = umeng;
+			sourceTree = "<group>";
+		};
 		232F314E17E6FB1F00A01C45 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
@@ -384,6 +410,7 @@
 		23E04B7C17A663EC00012192 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				231E95F917F434AA00D8ED36 /* umeng */,
 				231E95E617F42C0A00D8ED36 /* QuartzCore.framework */,
 				231E95DD17F3D5B100D8ED36 /* SystemConfiguration.framework */,
 				231E95D717F3CFE100D8ED36 /* Reachability */,
@@ -591,6 +618,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				"zh-Hans",
 			);
 			mainGroup = 23E04B7117A663EB00012192;
 			productRefGroup = 23E04B7B17A663EC00012192 /* Products */;
@@ -668,6 +696,7 @@
 				231E95F617F4328A00D8ED36 /* grayArrow@2x.png in Resources */,
 				231E95F717F4328A00D8ED36 /* whiteArrow.png in Resources */,
 				231E95F817F4328A00D8ED36 /* whiteArrow@2x.png in Resources */,
+				231E960317F435E400D8ED36 /* umFeedback.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -832,6 +861,10 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = C4BA35C1066440688119C51E /* Pods.xcconfig */;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/UMSocial_Sdk_3.0/frameworks/TencentOpenAPI\"",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "AudioPlayerDemo/AudioPlayerDemo-Prefix.pch";
 				INFOPLIST_FILE = "AudioPlayerDemo/AudioPlayerDemo-Info.plist";
@@ -839,6 +872,9 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/AudioPlayerDemo/TestFlightSDK1.2.6\"",
+					"\"$(SRCROOT)\"",
+					"\"$(SRCROOT)/UMSocial_Sdk_3.0/frameworks/Wechat\"",
+					"\"$(SRCROOT)/UMSocial_Sdk_3.0\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
@@ -849,6 +885,10 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = C4BA35C1066440688119C51E /* Pods.xcconfig */;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/UMSocial_Sdk_3.0/frameworks/TencentOpenAPI\"",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "AudioPlayerDemo/AudioPlayerDemo-Prefix.pch";
 				INFOPLIST_FILE = "AudioPlayerDemo/AudioPlayerDemo-Info.plist";
@@ -856,6 +896,9 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/AudioPlayerDemo/TestFlightSDK1.2.6\"",
+					"\"$(SRCROOT)\"",
+					"\"$(SRCROOT)/UMSocial_Sdk_3.0/frameworks/Wechat\"",
+					"\"$(SRCROOT)/UMSocial_Sdk_3.0\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
