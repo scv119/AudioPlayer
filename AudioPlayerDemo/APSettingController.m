@@ -22,7 +22,7 @@
     [super viewDidLoad];
     
     self.setting = [APSetting instance];
-    self.audioSwitch.on = self.setting.enablehighQuality;
+//    self.audioSwitch.on = self.setting.enablehighQuality;
     self.cellularSwitch.on = self.setting.enableCelluarData;
     self.backgroundSwitch.on = self.setting.enableBackground;
     // Uncomment the following line to preserve selection between presentations.
@@ -39,11 +39,11 @@
 }
 
 
-
--(IBAction) toggleAudioQuality:(id)sender {
-    
-    self.setting.enablehighQuality = self.audioSwitch.on;
-}
+//
+//-(IBAction) toggleAudioQuality:(id)sender {
+//    
+//    self.setting.enablehighQuality = self.audioSwitch.on;
+//}
 
 -(IBAction) toggleCellularData:(id)sender {
     self.setting.enableCelluarData = self.cellularSwitch.on;

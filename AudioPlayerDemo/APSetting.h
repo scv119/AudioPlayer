@@ -11,12 +11,12 @@
 extern NSString *settingChangedNotification;
 
 @interface APSetting : NSObject {
-    BOOL _highQuality;
+//    BOOL _highQuality;
     BOOL _celluarData;
     BOOL _backGround;
 }
 
-@property (nonatomic) BOOL enablehighQuality;
+//@property (nonatomic) BOOL enablehighQuality;
 @property (nonatomic) BOOL enableCelluarData;
 @property (nonatomic) BOOL enableBackground;
 

@@ -10,12 +10,12 @@
 
 @interface APSettingController : UITableViewController
 
-@property (nonatomic, strong) IBOutlet UISwitch *audioSwitch;
+//@property (nonatomic, strong) IBOutlet UISwitch *audioSwitch;
 @property (nonatomic, strong) IBOutlet UISwitch *cellularSwitch;
 @property (nonatomic, strong) IBOutlet UISwitch *backgroundSwitch;
 
 
--(IBAction) toggleAudioQuality:(id)sender;
+//-(IBAction) toggleAudioQuality:(id)sender;
 -(IBAction) toggleCellularData:(id)sender;
 -(IBAction) toggleBackgroundDownload:(id)sender;
 @end

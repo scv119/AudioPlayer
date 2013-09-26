@@ -324,41 +324,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <sections>
-                            <tableViewSection headerTitle="" footerTitle="高音质质量更清晰，但是会消耗更多流量" id="dCG-mt-1pH">
-                                <cells>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="ecn-rf-S5B">
-                                        <rect key="frame" x="0.0" y="10" width="320" height="46"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="10" y="1" width="300" height="43"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="高音质" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rKv-7i-70U">
-                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                    <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                </label>
-                                                <switch opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="twA-yS-39y">
-                                                    <connections>
-                                                        <action selector="toggleAudioQuality:" destination="ugq-qs-2qB" eventType="valueChanged" id="bEE-3f-GM6"/>
-                                                    </connections>
-                                                </switch>
-                                            </subviews>
-                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                        </view>
-                                        <constraints>
-                                            <constraint firstItem="twA-yS-39y" firstAttribute="centerY" secondItem="rKv-7i-70U" secondAttribute="centerY" type="default" id="geU-91-AuQ"/>
-                                            <constraint firstAttribute="trailing" secondItem="twA-yS-39y" secondAttribute="trailing" constant="30" id="k5f-ol-eDX"/>
-                                            <constraint firstItem="rKv-7i-70U" firstAttribute="leading" secondItem="ecn-rf-S5B" secondAttribute="leading" constant="20" type="default" id="stM-mz-bmD"/>
-                                            <constraint firstItem="twA-yS-39y" firstAttribute="top" secondItem="ecn-rf-S5B" secondAttribute="top" constant="9" id="tQz-aG-9MV"/>
-                                        </constraints>
-                                    </tableViewCell>
-                                </cells>
-                            </tableViewSection>
                             <tableViewSection headerTitle="" footerTitle="移动网络数据会消耗额外数据流量" id="Big-bK-ajy">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="70N-2W-g63">
-                                        <rect key="frame" x="0.0" y="107" width="320" height="46"/>
+                                        <rect key="frame" x="0.0" y="10" width="320" height="46"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="10" y="1" width="300" height="43"/>
@@ -389,7 +358,7 @@
                             <tableViewSection headerTitle="" footerTitle="程序退出后会继续下载未完成的下载任务" id="KWr-4e-49j">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="fSg-a5-xsd">
-                                        <rect key="frame" x="0.0" y="204" width="320" height="46"/>
+                                        <rect key="frame" x="0.0" y="107" width="320" height="46"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="10" y="1" width="300" height="43"/>
@@ -420,7 +389,7 @@
                             <tableViewSection headerTitle="" id="W0x-4u-fpH">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="Iiv-aG-vxu" style="IBUITableViewCellStyleDefault" id="7vZ-2Y-wjE">
-                                        <rect key="frame" x="0.0" y="301" width="320" height="45"/>
+                                        <rect key="frame" x="0.0" y="204" width="320" height="45"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="10" y="1" width="280" height="43"/>
@@ -436,7 +405,7 @@
                                         </view>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="2LB-oY-lTZ" detailTextLabel="Tn7-iC-yVX" style="IBUITableViewCellStyleValue1" id="dHg-hE-DvJ">
-                                        <rect key="frame" x="0.0" y="346" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="249" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="10" y="0.0" width="280" height="43"/>
@@ -457,7 +426,7 @@
                                         </view>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="DHc-nY-nEH" detailTextLabel="QO6-hp-jK9" style="IBUITableViewCellStyleValue1" id="L9q-e8-mNd">
-                                        <rect key="frame" x="0.0" y="390" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="293" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="10" y="0.0" width="280" height="43"/>
@@ -478,7 +447,7 @@
                                         </view>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="VPN-ls-ce6" detailTextLabel="7dU-WK-mcB" style="IBUITableViewCellStyleValue1" id="SNt-5q-Uua">
-                                        <rect key="frame" x="0.0" y="434" width="320" height="45"/>
+                                        <rect key="frame" x="0.0" y="337" width="320" height="45"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="10" y="0.0" width="300" height="43"/>
@@ -510,7 +479,6 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="设置" id="ghe-BX-xSq"/>
                     <connections>
-                        <outlet property="audioSwitch" destination="twA-yS-39y" id="NKU-hW-SN4"/>
                         <outlet property="backgroundSwitch" destination="viC-zM-YA0" id="0Zb-Sy-ima"/>
                         <outlet property="cellularSwitch" destination="TG2-r1-Ns5" id="XIP-HF-ZSz"/>
                     </connections>

@@ -19,7 +19,7 @@ NSString *downloadStatusNotification = @"DOWNLOAD_STATUS_CHANGED";
 @property id<APDownloadTask> currentTask;
 @property NSDate *lastNoti;
 @property NSMutableArray *queue;
-@property long long cancelId;
+@property long long removeId;
 
 @end
 
@@ -62,7 +62,6 @@ static id sharedInstance;
         if (self.isRunning)
             return;
         self.isRunning = YES;
-        self.cancelId = -1;
         [self notifyStartDownload];
     }
 }
@@ -74,7 +73,6 @@ static id sharedInstance;
             return;
         self.isRunning = NO;
         if (self.operation != nil) {
-            self.cancelId = self.currentTask.taskId;
             [self.operation cancel];
         }
     }
@@ -118,6 +116,8 @@ static id sharedInstance;
         }
         
         if (self.currentTask != nil && self.currentTask.taskId == taskId) {
+            
+            self.removeId = self.currentTask.taskId;
             [self.operation cancel];
         }
     }
@@ -132,6 +132,7 @@ static id sharedInstance;
     NSURLRequest *request = [NSURLRequest requestWithURL:task.fileUrl];
     self.operation = [[AFDownloadRequestOperation alloc] initWithRequest:request targetPath:path shouldResume:YES];
     self.currentTask = task;
+    self.removeId = -1;
     
     BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:path];
     NSLog(@"%d", fileExists);
@@ -142,12 +143,13 @@ static id sharedInstance;
         [self notifyStartDownload];
         return;
     }
-    
 
     [self.operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"Successfully downloaded file to %@", path);
         APDownloadManager *downloadManager = [APDownloadManager instance];
         task.status = FINISHED;
+        if (task.taskId == downloadManager.removeId)
+            task.status = STOPED;
         [downloadManager notifyTaskStatus:task noDelay:YES];
         [downloadManager finishOperation];
         [downloadManager notifyStartDownload];
@@ -155,6 +157,7 @@ static id sharedInstance;
         
         APDownloadManager *downloadManager = [APDownloadManager instance];
         task.status = QUEUED;
+        
         NSLog(@"Error: %@ Task status changed: %d", error, task.status);
         [downloadManager notifyTaskStatus:task noDelay:YES];
         [downloadManager finishOperation];

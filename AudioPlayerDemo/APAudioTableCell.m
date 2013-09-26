@@ -207,8 +207,10 @@ static UIImage *coverPlaceholderImage;
 {
 
     NSLog(@"triggled");
-    [self.fileManager startDownloadFile:self.audio];
-    [self displayHud];
+    if (self.audio.status == STOPED) {
+        [self.fileManager startDownloadFile:self.audio];
+        [self displayHud];
+    }
 
 }
 
