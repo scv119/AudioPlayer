@@ -129,7 +129,7 @@ static id sharedInstance;
             [self.slider setValue:normalizedTime animated:NO];
             [self adjustLabelForSlider:self.slider];
         }
-        NSLog(@"%f %f", [self availableDuration], (double)self.player.currentTime.value);
+     //   NSLog(@"%f %f", [self availableDuration], (double)self.player.currentTime.value);
     }
 }
 

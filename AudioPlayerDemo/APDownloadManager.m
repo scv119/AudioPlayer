@@ -116,7 +116,6 @@ static id sharedInstance;
         }
         
         if (self.currentTask != nil && self.currentTask.taskId == taskId) {
-            
             self.removeId = self.currentTask.taskId;
             [self.operation cancel];
         }

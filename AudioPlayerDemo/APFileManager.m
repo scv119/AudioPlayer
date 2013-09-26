@@ -37,6 +37,7 @@ static id stringsPlistPath;
     stringsPlistPath = [[paths objectAtIndex:0] stringByAppendingPathComponent:@"downloadFile.plist"];
     self.downloadManager = [APDownloadManager instance];
     [self readFile];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(maySaveFile) name:downloadStatusNotification object:nil];
     return self;
 }
 
@@ -69,7 +70,7 @@ static id stringsPlistPath;
             current = file;
         }
         [self.downloadManager add:current];
-        [self maySaveFile];
+        [self saveFile];
     }
 }
 
@@ -81,7 +82,7 @@ static id stringsPlistPath;
             return;
         }
         [self.downloadManager remove:current.fileId];
-        [self maySaveFile];
+        [self saveFile];
     }
 }
 
@@ -102,7 +103,7 @@ static id stringsPlistPath;
         }
         
         if (matched) {
-            [self maySaveFile];
+            [self saveFile];
         }
     }
 

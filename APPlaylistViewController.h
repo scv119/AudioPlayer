@@ -11,8 +11,12 @@
 #import "APAudioFile.h"
 #import "APAudioTableCell.h"
 #import "APAudioPlayerViewController.h"
+#import "EGORefreshTableHeaderView.h"
 
-@interface APPlaylistViewController : UITableViewController
+@interface APPlaylistViewController : UITableViewController<EGORefreshTableHeaderDelegate> {
+    EGORefreshTableHeaderView *refreshTableView;
+    BOOL _reloading;
+}
 
 
 @end

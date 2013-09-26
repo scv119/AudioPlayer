@@ -15,6 +15,7 @@
 
 @property (nonatomic, strong) NSMutableArray *audioList;
 @property (nonatomic, strong) APFileManager *fileManager;
+@property (nonatomic, strong) NSDate *lastUpdated;
 
 @end
 
@@ -32,6 +33,15 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    if (refreshTableView == nil) {
+        refreshTableView = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0,  0 - self.tableView.bounds.size.height, self.tableView.bounds.size.width,  self.tableView.bounds.size.height)];
+        refreshTableView.delegate = self;
+        [self.tableView addSubview:refreshTableView];
+        
+        [refreshTableView refreshLastUpdatedDate];
+    }
+    
     UINavigationBar *navigationBar = self.navigationController.navigationBar;
     navigationBar.topItem.title = @"化性谈";
     [self.tableView setSeparatorColor:UIColorFromRGB(0xc1c1c2)];
@@ -40,7 +50,7 @@
     
     self.audioList = [[NSMutableArray alloc] init];
     self.fileManager = [APFileManager instance];
-    [self loadFeed];
+    [self loadFeedFirstTime:YES];
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
  
@@ -134,7 +144,18 @@
     NSLog(@"clicked");
     APAudioPlayerViewController *playerView = [APAudioPlayerViewController getInstance];
     playerView.previousNav = [self navigationController];
-    [playerView setAudioFile: [self.audioList objectAtIndex:indexPath.row] withLocalStorage:nil];
+    APAudioFile *file = [self.audioList objectAtIndex:indexPath.row];
+    NSURL *localStorage = nil;
+    NSLog(@"%d %d", file.status, FINISHED);
+    NSLog(@"%@", file.path);
+    if (file.status == FINISHED) {
+        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+        NSString *path = [[paths objectAtIndex:0] stringByAppendingPathComponent:file.path];
+        localStorage = [[NSURL alloc] initFileURLWithPath: path];
+//        NSLog(@"%@ %@", path, [localStorage description]);
+        
+    }
+    [playerView setAudioFile: file withLocalStorage:localStorage];
     [[self navigationController] presentViewController:playerView animated:YES completion:nil];
 }
 
@@ -143,10 +164,13 @@
     return 69;
 }
 
--(void) loadFeed
+-(void) loadFeedFirstTime:(BOOL) firstTime
 {
-    MBProgressHUD *hud =[MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    hud.labelText = @"加载中";
+    MBProgressHUD *hud = nil;
+    if (firstTime) {
+        hud =[MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        hud.labelText = @"正在加载";
+    }
     NSURL *url = [NSURL URLWithString:@"http://huaxingtan.cn/api/"];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     
@@ -163,24 +187,96 @@
             }
             [self.audioList addObject: file];
         }
-        [self.tableView reloadData];
-        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, 0.4 * NSEC_PER_SEC);
-        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-            // Do something...
-            [MBProgressHUD hideHUDForView:self.view animated:YES];
+        [self.tableView reloadData]; 
+        [self performSelector:@selector(doneLoadingTableViewData) withObject:nil afterDelay:0.2];
+        
+        if (firstTime) {
+            hud.labelText = @"加载完成";
+            dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, 0.8 * NSEC_PER_SEC);
+            dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+                // Do something...
+                [MBProgressHUD hideHUDForView:self.view animated:YES];
         });
+        }
     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
         NSLog(@"fetch feed failed");
-        hud.labelText = @"加载失败";
-        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, 0.4 * NSEC_PER_SEC);
+        MBProgressHUD *hud1 = hud;
+        if (hud1 == nil)
+            hud1 =[MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        hud1.labelText = @"加载失败";
+        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, 0.8 * NSEC_PER_SEC);
         dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
             // Do something...
             [MBProgressHUD hideHUDForView:self.view animated:YES];
         });
+        
+        [self performSelector:@selector(doneLoadingTableViewData) withObject:nil afterDelay:0.2];
     }];
     
     [operation start];
     
 }
+
+
+
+#pragma mark -
+#pragma mark Data Source Loading / Reloading Methods
+
+- (void)reloadTableViewDataSource{
+    
+    //  should be calling your tableviews data source model to reload
+    //  put here just for demo
+    _reloading = YES;
+    [self loadFeedFirstTime:NO];
+    
+}
+
+- (void)doneLoadingTableViewData{
+    
+    //  model should call this when its done loading
+    _reloading = NO;
+    [refreshTableView egoRefreshScrollViewDataSourceDidFinishedLoading:self.tableView];
+    
+}
+
+#pragma mark -
+#pragma mark UIScrollViewDelegate Methods
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView{
+    
+    [refreshTableView egoRefreshScrollViewDidScroll:scrollView];
+    
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
+    
+    [refreshTableView egoRefreshScrollViewDidEndDragging:scrollView];
+    
+}
+
+
+
+#pragma mark -
+#pragma mark EGORefreshTableHeaderDelegate Methods
+
+- (void)egoRefreshTableHeaderDidTriggerRefresh:(EGORefreshTableHeaderView*)view{
+    
+    [self reloadTableViewDataSource];
+    
+    
+}
+
+- (BOOL)egoRefreshTableHeaderDataSourceIsLoading:(EGORefreshTableHeaderView*)view{
+    
+    return _reloading; // should return if data source model is reloading
+    
+}
+
+- (NSDate*)egoRefreshTableHeaderDataSourceLastUpdated:(EGORefreshTableHeaderView*)view{
+    
+    return [NSDate date]; // should return date data source was last changed
+    
+}
+
 
 @end
