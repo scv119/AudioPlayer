@@ -10,7 +10,6 @@
 
 @implementation APNetworkManager {
     Reachability *_hostReach;
-    NetworkStatus _status;
 }
 
 static id sharedInstance;
@@ -35,7 +34,6 @@ static id sharedInstance;
     
     _hostReach = [Reachability reachabilityWithHostName:@"www.huaxingtan.cn"];
     [_hostReach startNotifier];
-    _status = NotReachable;
     NSLog(@"networking manager started");
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateStatus:) name:kReachabilityChangedNotification object:nil];
     return self;
@@ -43,13 +41,12 @@ static id sharedInstance;
 
 -(NetworkStatus) getStatus
 {
-    return _status;
+    return [_hostReach currentReachabilityStatus];
 }
 
 -(void) updateStatus:(NSNotification *)notification
 {
-    _status = [_hostReach currentReachabilityStatus];
-    NSLog(@"network status changed %d", _status);
+    NSLog(@"network status changed %d", [_hostReach currentReachabilityStatus]);
 }
 
 @end

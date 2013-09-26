@@ -10,9 +10,7 @@
 #import "Reachability.h"
 
 @interface APNetworkManager : NSObject
-
-@property (readonly)NetworkStatus stauts;
-
 +(instancetype) instance;
+-(NetworkStatus) getStatus;
 
 @end

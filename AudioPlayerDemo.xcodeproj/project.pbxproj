@@ -304,6 +304,7 @@
 		232F314F17E6FB2900A01C45 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				23BF99FE17F190DE002B66A9 /* storage */,
 				2316316C17F01CE7003028BD /* tabbar */,
 				2316316B17F01C51003028BD /* icon */,
 				2316315E17F01BCA003028BD /* mainscreen */,
@@ -364,7 +365,6 @@
 		23E04B8317A663EC00012192 /* AudioPlayerDemo */ = {
 			isa = PBXGroup;
 			children = (
-				23BF99FE17F190DE002B66A9 /* storage */,
 				232F314F17E6FB2900A01C45 /* Resources */,
 				23E04BEC17A780B400012192 /* manager */,
 				23E04BE817A6816000012192 /* view */,

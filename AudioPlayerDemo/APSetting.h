@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+extern NSString *settingChangedNotification;
+
 @interface APSetting : NSObject {
     BOOL _highQuality;
     BOOL _celluarData;

@@ -152,11 +152,10 @@ static id sharedInstance;
         [downloadManager finishOperation];
         [downloadManager notifyStartDownload];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"Error: %@", error);
+        
         APDownloadManager *downloadManager = [APDownloadManager instance];
-        task.status = STOPED;
-        if (downloadManager.cancelId == task.taskId)
-            task.status = QUEUED;
+        task.status = QUEUED;
+        NSLog(@"Error: %@ Task status changed: %d", error, task.status);
         [downloadManager notifyTaskStatus:task noDelay:YES];
         [downloadManager finishOperation];
         [downloadManager notifyStartDownload];

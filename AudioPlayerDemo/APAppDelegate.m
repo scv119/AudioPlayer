@@ -10,8 +10,14 @@
 #import "APDownloadManager.h"
 #import "APFileManager.h"
 #import "APNetworkManager.h"
+#import "APSetting.h"
 
-@implementation APAppDelegate
+@implementation APAppDelegate{
+    APDownloadManager *downloadManager;
+    APSetting *setting;
+    APFileManager *fileManager;
+    APNetworkManager *networkManager;
+}
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
@@ -27,10 +33,14 @@
 //      [UIFont fontWithName:@"STLiti" size:20], UITextAttributeFont,nil]];
 //    [[UINavigationBar appearance] setBackgroundImage:navBackground forBarMetrics:UIBarMetricsDefault];
     [[UINavigationBar appearance] setTintColor:[UIColor darkTextColor]];
-    APDownloadManager *downloadManager = [APDownloadManager instance];
-    [APFileManager instance];
-    [downloadManager start];
-    [APNetworkManager instance];
+    downloadManager = [APDownloadManager instance];
+    fileManager = [APFileManager instance];
+    networkManager = [APNetworkManager instance];
+    setting = [APSetting instance];
+    if ([self networkPermitDownload])
+        [downloadManager start];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(processNetworkNotification:) name:kReachabilityChangedNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(processNetworkNotification:) name:settingChangedNotification object:nil];
     return YES;
 }
 							
@@ -42,9 +52,10 @@
 
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
-    APDownloadManager *downloadManager = [APDownloadManager instance];
-    [downloadManager stop];
-    APFileManager *fileManager = [APFileManager instance];
+    if (!setting.enableBackground) {
+        [downloadManager stop];
+    }
+    
     [fileManager flush];
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
@@ -52,8 +63,8 @@
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
-    APDownloadManager *downloadManager = [APDownloadManager instance];
-    [downloadManager start];
+    if ([self networkPermitDownload])
+        [downloadManager start];
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
 }
 
@@ -65,9 +76,7 @@
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
-    APDownloadManager *downloadManager = [APDownloadManager instance];
     [downloadManager stop];
-    APFileManager *fileManager = [APFileManager instance];
     [fileManager flush];
 }
 
@@ -87,6 +96,28 @@
 			NSLog(@"\tFont name: %@",[fontNames objectAtIndex:indFont]);
         }
 	}
+}
+
+-(void) processNetworkNotification:(NSNotification *)noti
+{
+    BOOL ret = [self networkPermitDownload];
+    NSLog(@"allow download? %d", ret);
+    if (ret) {
+        [downloadManager stop];
+        [downloadManager start];
+    }
+    else
+        [downloadManager stop];
+}
+
+-(BOOL) networkPermitDownload
+{
+    NetworkStatus status = [[APNetworkManager instance] getStatus];
+    if (status == ReachableViaWiFi)
+        return YES;
+    if (status == NotReachable)
+        return NO;
+    return setting.enableCelluarData;
 }
 
 @end

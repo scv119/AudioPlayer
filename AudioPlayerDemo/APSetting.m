@@ -10,6 +10,7 @@
 
 @implementation APSetting
 
+NSString *settingChangedNotification = @"SETTING_UPDATED";
 static id sharedInstance;
 
 @synthesize enableBackground = _backGround;
@@ -45,6 +46,7 @@ static id sharedInstance;
     _backGround = val;
     [[NSUserDefaults standardUserDefaults] setBool:val forKey:@"backgroundDownload"];
     [[NSUserDefaults standardUserDefaults] synchronize];
+    [self notifyStatusChange];
     NSLog(@"backgroundDownload changed %d", val);
 }
 
@@ -53,6 +55,7 @@ static id sharedInstance;
     _celluarData = val;
     [[NSUserDefaults standardUserDefaults] setBool:val forKey:@"cellularData"];
     [[NSUserDefaults standardUserDefaults] synchronize];
+    [self notifyStatusChange];
     NSLog(@"cellularData changed %d", val);
 }
 
@@ -61,12 +64,13 @@ static id sharedInstance;
     _highQuality = val;
     [[NSUserDefaults standardUserDefaults] setBool:val forKey:@"audioQuality"];
     [[NSUserDefaults standardUserDefaults] synchronize];
+    [self notifyStatusChange];
     NSLog(@"audioQuality changed %d", val);
 }
 
 -(void) notifyStatusChange
 {
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"SETTING_UPDATED" object:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:settingChangedNotification object:nil];
 }
 
 
