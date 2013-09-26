@@ -26,4 +26,5 @@ static UIImage *imageWithColor(UIColor *color)
     return image;
 }
 
+
 #endif

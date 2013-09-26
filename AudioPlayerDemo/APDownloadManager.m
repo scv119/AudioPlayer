@@ -9,6 +9,8 @@
 #import "APDownloadManager.h"
 #import "AFDownloadRequestOperation.h"
 
+NSString *downloadNotification = @"DOWNLOAD_NOTIFICATION";
+NSString *downloadStatusNotification = @"DOWNLOAD_STATUS_CHANGED";
 
 @interface APDownloadManager()
 
@@ -25,7 +27,6 @@
 @implementation APDownloadManager
 
 static id sharedInstance;
-static id DOWNLOAD_NOTIFICATION;
 
 -(id) init
 {
@@ -39,12 +40,11 @@ static id DOWNLOAD_NOTIFICATION;
     self.currentTask = nil;
     self.operation = nil;
     self.queue = [[NSMutableArray alloc] init];
-    DOWNLOAD_NOTIFICATION = @"DOWNLOAD_NOTIFICATION";
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(startDownload) name:DOWNLOAD_NOTIFICATION object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(startDownload) name:downloadNotification object:nil];
     return self;
 }
 
-+(APDownloadManager *) instance
++(instancetype) instance
 {
     static dispatch_once_t _singletonPredicate;
     
@@ -179,7 +179,7 @@ static id DOWNLOAD_NOTIFICATION;
 -(void) notifyStartDownload
 {
     NSLog(@"notification sent!");
-    [[NSNotificationCenter defaultCenter] postNotificationName:DOWNLOAD_NOTIFICATION object:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:downloadNotification object:nil];
 }
 
 -(void) notifyTaskStatus:(id<APDownloadTask>)task noDelay:(BOOL) noDelay
@@ -193,7 +193,7 @@ static id DOWNLOAD_NOTIFICATION;
         noDelay = YES;
     
     if (noDelay) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"DOWNLOAD_STATUS_CHANGED" object: task];
+        [[NSNotificationCenter defaultCenter] postNotificationName:downloadStatusNotification object: task];
     }
 }
 

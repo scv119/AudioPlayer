@@ -9,6 +9,7 @@
 #import "APAppDelegate.h"
 #import "APDownloadManager.h"
 #import "APFileManager.h"
+#import "APNetworkManager.h"
 
 @implementation APAppDelegate
 
@@ -27,8 +28,9 @@
 //    [[UINavigationBar appearance] setBackgroundImage:navBackground forBarMetrics:UIBarMetricsDefault];
     [[UINavigationBar appearance] setTintColor:[UIColor darkTextColor]];
     APDownloadManager *downloadManager = [APDownloadManager instance];
-    APFileManager *fileManager = [APFileManager instance];
+    [APFileManager instance];
     [downloadManager start];
+    [APNetworkManager instance];
     return YES;
 }
 							

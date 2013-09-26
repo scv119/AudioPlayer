@@ -34,7 +34,6 @@
     [super viewDidLoad];
     UINavigationBar *navigationBar = self.navigationController.navigationBar;
     navigationBar.topItem.title = @"化性谈";
-    UIBarButtonItem *buttionItem = [navigationBar.topItem rightBarButtonItem];
     [self.tableView setSeparatorColor:UIColorFromRGB(0xc1c1c2)];
     [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
 

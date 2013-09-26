@@ -14,8 +14,6 @@
 #import "APFileManager.h"
 #import "MBProgressHUD.h"
 
-extern enum APDownloadStatus;
-
 
 static UIImage *coverPlaceholderImage;
 
@@ -115,7 +113,7 @@ static UIImage *coverPlaceholderImage;
         return nil;
     
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(downloadStatusChanged:) name:@"DOWNLOAD_STATUS_CHANGED" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(downloadStatusChanged:) name:downloadStatusNotification object:nil];
     self.fileManager = [APFileManager instance];
     
     return self;

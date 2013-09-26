@@ -15,7 +15,7 @@ typedef enum APDownloadStatus{
     FINISHED
 } APDownloadStatus;
 
-
+extern NSString *downloadStatusNotification;
 
 #pragma protocal
 
@@ -35,7 +35,7 @@ typedef enum APDownloadStatus{
 @interface APDownloadManager : NSObject
 
 
-+(APDownloadManager *) instance;
++(instancetype) instance;
 
 
 -(void) start;

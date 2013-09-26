@@ -7,8 +7,11 @@
 //
 
 #import "APSettingController.h"
+#import "APSetting.h"
 
 @interface APSettingController ()
+
+@property APSetting *setting;
 
 @end
 
@@ -17,7 +20,11 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
+    
+    self.setting = [APSetting instance];
+    self.audioSwitch.on = self.setting.enablehighQuality;
+    self.cellularSwitch.on = self.setting.enableCelluarData;
+    self.backgroundSwitch.on = self.setting.enableBackground;
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
  
@@ -35,17 +42,15 @@
 
 -(IBAction) toggleAudioQuality:(id)sender {
     
-    NSLog(@"audioQuality changed %d", self.audioSwitch.on);
+    self.setting.enablehighQuality = self.audioSwitch.on;
 }
 
 -(IBAction) toggleCellularData:(id)sender {
-    NSLog(@"cellularData changed %d", self.cellularSwitch.on);
+    self.setting.enableCelluarData = self.cellularSwitch.on;
     
 }
 -(IBAction) toggleBackgroundDownload:(id)sender {
-    NSLog(@"backgroundDownload changed %d", self.backgroundSwitch.on);
-
-    
+    self.setting.enableBackground = self.backgroundSwitch.on;
 }
 
 
