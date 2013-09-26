@@ -12,6 +12,7 @@
 #import "util.h"
 #import "APDownloadManager.h"
 #import "APFileManager.h"
+#import "MBProgressHUD.h"
 
 extern enum APDownloadStatus;
 
@@ -206,9 +207,22 @@ static UIImage *coverPlaceholderImage;
 
 -(void) startDownload
 {
-    
+
     NSLog(@"triggled");
     [self.fileManager startDownloadFile:self.audio];
+    [self displayHud];
+
+}
+
+-(void) displayHud
+{
+    MBProgressHUD *hud =[MBProgressHUD showHUDAddedTo:self.superview animated:YES];
+    hud.labelText = @"加入下载队列";
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, 0.4 * NSEC_PER_SEC);
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        // Do something...
+        [MBProgressHUD hideHUDForView:self.superview animated:YES];
+    });
 }
 
 @end

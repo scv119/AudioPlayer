@@ -9,6 +9,7 @@
 #import "APPlaylistViewController.h"
 #import "AFJSONRequestOperation.h"
 #import "APFileManager.h"
+#import "MBProgressHUD.h"
 
 @interface APPlaylistViewController ()
 
@@ -145,6 +146,8 @@
 
 -(void) loadFeed
 {
+    MBProgressHUD *hud =[MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    hud.labelText = @"加载中";
     NSURL *url = [NSURL URLWithString:@"http://huaxingtan.cn/api/"];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     
@@ -162,8 +165,19 @@
             [self.audioList addObject: file];
         }
         [self.tableView reloadData];
+        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, 0.4 * NSEC_PER_SEC);
+        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+            // Do something...
+            [MBProgressHUD hideHUDForView:self.view animated:YES];
+        });
     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
         NSLog(@"fetch feed failed");
+        hud.labelText = @"加载失败";
+        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, 0.4 * NSEC_PER_SEC);
+        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+            // Do something...
+            [MBProgressHUD hideHUDForView:self.view animated:YES];
+        });
     }];
     
     [operation start];

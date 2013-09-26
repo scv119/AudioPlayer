@@ -126,6 +126,9 @@ static id stringsPlistPath;
             [self.files addObject:file];
             [self.dict setObject:file forKey:[NSNumber numberWithLongLong:file.fileId]];
             
+            if ([self fileExist:file])
+                file.status = FINISHED;
+            
             if (file.status == STARTED || file.status == QUEUED) {
                 [self.downloadManager add:file];
             }
@@ -160,6 +163,14 @@ static id stringsPlistPath;
     
     if (save)
         [self saveFile];
+}
+
+-(BOOL) fileExist:(APAudioFile *)file
+{
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *path = [[paths objectAtIndex:0] stringByAppendingPathComponent:file.path];
+    
+    return[[NSFileManager defaultManager] fileExistsAtPath:path];
 }
 
 @end
