@@ -168,9 +168,9 @@ static id sharedInstance;
         [downloadManager notifyStartDownload];
     }];
     [self.operation setDownloadProgressBlock:^(NSUInteger bytesRead, long long totalBytesRead, long long totalBytesExpectedToRead) {
-        NSLog(@"Operation%i: bytesRead: %d", 1, bytesRead);
-        NSLog(@"Operation%i: totalBytesRead: %lld", 1, totalBytesRead);
-        NSLog(@"Operation%i: totalBytesExpectedToRead: %lld", 1, totalBytesExpectedToRead);
+//        NSLog(@"Operation%i: bytesRead: %d", 1, bytesRead);
+//        NSLog(@"Operation%i: totalBytesRead: %lld", 1, totalBytesRead);
+//        NSLog(@"Operation%i: totalBytesExpectedToRead: %lld", 1, totalBytesExpectedToRead);
         task.finishedSize = task.fileSize - (totalBytesExpectedToRead - totalBytesRead);
         APDownloadManager *downloadManager = [APDownloadManager instance];
         task.status = STARTED;
@@ -189,6 +189,7 @@ static id sharedInstance;
 
 -(void) notifyTaskStatus:(id<APDownloadTask>)task noDelay:(BOOL) noDelay
 {
+    task.statusUpdated = [[NSDate alloc] init];
     if (!noDelay && self.lastNoti != nil) {
         NSDate *now = [[NSDate alloc] init];
         if ([now timeIntervalSinceDate:self.lastNoti] > 0.05f) {

@@ -234,7 +234,6 @@ static UIImage *downloadFinishAlphaImage;
 
 -(void) downloadButtonClicked
 {
-
     NSLog(@"triggled");
     if (self.audio.status == STOPED) {
         [self.fileManager startDownloadFile:self.audio];

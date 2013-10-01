@@ -27,6 +27,7 @@
 @property (nonatomic) long long finishedSize;
 @property (nonatomic, strong) NSString *path;
 @property APDownloadStatus status;
+@property (nonatomic, strong) NSDate   *statusUpdated;
 
 -(NSDictionary *) toDict;
 +(APAudioFile *) instanceByDict:(NSDictionary *) dict;

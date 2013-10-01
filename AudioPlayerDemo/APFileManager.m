@@ -9,18 +9,31 @@
 #import "APFileManager.h"
 #import "APDownloadManager.h"
 
+NSString *finishedListAddedNotification = @"FILE_MANAGER_FINISH_NOTIFICATION_ADD";
+NSString *downloadingListAddedNotification = @"FILE_MANAGER_DOWNLOA_CHANGED_ADD";
+
+NSString *finishedListRemovedNotification = @"FILE_MANAGER_FINISH_NOTIFICATION_RMV";
+NSString *downloadingListRemovedNotification = @"FILE_MANAGER_DOWNLOA_CHANGED_RMV";
 
 @interface APFileManager ()
 
 @property NSMutableArray *files;
 @property NSMutableDictionary *dict;
+@property NSMutableDictionary *finishedDict;
+@property NSMutableDictionary *downloadingDict;
 @property NSDate* timeStamp;
 @property APDownloadManager *downloadManager;
+
+
+
+
 
 @end
 
 
-@implementation APFileManager
+@implementation APFileManager {
+    NSComparator comparator;
+}
 
 static id sharedInstance;
 static id stringsPlistPath;
@@ -36,8 +49,23 @@ static id stringsPlistPath;
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     stringsPlistPath = [[paths objectAtIndex:0] stringByAppendingPathComponent:@"downloadFile.plist"];
     self.downloadManager = [APDownloadManager instance];
+    
+    comparator = ^(id<APDownloadTask> obj1, id<APDownloadTask> obj2){
+        if ([obj1.statusUpdated timeIntervalSinceDate:obj2.statusUpdated] > 0) {
+            return (NSComparisonResult)NSOrderedDescending;
+        }
+        
+        if ([obj1.statusUpdated timeIntervalSinceDate:obj2.statusUpdated] < 0) {
+            return (NSComparisonResult)NSOrderedAscending;
+        }
+        return (NSComparisonResult)NSOrderedSame;
+    };
+    
     [self readFile];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(maySaveFile) name:downloadStatusNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(downloadStatusChanged:) name:downloadStatusNotification object:nil];
+    
+
+    
     return self;
 }
 
@@ -120,6 +148,10 @@ static id stringsPlistPath;
         NSArray *data = [NSArray arrayWithContentsOfFile:stringsPlistPath];
         self.files = [[NSMutableArray alloc] init];
         self.dict = [[NSMutableDictionary alloc] init];
+        self.finished = [[NSMutableArray alloc] init];
+        self.downloading = [[NSMutableArray alloc] init];
+        self.finishedDict = [[NSMutableDictionary alloc] init];
+        self.downloadingDict = [[NSMutableDictionary alloc] init];
         
         for (id item in data) {
             NSDictionary *dict = (NSDictionary*) item;
@@ -127,13 +159,21 @@ static id stringsPlistPath;
             [self.files addObject:file];
             [self.dict setObject:file forKey:[NSNumber numberWithLongLong:file.fileId]];
             
-            if ([self fileExist:file])
+            if ([self fileExist:file]) {
                 file.status = FINISHED;
+                [self.finished addObject:file];
+                [self.finishedDict setObject:file forKey:[NSNumber numberWithLongLong:file.fileId]];
+            }
             
             if (file.status == STARTED || file.status == QUEUED) {
+                [self.downloading addObject:file];
+                [self.downloadingDict setObject:file forKey:[NSNumber numberWithLongLong:file.fileId]];
                 [self.downloadManager add:file];
             }
         }
+        
+        [self.finished sortUsingComparator:comparator];
+        [self.downloading sortUsingComparator:comparator];
     }
 }
 
@@ -152,8 +192,55 @@ static id stringsPlistPath;
     }
 }
 
--(void) maySaveFile
+-(void) downloadStatusChanged:(NSNotification *) notification
 {
+    APAudioFile *task = notification.object;
+    
+    if (task.status == QUEUED || task.status == STARTED) {
+        if ([self.downloadingDict objectForKey:[NSNumber numberWithLongLong:task.fileId]] == nil) {
+            @synchronized(self) {
+                if ([self.downloadingDict objectForKey:[NSNumber numberWithLongLong:task.fileId]] == nil) {
+                    [self.downloadingDict setObject:task forKey:[NSNumber numberWithLongLong:task.fileId]];
+                    [self.downloading addObject:task];
+                    [[NSNotificationCenter defaultCenter] postNotificationName:downloadingListAddedNotification object:[NSNumber numberWithInt:[self.downloading count] - 1]];
+                }
+            }
+        }
+    } else if (task.status == FINISHED) {
+        if ([self.finishedDict objectForKey:[NSNumber numberWithLongLong:task.fileId]] == nil) {
+            @synchronized(self) {
+                if ([self.finishedDict objectForKey:[NSNumber numberWithLongLong:task.fileId]] == nil) {
+                    [self.finishedDict setObject:task forKey:[NSNumber numberWithLongLong:task.fileId]];
+                    [self.finished addObject:task];
+                   [[NSNotificationCenter defaultCenter] postNotificationName:finishedListAddedNotification object:[NSNumber numberWithInt:[self.finished count] - 1]];
+                }
+            }
+        }
+        
+        if ([self.downloadingDict objectForKey:[NSNumber numberWithLongLong:task.fileId]] != nil) {
+            @synchronized(self) {
+                if ([self.downloadingDict objectForKey:[NSNumber numberWithLongLong:task.fileId]] != nil) {
+                    [self.downloadingDict removeObjectForKey:[NSNumber numberWithLongLong:task.fileId]];
+                    int idx = [self.downloading indexOfObject:task];
+                    [self.downloading removeObjectAtIndex:idx];
+                    [[NSNotificationCenter defaultCenter] postNotificationName:downloadingListRemovedNotification object:[NSNumber numberWithInt:idx]];
+                }
+            }
+        }
+    } else if (task.status == STOPED) {
+        if ([self.downloadingDict objectForKey:[NSNumber numberWithLongLong:task.fileId]] != nil) {
+            @synchronized(self) {
+                if ([self.downloadingDict objectForKey:[NSNumber numberWithLongLong:task.fileId]] != nil) {
+                    [self.downloadingDict removeObjectForKey:[NSNumber numberWithLongLong:task.fileId]];
+                    int idx = [self.downloading indexOfObject:task];
+                    [self.downloading removeObjectAtIndex:idx];
+                    [[NSNotificationCenter defaultCenter] postNotificationName:downloadingListRemovedNotification object:[NSNumber numberWithInt:idx]];
+                }
+            }
+        }
+        
+    }
+    
     BOOL save = NO;
     if (self.timeStamp == nil)
         save = YES;

@@ -41,6 +41,7 @@
 		232F316317E72CB500A01C45 /* tabbar_setting_unactive.png in Resources */ = {isa = PBXBuildFile; fileRef = 232F315D17E72CB500A01C45 /* tabbar_setting_unactive.png */; };
 		232F316417E72CB500A01C45 /* tabbar_setting.png in Resources */ = {isa = PBXBuildFile; fileRef = 232F315E17E72CB500A01C45 /* tabbar_setting.png */; };
 		232F316717E72DDC00A01C45 /* APTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 232F316617E72DDC00A01C45 /* APTabBarController.m */; };
+		23AB88F017FAE9E6008CF461 /* APMyFileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 23AB88EF17FAE9E6008CF461 /* APMyFileViewController.m */; };
 		23AC667C17AF90A300ECDD79 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23AC667B17AF90A300ECDD79 /* AVFoundation.framework */; };
 		23AC667E17AF9A1D00ECDD79 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23AC667D17AF9A1D00ECDD79 /* CoreMedia.framework */; };
 		23BF9A0017F19122002B66A9 /* downloadFile.plist in Resources */ = {isa = PBXBuildFile; fileRef = 23BF99FF17F19122002B66A9 /* downloadFile.plist */; };
@@ -156,6 +157,8 @@
 		232F315E17E72CB500A01C45 /* tabbar_setting.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tabbar_setting.png; sourceTree = "<group>"; };
 		232F316517E72DDC00A01C45 /* APTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APTabBarController.h; sourceTree = "<group>"; };
 		232F316617E72DDC00A01C45 /* APTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APTabBarController.m; sourceTree = "<group>"; };
+		23AB88EE17FAE9E6008CF461 /* APMyFileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APMyFileViewController.h; sourceTree = "<group>"; };
+		23AB88EF17FAE9E6008CF461 /* APMyFileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APMyFileViewController.m; sourceTree = "<group>"; };
 		23AC667817AF904A00ECDD79 /* APAudioPlayerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APAudioPlayerViewController.h; sourceTree = "<group>"; };
 		23AC667B17AF90A300ECDD79 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		23AC667D17AF9A1D00ECDD79 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
@@ -458,6 +461,8 @@
 			children = (
 				23E04BAF17A6798C00012192 /* APPlaylistViewController.h */,
 				23E04BB017A6798C00012192 /* APPlaylistViewController.m */,
+				23AB88EE17FAE9E6008CF461 /* APMyFileViewController.h */,
+				23AB88EF17FAE9E6008CF461 /* APMyFileViewController.m */,
 				23E04BAC17A674BC00012192 /* APSettingController.h */,
 				23E04BAD17A674BC00012192 /* APSettingController.m */,
 				23AC667817AF904A00ECDD79 /* APAudioPlayerViewController.h */,
@@ -766,6 +771,7 @@
 				231E95DA17F3CFFD00D8ED36 /* Reachability.m in Sources */,
 				231E95E117F3E7CC00D8ED36 /* APNetworkManager.m in Sources */,
 				231E95E417F4295800D8ED36 /* EGORefreshTableHeaderView.m in Sources */,
+				23AB88F017FAE9E6008CF461 /* APMyFileViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -795,10 +801,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = (
-					"$(ARCHS_STANDARD_32_BIT)",
-					armv6,
-				);
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -831,10 +834,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = (
-					"$(ARCHS_STANDARD_32_BIT)",
-					armv6,
-				);
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_OBJC_ARC = YES;

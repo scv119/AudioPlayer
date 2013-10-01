@@ -31,6 +31,7 @@
     [dict setObject:[NSString stringWithFormat:@"%lld", self.finishedSize] forKey:@"finishedSize"];
     [dict setObject:self.path forKey:@"path"];
     [dict setObject:[NSString stringWithFormat:@"%d", self.status] forKey:@"status"];
+    [dict setObject:[NSString stringWithFormat:@"%f", [self.statusUpdated timeIntervalSince1970]] forKey:@"statusUpdated"];
     return dict;
 }
 
@@ -59,6 +60,10 @@
         file.status = [[dict objectForKey:@"status"] integerValue];
     else
         file.status = STOPED;
+    if ([dict objectForKey:@"statusUpdated"] != nil)
+        file.statusUpdated =  [[NSDate alloc] initWithTimeIntervalSince1970: [[dict objectForKey:@"statusUpdated"] floatValue]];
+    else
+        file.statusUpdated = [[NSDate alloc] init];
     
     return file;
 }
@@ -78,6 +83,7 @@
     self.finishedSize = item.finishedSize;
     self.path = item.path;
     self.status = item.status;
+    self.statusUpdated = item.statusUpdated;
 }
 
 - (id)copyWithZone:(NSZone *)zone {

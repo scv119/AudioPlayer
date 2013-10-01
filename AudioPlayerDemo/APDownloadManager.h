@@ -16,6 +16,7 @@ typedef enum APDownloadStatus{
 } APDownloadStatus;
 
 extern NSString *downloadStatusNotification;
+extern NSString *downloadStatusNotification1;
 
 #pragma protocal
 
@@ -26,6 +27,7 @@ extern NSString *downloadStatusNotification;
 @property (nonatomic) long long finishedSize;
 @property (nonatomic, strong) NSString *path;
 @property APDownloadStatus status;
+@property (nonatomic, strong) NSDate *statusUpdated;
 @property long long taskId;
 
 @end

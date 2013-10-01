@@ -9,7 +9,17 @@
 #import <Foundation/Foundation.h>
 #import "APAudioFile.h"
 
+extern NSString *finishedListAddedNotification ;
+extern NSString *downloadingListAddedNotification ;
+
+extern NSString *finishedListRemovedNotification ;
+extern NSString *downloadingListRemovedNotification ;
+
 @interface APFileManager : NSObject
+
+
+@property NSMutableArray *finished;
+@property NSMutableArray *downloading;
 
 -(void) startDownloadFile:(APAudioFile *)file;
 -(void) stopDownloadFiles:(APAudioFile *)file;
