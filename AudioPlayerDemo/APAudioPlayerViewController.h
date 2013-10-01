@@ -12,6 +12,9 @@
 #import "APAudioFile.h"
 #import "util.h"
 
+
+extern NSString* playerNotification;
+
 @interface APAudioPlayerViewController : UIViewController
 
 @property (nonatomic, strong) IBOutlet UISlider *slider;
@@ -29,6 +32,8 @@
 -(IBAction) sliderRelease:(id)sender;
 -(IBAction) backClicked:(id)sender;
 -(IBAction) volumSliderChange:(id)sender;
+
+-(BOOL) isPlaying;
 
 -(void) setAudioFile:(APAudioFile *)file withLocalStorage:(NSURL *) path;
 

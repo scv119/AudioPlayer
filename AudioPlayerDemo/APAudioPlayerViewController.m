@@ -8,6 +8,8 @@
 
 #import "APAudioPlayerViewController.h"
 
+NSString* playerNotification = @"PLAYER_PLAYED_NOTIFICATION";
+
 @interface APAudioPlayerViewController ()
 
 @property (nonatomic, strong) APAudioFile *audioFile;
@@ -64,6 +66,7 @@ static id sharedInstance;
     [self.slider addTarget:self action:@selector(adjustLabelForSlider:) forControlEvents:UIControlEventValueChanged];
     [self.slider setThumbImage:[UIImage imageNamed:@"slider-icon"] forState:UIControlStateNormal];
 
+
     NSLog(@"%@", [[self.slider minimumTrackTintColor] description]);
 }
 
@@ -91,7 +94,9 @@ static id sharedInstance;
         self.storage = path;
         if (self.storage == nil)
             self.storage = self.audioFile.fileUrl;
-        [self.player replaceCurrentItemWithPlayerItem:[[AVPlayerItem alloc] initWithURL:self.storage]];
+        AVPlayerItem* playerItem = [[AVPlayerItem alloc] initWithURL:self.storage];
+        [self.player replaceCurrentItemWithPlayerItem:playerItem];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(itemDidFinishPlaying) name:AVPlayerItemDidPlayToEndTimeNotification object:playerItem];
     }
 
 }
@@ -146,10 +151,13 @@ static id sharedInstance;
 -(IBAction) playButtonClicked:(id)sender
 {
     //self.slider.value = 0;
+    
     if ([self.player rate] == 0.0)
         [self.player play];
     else
         [self.player pause];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:playerNotification object:[NSNumber numberWithBool:[self isPlaying]]];
 }
 
 -(IBAction) sliderTouched:(id)sender
@@ -202,6 +210,16 @@ static id sharedInstance;
     NSString *sstr = second%60 < 10 ? [NSString stringWithFormat:@"0%d", second%60] : [NSString stringWithFormat:@"%d", second%60];
     self.timeLabel.text = [NSString stringWithFormat:@"%d:%@", second/60, sstr];
     self.timeLabel.center = CGPointMake(thumbRect.origin.x + self.slider.frame.origin.x + 25,  self.slider.frame.origin.y + 9);
+}
+
+-(BOOL) isPlaying
+{
+    return (self.player != nil && self.player.rate != 0.0);
+}
+
+-(void) itemDidFinishPlaying
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:playerNotification object:[NSNumber numberWithBool:[self isPlaying]]];
 }
 
 @end
