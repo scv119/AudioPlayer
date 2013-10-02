@@ -13,22 +13,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </tableView>
-                    <navigationItem key="navigationItem" title="化性谈——我的随身播经机" id="UWR-Yc-zsj">
-                        <barButtonItem key="rightBarButtonItem" style="plain" id="1E8-FL-UYe">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="yX3-wo-gSu">
-                                <rect key="frame" x="275" y="7" width="40" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="boldSystem" size="button"/>
-                                <state key="normal" image="playnow.png">
-                                    <color key="titleColor" red="0.19607843137254902" green="0.30980392156862746" blue="0.52156862745098043" alpha="1" colorSpace="calibratedRGB"/>
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <state key="highlighted">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                            </button>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="化性谈——我的随身播经机" id="UWR-Yc-zsj"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kuc-4z-BSA" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -491,7 +476,6 @@
         <image name="icon_return.png" width="79" height="62"/>
         <image name="icon_share.png" width="66" height="66"/>
         <image name="my_blue.png" width="28" height="33"/>
-        <image name="playnow.png" width="40" height="30"/>
         <image name="setting_blue.png" width="28" height="28"/>
     </resources>
     <classes>

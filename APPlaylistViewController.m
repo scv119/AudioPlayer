@@ -16,6 +16,7 @@
 @property (nonatomic, strong) NSMutableArray *audioList;
 @property (nonatomic, strong) APFileManager *fileManager;
 @property (nonatomic, strong) NSDate *lastUpdated;
+@property (nonatomic, strong) UIBarButtonItem *playButton;
 
 @end
 
@@ -41,6 +42,13 @@
         
         [refreshTableView refreshLastUpdatedDate];
     }
+    UIImage *playImg = [UIImage imageNamed:@"playnow.png"];
+    UIButton *playBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    playBtn.bounds = CGRectMake( 0, 0, playImg.size.width, playImg.size.height );
+    [playBtn setImage:playImg forState:UIControlStateNormal];
+    self.playButton= [[UIBarButtonItem alloc] initWithCustomView:playBtn];
+    [playBtn addTarget:self action:@selector(playButtonClicked) forControlEvents:UIControlEventTouchUpInside];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(playerNotification:) name:playerNotification object:nil];
     
     UINavigationBar *navigationBar = self.navigationController.navigationBar;
     navigationBar.topItem.title = @"化性谈";
@@ -278,5 +286,22 @@
     
 }
 
+- (void) playerNotification:(NSNotification *)noti
+{
+    NSNumber *number = noti.object;
+    if ([number boolValue]) {
+        [self.navigationItem setRightBarButtonItem:self.playButton animated:YES];
+    } else {
+        [self.navigationItem setRightBarButtonItem:nil animated:YES];
+    }
+}
+
+-(void) playButtonClicked
+{
+    NSLog(@"clicked");
+    APAudioPlayerViewController *playerView = [APAudioPlayerViewController getInstance];
+    playerView.previousNav = [self navigationController];
+    [[self navigationController] presentViewController:playerView animated:YES completion:nil];
+}
 
 @end
