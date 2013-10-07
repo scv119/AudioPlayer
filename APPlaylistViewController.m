@@ -42,12 +42,9 @@
         
         [refreshTableView refreshLastUpdatedDate];
     }
-    UIImage *playImg = [UIImage imageNamed:@"playnow.png"];
-    UIButton *playBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    playBtn.bounds = CGRectMake( 0, 0, playImg.size.width, playImg.size.height );
-    [playBtn setImage:playImg forState:UIControlStateNormal];
-    self.playButton= [[UIBarButtonItem alloc] initWithCustomView:playBtn];
-    [playBtn addTarget:self action:@selector(playButtonClicked) forControlEvents:UIControlEventTouchUpInside];
+
+    self.playButton= [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemPlay target:self action:@selector(playButtonClicked)];
+    self.playButton.tintColor = [UIColor darkGrayColor];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(playerNotification:) name:playerNotification object:nil];
     
     UINavigationBar *navigationBar = self.navigationController.navigationBar;
@@ -163,7 +160,8 @@
 //        NSLog(@"%@ %@", path, [localStorage description]);
         
     }
-    [playerView setAudioFile: file withLocalStorage:localStorage];
+    [playerView setAudioFile: file withLocalStorage:localStorage withPlayList:self.audioList];
+    [playerView playButtonClicked:nil];
     [[self navigationController] presentViewController:playerView animated:YES completion:nil];
 }
 

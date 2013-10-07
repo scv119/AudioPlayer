@@ -10,6 +10,11 @@
 
 NSString* playerNotification = @"PLAYER_PLAYED_NOTIFICATION";
 
+static UIImage* playHLImage;
+static UIImage* nextHLImage;
+static UIImage* backHLImage;
+static UIImage* pauseHLImage;
+
 @interface APAudioPlayerViewController ()
 
 @property (nonatomic, strong) APAudioFile *audioFile;
@@ -18,7 +23,7 @@ NSString* playerNotification = @"PLAYER_PLAYED_NOTIFICATION";
 @property (nonatomic, strong) NSTimer *timer;
 @property BOOL slideWithProgress;
 @property MPMusicPlayerController* musicPlayer;
-@property UILabel *timeLabel;
+@property NSArray* playList;
 
 
 @end
@@ -41,31 +46,39 @@ static id sharedInstance;
 {
 
     [super viewDidLoad];
+    
+    if (playHLImage == nil) {
+        playHLImage = imageByApplyingAlpha([UIImage imageNamed:@"play.png"], 0.2);
+        nextHLImage = imageByApplyingAlpha([UIImage imageNamed:@"forward.png"], 0.2);
+        backHLImage = imageByApplyingAlpha([UIImage imageNamed:@"back.png"], 0.2);
+        pauseHLImage = imageByApplyingAlpha([UIImage imageNamed:@"pause.png"], 0.2);
+    }
+    
+//    self.navBar.tintColor = [UIColor whiteColor];
     CGSize result = [[UIScreen mainScreen] bounds].size;
     NSLog(@"size is %f, %f", result.width, result.height);
     self.imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon_playscreen"]];
-    [self.imageView setFrame:CGRectMake(0 - (result.height - 480)/2, 42, result.height - 160, result.height - 160)];
+    [self.imageView setFrame:CGRectMake(0 - (result.height - 480)/2, 42, result.height - 160, result.height - 140)];
     [self.view addSubview:self.imageView];
 	// Do any additional setup after loading the view.
     self.slider.maximumTrackTintColor = [UIColor clearColor];
     self.slider.minimumTrackTintColor = UIColorFromRGB(0x0099ff);
     self.progressView.progressTintColor = UIColorFromRGB(0x525a68);
-    [self.volumeSlider setThumbImage:[UIImage imageNamed:@"icon_volumn1"] forState:UIControlStateNormal];
     self.volumeSlider.maximumValue = 1;
+    [self.volumeSlider setHidden:YES];
     self.musicPlayer = [MPMusicPlayerController applicationMusicPlayer];
     [[NSNotificationCenter defaultCenter]
      addObserver:self
      selector:@selector(volumeChanged:)
      name:@"AVSystemController_SystemVolumeDidChangeNotification"
      object:nil];
-    self.timeLabel = [[UILabel alloc] initWithFrame:(CGRectMake(0, 0, 35, 20))];
-    self.timeLabel.font = [UIFont systemFontOfSize:12];
-    [self.timeLabel setBackgroundColor:[UIColor clearColor]];
     [self adjustLabelForSlider:self.slider];
-    [[self.slider superview] addSubview: self.timeLabel];
     [self.slider addTarget:self action:@selector(adjustLabelForSlider:) forControlEvents:UIControlEventValueChanged];
-    [self.slider setThumbImage:[UIImage imageNamed:@"slider-icon"] forState:UIControlStateNormal];
-
+    
+    [self.playButton setImage:playHLImage forState:UIControlStateHighlighted];
+    [self.backButton setImage:backHLImage forState:UIControlStateHighlighted];
+    [self.nextButton setImage:nextHLImage forState:UIControlStateHighlighted];
+    [self.pauseButton setImage:pauseHLImage forState:UIControlStateHighlighted];
 
     NSLog(@"%@", [[self.slider minimumTrackTintColor] description]);
 }
@@ -79,17 +92,25 @@ static id sharedInstance;
 - (void) viewWillAppear:(BOOL)animated
 {
     if (self.audioFile != nil) {
-        NSLog(@"called");
-        self.titleLabel.text = self.audioFile.name;
-        self.titleLabel.font = [UIFont systemFontOfSize:20];
+        self.navBar.topItem.title = self.audioFile.name;
     }
+
     self.volumeSlider.value = self.musicPlayer.volume;
+    if (self.player.rate == 0) {
+        [self.pauseButton setHidden:YES];
+        [self.playButton setHidden:NO];
+    } else
+    {
+        [self.pauseButton setHidden:NO];
+        [self.playButton setHidden:YES];
+    }
     [super viewWillAppear:animated];
 }
 
--(void) setAudioFile:(APAudioFile *)file withLocalStorage:(NSURL *) path
+-(void) setAudioFile:(APAudioFile *)file withLocalStorage:(NSURL *) path withPlayList:(NSArray *)list
 {
     if (self.audioFile == nil || self.audioFile != file) {
+        self.playList = list;
         self.audioFile = file;
         self.storage = path;
         if (self.storage == nil)
@@ -97,20 +118,25 @@ static id sharedInstance;
         AVPlayerItem* playerItem = [[AVPlayerItem alloc] initWithURL:self.storage];
         [self.player replaceCurrentItemWithPlayerItem:playerItem];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(itemDidFinishPlaying) name:AVPlayerItemDidPlayToEndTimeNotification object:playerItem];
+        
+        self.navBar.topItem.title = self.audioFile.name;
     }
 
 }
 
-- (NSTimeInterval) availableDuration
+- (double) availablePercentage
 {
+   
     NSArray *loadedTimeRanges = [[self.player currentItem] loadedTimeRanges];
     if ([loadedTimeRanges count] == 0)
         return 0;
-    CMTimeRange timeRange = [[loadedTimeRanges objectAtIndex:0] CMTimeRangeValue];
-    float startSeconds = CMTimeGetSeconds(timeRange.start);
-    float durationSeconds = CMTimeGetSeconds(timeRange.duration);
-    NSTimeInterval result = startSeconds + durationSeconds;
-    return result;
+    NSTimeInterval result = 0;
+    for (id item in loadedTimeRanges) {
+        CMTimeRange timeRange = [item CMTimeRangeValue];
+        result += (CMTimeGetSeconds(timeRange.start) + CMTimeGetSeconds(timeRange.duration));
+    }
+    return result/CMTimeGetSeconds(self.player.currentItem.duration);
+    
 }
 
 -(void) preparePlayer
@@ -125,16 +151,15 @@ static id sharedInstance;
 
 -(void) updateSlider
 {
-    CMTime endTime = CMTimeConvertScale (self.player.currentItem.asset.duration, self.player.currentTime.timescale, kCMTimeRoundingMethod_RoundHalfAwayFromZero);
-    [self.progressView setProgress: [self availableDuration]/CMTimeGetSeconds(self.player.currentItem.duration)];
-    if (CMTimeCompare(endTime, kCMTimeZero) != 0) {
-        double normalizedTime = (double) self.player.currentTime.value / (double) endTime.value;
-        // NSLog(@"%f", normalizedTime);
+    [self.progressView setProgress: [self availablePercentage]];
+    if (CMTimeGetSeconds(self.player.currentItem.duration) > 0) {
+        double normalizedTime = CMTimeGetSeconds(self.player.currentTime) / CMTimeGetSeconds(self.player.currentItem.duration);
+//        NSLog(@"%f", normalizedTime);
         if (self.slideWithProgress) {
             [self.slider setValue:normalizedTime animated:NO];
             [self adjustLabelForSlider:self.slider];
         }
-     //   NSLog(@"%f %f", [self availableDuration], (double)self.player.currentTime.value);
+//        NSLog(@"%f %f %f", [self availablePercentage], (double)self.player.currentTime.value, [self.player rate]);
     }
 }
 
@@ -150,13 +175,19 @@ static id sharedInstance;
 
 -(IBAction) playButtonClicked:(id)sender
 {
-    //self.slider.value = 0;
+
+    [self.player play];
+    [self.playButton setHidden:YES];
+    [self.pauseButton setHidden:NO];
+    [[NSNotificationCenter defaultCenter] postNotificationName:playerNotification object:[NSNumber numberWithBool:[self isPlaying]]];
+}
+
+-(IBAction) pauseButtonClicked:(id)sender
+{
     
-    if ([self.player rate] == 0.0)
-        [self.player play];
-    else
-        [self.player pause];
-    
+    [self.player pause];
+    [self.playButton setHidden:NO];
+    [self.pauseButton setHidden:YES];
     [[NSNotificationCenter defaultCenter] postNotificationName:playerNotification object:[NSNumber numberWithBool:[self isPlaying]]];
 }
 
@@ -170,7 +201,8 @@ static id sharedInstance;
 {
      NSLog(@"slider release");
     
-    [self.player seekToTime:CMTimeMultiplyByFloat64(self.player.currentItem.duration, self.slider.value) completionHandler: ^(BOOL finished){
+    CMTime time = CMTimeMakeWithSeconds(CMTimeGetSeconds(self.player.currentItem.duration) * self.slider.value, 1);
+    [self.player seekToTime:time completionHandler: ^(BOOL finished){
         self.slideWithProgress = YES;
     }];
 }
@@ -189,6 +221,61 @@ static id sharedInstance;
     self.musicPlayer.volume = self.volumeSlider.value;
 }
 
+-(IBAction) previousButtonClicked:(id)sender
+{
+    int idx = -1;
+    for (int i = 0; i < self.playList.count; i ++) {
+        if ([self.playList objectAtIndex:i] == self.audioFile) {
+            idx = i;
+            break;
+        }
+    }
+    
+    if (idx >0) {
+        idx = idx - 1;
+        id nextItem = [self.playList objectAtIndex:idx];
+        if (nextItem != nil) {
+            APAudioFile *nextFile = nextItem;
+            NSURL *localStorage = nil;
+            if (nextFile.status == FINISHED) {
+                NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+                NSString *path = [[paths objectAtIndex:0] stringByAppendingPathComponent:nextFile.path];
+                localStorage = [[NSURL alloc] initFileURLWithPath: path];
+            }
+            [self setAudioFile:nextItem withLocalStorage:localStorage withPlayList:self.playList];
+            [self.player play];
+        }
+    }
+}
+
+-(IBAction) nextButtonClicked:(id)sender
+{
+    NSLog(@"next button clicked");
+    int idx = -1;
+    for (int i = 0; i < self.playList.count; i ++) {
+        if ([self.playList objectAtIndex:i] == self.audioFile) {
+            idx = i;
+            break;
+        }
+    }
+    
+    if (idx >= 0 && idx < self.playList.count - 1) {
+        idx = idx + 1;
+        id nextItem = [self.playList objectAtIndex:idx];
+        if (nextItem != nil) {
+            APAudioFile *nextFile = nextItem;
+            NSURL *localStorage = nil;
+            if (nextFile.status == FINISHED) {
+                NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+                NSString *path = [[paths objectAtIndex:0] stringByAppendingPathComponent:nextFile.path];
+                localStorage = [[NSURL alloc] initFileURLWithPath: path];
+            }
+            [self setAudioFile:nextItem withLocalStorage:localStorage withPlayList:self.playList];
+            [self.player play];
+        }
+    }
+}
+
 
 
 - (void)volumeChanged:(NSNotification *)notification
@@ -202,14 +289,12 @@ static id sharedInstance;
 
 -(void)adjustLabelForSlider:(id)slider
 {
-    CGRect trackRect = [self.slider trackRectForBounds:self.slider.bounds];
-    CGRect thumbRect = [self.slider thumbRectForBounds:self.slider.bounds
-                                             trackRect:trackRect
-                                                 value:self.slider.value];
-    int second = (int)([self availableDuration] * self.slider.value);
+    int second = CMTimeGetSeconds(self.player.currentTime);
     NSString *sstr = second%60 < 10 ? [NSString stringWithFormat:@"0%d", second%60] : [NSString stringWithFormat:@"%d", second%60];
-    self.timeLabel.text = [NSString stringWithFormat:@"%d:%@", second/60, sstr];
-    self.timeLabel.center = CGPointMake(thumbRect.origin.x + self.slider.frame.origin.x + 25,  self.slider.frame.origin.y + 9);
+    self.timePlayedLabel.text = [NSString stringWithFormat:@"%d:%@", second/60, sstr];
+    second =(int)CMTimeGetSeconds(self.player.currentItem.duration) - second;
+    sstr = second%60 < 10 ? [NSString stringWithFormat:@"0%d", second%60] : [NSString stringWithFormat:@"%d", second%60];
+    self.timeLeftLabel.text = [NSString stringWithFormat:@"%d:%@", second/60, sstr];
 }
 
 -(BOOL) isPlaying

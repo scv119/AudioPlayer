@@ -21,21 +21,31 @@ extern NSString* playerNotification;
 @property (nonatomic, strong) IBOutlet UIProgressView *progressView;
 @property (nonatomic, strong) IBOutlet UISlider *volumeSlider;
 @property (nonatomic, strong) IBOutlet UINavigationBar *navBar;
-@property (nonatomic, strong) IBOutlet UILabel *titleLabel;
+@property (nonatomic, strong) IBOutlet UILabel *timePlayedLabel;
+@property (nonatomic, strong) IBOutlet UILabel *timeLeftLabel;
 @property (nonatomic, strong) IBOutlet UIImageView *imageView;
+@property (nonatomic, strong) IBOutlet UIButton *playButton;
+@property (nonatomic, strong) IBOutlet UIButton *pauseButton;
+@property (nonatomic, strong) IBOutlet UIButton *backButton;
+@property (nonatomic, strong) IBOutlet UIButton *nextButton;
+
 
 
 @property (weak) UINavigationController *previousNav;
 
 -(IBAction) playButtonClicked:(id)sender;
+-(IBAction) pauseButtonClicked:(id)sender;
 -(IBAction) sliderTouched:(id)sender;
 -(IBAction) sliderRelease:(id)sender;
 -(IBAction) backClicked:(id)sender;
 -(IBAction) volumSliderChange:(id)sender;
+-(IBAction) previousButtonClicked:(id)sender;
+-(IBAction) nextButtonClicked:(id)sender;
+
 
 -(BOOL) isPlaying;
 
--(void) setAudioFile:(APAudioFile *)file withLocalStorage:(NSURL *) path;
+-(void) setAudioFile:(APAudioFile *)file withLocalStorage:(NSURL *) path withPlayList:(NSArray *)list;
 
 +(id) getInstance;
 

@@ -18,6 +18,7 @@
 static UIImage *coverPlaceholderImage;
 static UIImage *downloadAlphaImage;
 static UIImage *downloadFinishAlphaImage;
+static UIImage *iconImage;
 
 @interface APAudioTableCell ()
 
@@ -33,7 +34,6 @@ static UIImage *downloadFinishAlphaImage;
 @property (nonatomic, strong) UIButton *downloadButton;
 @property (nonatomic, strong) UIButton *downloadFinishButton;
 @property (nonatomic, strong) UILabel *downloadLabel;
-@property (nonatomic, strong) UIView *iconView;
 @property (nonatomic) BOOL inDownloadTab;
 @property UIImage* downloadImage;
 @property UIImage* downloadFinishImage;
@@ -65,6 +65,18 @@ static UIImage *downloadFinishAlphaImage;
         downloadFinishAlphaImage = imageByApplyingAlpha(self.downloadFinishImage, 0.2);
     }
     
+    if (iconImage == nil) {
+        CGRect rect = CGRectMake(0, 0, 69, 69);
+        UIGraphicsBeginImageContext(rect.size);
+        CGContextRef context = UIGraphicsGetCurrentContext();
+        CGContextSetFillColorWithColor(context,
+                                       [UIColorFromRGB(0xc1c1c2) CGColor]);
+        //  [[UIColor colorWithRed:222./255 green:227./255 blue: 229./255 alpha:1] CGColor]) ;
+        CGContextFillRect(context, rect);
+        iconImage = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
+    }
+    
     self.titleLabel = [[UILabel alloc] init];
     [self.titleLabel setFrame:CGRectMake(69+14, 22, 180, 13)];
     [self.titleLabel setFont:[UIFont fontWithName:@"STHeitiSC-Medium" size:(12)]];
@@ -81,9 +93,7 @@ static UIImage *downloadFinishAlphaImage;
     [self.lyricLabel setTextAlignment:NSTextAlignmentCenter];
     self.lyricLabel.layer.cornerRadius = 3;
     
-
-    self.iconView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 69, 69)];
-    [self.iconView setBackgroundColor:UIColorFromRGB(0xc1c1c2)];
+    self.imageView.image = iconImage;
     
     
     self.lineView = [[UIView alloc] initWithFrame:CGRectMake(0, 68, 320, 1)];
@@ -94,14 +104,14 @@ static UIImage *downloadFinishAlphaImage;
     self.serialNameLabel.textColor = [UIColor whiteColor];
     [self.serialNameLabel setTextAlignment:NSTextAlignmentCenter];
     [self.serialNameLabel setBackgroundColor: [UIColor clearColor]];
-    [self.iconView addSubview:self.serialNameLabel];
+    [self.imageView addSubview:self.serialNameLabel];
   
     self.serialNoLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 38, 69, 18)];
     [self.serialNoLabel setFont:[UIFont fontWithName:@"STLiti" size:(18)]];
     self.serialNoLabel.textColor = [UIColor whiteColor];
     [self.serialNoLabel setTextAlignment:NSTextAlignmentCenter];
     [self.serialNoLabel setBackgroundColor: [UIColor clearColor]];
-    [self.iconView addSubview:self.serialNoLabel];
+    [self.imageView addSubview:self.serialNoLabel];
     
     self.downloadButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [self.downloadButton setFrame:CGRectMake(264, 10, 50, 50)];
@@ -149,7 +159,6 @@ static UIImage *downloadFinishAlphaImage;
 - (void) setAudio:(APAudioFile *)audio withDownloadBar:(BOOL) flag
 {
     self.audio = audio;
-    [self addSubview:self.iconView];
     [self addSubview:self.lineView];
     [self addSubview:self.downloadButton];
     [self addSubview:self.downloadFinishButton];
@@ -180,7 +189,7 @@ static UIImage *downloadFinishAlphaImage;
 - (void) layoutSubviews
 {
     [super layoutSubviews];
-    self.imageView.frame = CGRectMake(2, 2, 40, 40);
+    self.imageView.frame = CGRectMake(0, 0, 69, 69);
 
 }
 
