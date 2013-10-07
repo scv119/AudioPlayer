@@ -49,4 +49,6 @@ static UIImage *imageByApplyingAlpha(UIImage *image, CGFloat alpha) {
     return newImage;
 }
 
+extern NSString *version;
+
 #endif

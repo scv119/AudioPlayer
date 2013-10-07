@@ -179,7 +179,7 @@
         hud =[MBProgressHUD showHUDAddedTo:self.view animated:YES];
         hud.labelText = @"正在加载";
     }
-    NSURL *url = [NSURL URLWithString:@"http://huaxingtan.cn/api/"];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://huaxingtan.cn/api/?version=%@", version]];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     
     AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
