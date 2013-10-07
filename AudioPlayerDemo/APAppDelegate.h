@@ -7,8 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <AudioToolbox/AudioToolbox.h>
+#import <AVFoundation/AVFoundation.h>
 #import "TestFlight.h"
 #import "util.h"
+
 
 @interface APAppDelegate : UIResponder <UIApplicationDelegate>
 

@@ -64,6 +64,7 @@
 		239E9E6618029C42001FC0C3 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 239E9E6518029C42001FC0C3 /* Default-568h@2x.png */; };
 		239E9E691802E48A001FC0C3 /* pause.png in Resources */ = {isa = PBXBuildFile; fileRef = 239E9E671802E484001FC0C3 /* pause.png */; };
 		239E9E6A1802E48A001FC0C3 /* pause@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 239E9E681802E486001FC0C3 /* pause@2x.png */; };
+		239E9E6C1802EF87001FC0C3 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 239E9E6B1802EF86001FC0C3 /* AudioToolbox.framework */; };
 		23AB88F017FAE9E6008CF461 /* APMyFileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 23AB88EF17FAE9E6008CF461 /* APMyFileViewController.m */; };
 		23AC667C17AF90A300ECDD79 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23AC667B17AF90A300ECDD79 /* AVFoundation.framework */; };
 		23AC667E17AF9A1D00ECDD79 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23AC667D17AF9A1D00ECDD79 /* CoreMedia.framework */; };
@@ -196,6 +197,7 @@
 		239E9E6518029C42001FC0C3 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "../../../../Dropbox/huaxingtan/psd/Default-568h@2x.png"; sourceTree = "<group>"; };
 		239E9E671802E484001FC0C3 /* pause.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pause.png; sourceTree = "<group>"; };
 		239E9E681802E486001FC0C3 /* pause@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pause@2x.png"; sourceTree = "<group>"; };
+		239E9E6B1802EF86001FC0C3 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		23AB88EE17FAE9E6008CF461 /* APMyFileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APMyFileViewController.h; sourceTree = "<group>"; };
 		23AB88EF17FAE9E6008CF461 /* APMyFileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APMyFileViewController.m; sourceTree = "<group>"; };
 		23AC667817AF904A00ECDD79 /* APAudioPlayerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APAudioPlayerViewController.h; sourceTree = "<group>"; };
@@ -290,6 +292,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				239E9E6C1802EF87001FC0C3 /* AudioToolbox.framework in Frameworks */,
 				23F0635717B93DAE00231675 /* libz.dylib in Frameworks */,
 				231E95E717F42C0B00D8ED36 /* QuartzCore.framework in Frameworks */,
 				231E95DE17F3D5B100D8ED36 /* SystemConfiguration.framework in Frameworks */,
@@ -491,6 +494,7 @@
 				23E04B7F17A663EC00012192 /* Foundation.framework */,
 				23E04B8117A663EC00012192 /* CoreGraphics.framework */,
 				11CE61322455495F9DACA556 /* libPods.a */,
+				239E9E6B1802EF86001FC0C3 /* AudioToolbox.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";

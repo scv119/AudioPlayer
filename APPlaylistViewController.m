@@ -63,6 +63,17 @@
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
+- (void) viewWillAppear:(BOOL)animated
+{
+    APAudioPlayerViewController *playerView = [APAudioPlayerViewController getInstance];
+    if ([playerView isPlaying]) {
+        [self.navigationItem setRightBarButtonItem:self.playButton animated:YES];
+    } else {
+        [self.navigationItem setRightBarButtonItem:nil animated:YES];
+    }
+    [super viewWillAppear:animated];
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];

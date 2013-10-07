@@ -71,6 +71,17 @@
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
+- (void) viewWillAppear:(BOOL)animated
+{
+    APAudioPlayerViewController *playerView = [APAudioPlayerViewController getInstance];
+    if ([playerView isPlaying]) {
+        [self.navigationItem setRightBarButtonItem:self.playButton animated:YES];
+    } else {
+        [self.navigationItem setRightBarButtonItem:nil animated:YES];
+    }
+    [super viewWillAppear:animated];
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -175,6 +186,7 @@
     }
     [playerView setAudioFile: file withLocalStorage:localStorage withPlayList:self.current];
     [[self navigationController] presentViewController:playerView animated:YES completion:nil];
+    [playerView playButtonClicked:nil];
 }
 
 -(void) segmentAction:(UISegmentedControl *) seg

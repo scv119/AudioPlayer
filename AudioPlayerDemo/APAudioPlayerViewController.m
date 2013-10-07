@@ -243,7 +243,7 @@ static id sharedInstance;
                 localStorage = [[NSURL alloc] initFileURLWithPath: path];
             }
             [self setAudioFile:nextItem withLocalStorage:localStorage withPlayList:self.playList];
-            [self.player play];
+            [self playButtonClicked:nil];
         }
     }
 }
@@ -271,7 +271,7 @@ static id sharedInstance;
                 localStorage = [[NSURL alloc] initFileURLWithPath: path];
             }
             [self setAudioFile:nextItem withLocalStorage:localStorage withPlayList:self.playList];
-            [self.player play];
+            [self playButtonClicked:nil];
         }
     }
 }
