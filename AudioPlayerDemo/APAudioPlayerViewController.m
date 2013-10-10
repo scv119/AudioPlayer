@@ -26,6 +26,7 @@ static UIImage* pauseHLImage;
 @property MPMusicPlayerController* musicPlayer;
 @property NSArray* playList;
 @property BOOL item_loaded;
+@property MBProgressHUD *hud;
 
 @end
 
@@ -61,6 +62,8 @@ static id sharedInstance;
     self.imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon_playscreen"]];
     [self.imageView setFrame:CGRectMake(0 - (result.height - 480)/2, 42, result.height - 160, result.height - 140)];
     [self.view addSubview:self.imageView];
+    [self.navBar setFrame:CGRectMake(0, 0, self.navBar.frame.size.width, self.navBar.frame.size.height)];
+    [self.progressView setFrame:CGRectMake(self.progressView.frame.origin.x, self.progressView.frame.origin.y, self.progressView.frame.size.width, self.progressView.frame.size.height)];
 	// Do any additional setup after loading the view.
     self.slider.maximumTrackTintColor = [UIColor clearColor];
     self.slider.minimumTrackTintColor = UIColorFromRGB(0x0099ff);
@@ -86,10 +89,7 @@ static id sharedInstance;
 
 - (void) viewWillAppear:(BOOL)animated
 {
-    if (self.audioFile != nil) {
-        self.navBar.topItem.title = self.audioFile.name;
-    }
-
+    NSLog(@"player will apper?");
     self.volumeSlider.value = self.musicPlayer.volume;
     if (self.player.rate == 0) {
         [self.pauseButton setHidden:YES];
@@ -100,6 +100,7 @@ static id sharedInstance;
         [self.playButton setHidden:YES];
     }
     [super viewWillAppear:animated];
+    NSLog(@"player will apper!");
 }
 
 -(void) setAudioFile:(APAudioFile *)file withLocalStorage:(NSURL *) path withPlayList:(NSArray *)list
@@ -111,6 +112,7 @@ static id sharedInstance;
         self.storage = path;
         if (self.storage == nil)
             self.storage = self.audioFile.fileUrl;
+    
         NSLog(@"beging to load remote mp3");
         
         
@@ -121,11 +123,15 @@ static id sharedInstance;
         NSLog(@"main thread done1");
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(itemDidFinishPlaying) name:AVPlayerItemDidPlayToEndTimeNotification object:self.player.currentItem];
         NSLog(@"main thread done2");
+    
         
-        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-        hud.labelText = @"正在加载";
+        dispatch_async(dispatch_get_main_queue(), ^(void){
+            self.navBar.topItem.title = self.audioFile.name;
+            self.hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+            self.hud.labelText = @"正在加载";
+        });
         self.item_loaded = YES;
-        
+        NSLog(@"main thread done3");
         
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             NSLog(@"here!");
@@ -172,8 +178,8 @@ static id sharedInstance;
             }
             else {
                 self.item_loaded = NO;
-                hud.mode = MBProgressHUDModeText;
-                hud.labelText = @"加载失败";
+                self.hud.mode = MBProgressHUDModeText;
+                self.hud.labelText = @"加载失败";
                 dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, 2 * NSEC_PER_SEC);
                 dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
                     [MBProgressHUD hideHUDForView:self.view animated:YES];
@@ -182,7 +188,7 @@ static id sharedInstance;
             }
             NSLog(@"async finish to load remote mp3");
         });
-        
+        NSLog(@"set finished");
         self.navBar.topItem.title = self.audioFile.name;
     
 
@@ -224,8 +230,8 @@ static id sharedInstance;
         double normalizedTime = CMTimeGetSeconds(self.player.currentTime) / CMTimeGetSeconds(self.player.currentItem.duration);
 //        NSLog(@"%f", normalizedTime);
         if (self.slideWithProgress) {
-            [self.slider setValue:normalizedTime animated:NO];
-            [self adjustLabelForSlider:self.slider];
+                [self.slider setValue:normalizedTime animated:NO];
+                [self adjustLabelForSlider:self.slider];
         }
 //        NSLog(@"%f %f %f", [self availablePercentage], (double)self.player.currentTime.value, [self.player rate]);
     }
@@ -328,8 +334,14 @@ static id sharedInstance;
                 localStorage = [[NSURL alloc] initFileURLWithPath: path];
             }
             id tmpPlayList = self.playList;
-            [self reset];
-            [self setAudioFile: nextItem withLocalStorage:localStorage withPlayList:tmpPlayList];        }
+            dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, 0 * NSEC_PER_SEC);
+            dispatch_after(popTime, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
+                [self reset];
+                [self setAudioFile: nextItem withLocalStorage:localStorage withPlayList:tmpPlayList];
+            });
+            
+            
+        }
     }
 }
 
@@ -357,8 +369,13 @@ static id sharedInstance;
             }
             
             id tmpPlayList = self.playList;
-            [self reset];
-            [self setAudioFile: nextItem withLocalStorage:localStorage withPlayList:tmpPlayList];
+            
+            dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, 0 * NSEC_PER_SEC);
+            dispatch_after(popTime, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
+                [self reset];
+                [self setAudioFile: nextItem withLocalStorage:localStorage withPlayList:tmpPlayList];
+            });
+            
         }
     }
 }
@@ -401,15 +418,9 @@ static id sharedInstance;
 {
     if (self.timer != nil)
         [self.timer invalidate];
-    self.timer = [NSTimer scheduledTimerWithTimeInterval:0.1 target:(self) selector:@selector(updateSlider) userInfo:nil repeats:YES];
-    [self.timer fire];
+    
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    [[NSNotificationCenter defaultCenter]
-     addObserver:self
-     selector:@selector(volumeChanged:)
-     name:@"AVSystemController_SystemVolumeDidChangeNotification"
-     object:nil];
-    self.audioFile = nil;
+        self.audioFile = nil;
     self.storage = nil;
     self.slideWithProgress = YES;
     if (self.player != nil) {
@@ -420,11 +431,21 @@ static id sharedInstance;
     self.slideWithProgress = YES;
     self.playList = nil;
     self.item_loaded = NO;
-    [self.progressView setProgress:0.0];
-    [self.slider setValue: 0.0];
-    [self.volumeSlider setHidden:YES];
-    self.timePlayedLabel.text = @"";
-    self.timeLeftLabel.text = @"";
+    dispatch_async(dispatch_get_main_queue(), ^(void){
+        [self.volumeSlider setHidden:YES];
+        [self.progressView setProgress:0.0];
+        [self.slider setValue: 0.0];
+        self.timePlayedLabel.text = @"";
+        self.timeLeftLabel.text = @"";
+        [[NSNotificationCenter defaultCenter]
+         addObserver:self
+         selector:@selector(volumeChanged:)
+         name:@"AVSystemController_SystemVolumeDidChangeNotification"
+         object:nil];
+
+        self.timer = [NSTimer scheduledTimerWithTimeInterval:0.1 target:(self) selector:@selector(updateSlider) userInfo:nil repeats:YES];
+        [self.timer fire];
+    });
 }
 
 @end

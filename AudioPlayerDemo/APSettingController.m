@@ -9,9 +9,11 @@
 #import "APSettingController.h"
 #import "APSetting.h"
 #import "UMFeedback.h"
+#import "APAudioPlayerViewController.h"
 
 @interface APSettingController ()
 
+@property UIBarButtonItem *playButton;
 @property APSetting *setting;
 
 @end
@@ -21,6 +23,10 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.playButton= [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemPlay target:self action:@selector(playButtonClicked)];
+    self.playButton.tintColor = [UIColor darkGrayColor];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(playerNotification:) name:playerNotification object:nil];
     
     self.setting = [APSetting instance];
 //    self.audioSwitch.on = self.setting.enablehighQuality;
@@ -32,6 +38,17 @@
  
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+}
+
+- (void) viewWillAppear:(BOOL)animated
+{
+    APAudioPlayerViewController *playerView = [APAudioPlayerViewController getInstance];
+    if ([playerView isPlaying]) {
+        [self.navigationItem setRightBarButtonItem:self.playButton animated:YES];
+    } else {
+        [self.navigationItem setRightBarButtonItem:nil animated:YES];
+    }
+    [super viewWillAppear:animated];
 }
 
 - (void)didReceiveMemoryWarning
@@ -63,6 +80,23 @@
     self.setting.enableBackgroundPlay = self.backgroundPlaySwith.on;
 }
 
+- (void) playerNotification:(NSNotification *)noti
+{
+    NSNumber *number = noti.object;
+    if ([number boolValue]) {
+        [self.navigationItem setRightBarButtonItem:self.playButton animated:YES];
+    } else {
+        [self.navigationItem setRightBarButtonItem:nil animated:YES];
+    }
+}
+
+-(void) playButtonClicked
+{
+    NSLog(@"clicked");
+    APAudioPlayerViewController *playerView = [APAudioPlayerViewController getInstance];
+    playerView.previousNav = [self navigationController];
+    [[self navigationController] presentViewController:playerView animated:YES completion:nil];
+}
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {

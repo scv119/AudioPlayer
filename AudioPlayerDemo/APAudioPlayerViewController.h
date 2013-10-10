@@ -30,7 +30,6 @@ extern NSString* playerNotification;
 @property (nonatomic, strong) IBOutlet UIButton *nextButton;
 
 
-
 @property (weak) UINavigationController *previousNav;
 
 -(IBAction) playButtonClicked:(id)sender;
