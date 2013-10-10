@@ -42,11 +42,13 @@ extern NSString* playerNotification;
 -(IBAction) previousButtonClicked:(id)sender;
 -(IBAction) nextButtonClicked:(id)sender;
 
+-(void) reset;
 
 -(BOOL) isPlaying;
 
 -(void) setAudioFile:(APAudioFile *)file withLocalStorage:(NSURL *) path withPlayList:(NSArray *)list;
-
+-(void) changePlayList:(NSArray *)list;
 +(id) getInstance;
++(BOOL) isCurrentPlaying:(long long) fileId;
 
 @end

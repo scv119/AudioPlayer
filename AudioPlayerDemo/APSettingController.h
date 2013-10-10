@@ -13,10 +13,12 @@
 //@property (nonatomic, strong) IBOutlet UISwitch *audioSwitch;
 @property (nonatomic, strong) IBOutlet UISwitch *cellularSwitch;
 @property (nonatomic, strong) IBOutlet UISwitch *backgroundSwitch;
+@property (nonatomic, strong) IBOutlet UISwitch *backgroundPlaySwith;
 @property (nonatomic, strong) IBOutlet UITableViewCell *feedBackCell;
 
 
 //-(IBAction) toggleAudioQuality:(id)sender;
 -(IBAction) toggleCellularData:(id)sender;
 -(IBAction) toggleBackgroundDownload:(id)sender;
+-(IBAction) toggleBackgroundPlay:(id)sender;
 @end

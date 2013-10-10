@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="3084" systemVersion="12F37" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="4">
     <dependencies>
+        <development version="4600" identifier="xcode"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="2083"/>
     </dependencies>
     <scenes>
@@ -189,7 +190,7 @@
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                     <state key="normal" title="Play">
-                        <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="titleColor" red="0.19607843137254902" green="0.30980392156862746" blue="0.52156862745098043" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                     <state key="highlighted">
@@ -320,7 +321,7 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
-                            <tableViewSection headerTitle="" footerTitle="程序退出后会继续下载未完成的下载任务" id="KWr-4e-49j">
+                            <tableViewSection headerTitle="" footerTitle="程序在后台会继续下载未完成的下载任务" id="KWr-4e-49j">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="fSg-a5-xsd">
                                         <rect key="frame" x="0.0" y="107" width="320" height="46"/>
@@ -351,10 +352,41 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
+                            <tableViewSection headerTitle="" footerTitle="程序在后台会继续播放" id="gdH-w3-EYJ">
+                                <cells>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="hyL-Ff-7ae">
+                                        <rect key="frame" x="0.0" y="204" width="320" height="46"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="10" y="1" width="300" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="后台播放" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xWk-p3-hya">
+                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </label>
+                                                <switch opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="AKZ-zF-a5H">
+                                                    <connections>
+                                                        <action selector="toggleBackgroundPlay:" destination="ugq-qs-2qB" eventType="valueChanged" id="Yof-wZ-uVI"/>
+                                                    </connections>
+                                                </switch>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <constraints>
+                                            <constraint firstItem="AKZ-zF-a5H" firstAttribute="top" secondItem="hyL-Ff-7ae" secondAttribute="top" constant="9" id="P4o-Rx-rFq"/>
+                                            <constraint firstItem="xWk-p3-hya" firstAttribute="leading" secondItem="hyL-Ff-7ae" secondAttribute="leading" constant="20" type="default" id="Une-dh-MSJ"/>
+                                            <constraint firstItem="AKZ-zF-a5H" firstAttribute="centerY" secondItem="xWk-p3-hya" secondAttribute="centerY" type="default" id="ldK-99-R6J"/>
+                                            <constraint firstAttribute="trailing" secondItem="AKZ-zF-a5H" secondAttribute="trailing" constant="30" id="xrX-nV-Qas"/>
+                                        </constraints>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
                             <tableViewSection headerTitle="" id="W0x-4u-fpH">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="Iiv-aG-vxu" style="IBUITableViewCellStyleDefault" id="7vZ-2Y-wjE">
-                                        <rect key="frame" x="0.0" y="204" width="320" height="45"/>
+                                        <rect key="frame" x="0.0" y="301" width="320" height="45"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="10" y="1" width="280" height="43"/>
@@ -370,7 +402,7 @@
                                         </view>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="DHc-nY-nEH" detailTextLabel="QO6-hp-jK9" style="IBUITableViewCellStyleValue1" id="L9q-e8-mNd">
-                                        <rect key="frame" x="0.0" y="249" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="346" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="10" y="0.0" width="280" height="43"/>
@@ -391,7 +423,7 @@
                                         </view>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="VPN-ls-ce6" detailTextLabel="7dU-WK-mcB" style="IBUITableViewCellStyleValue1" id="SNt-5q-Uua">
-                                        <rect key="frame" x="0.0" y="293" width="320" height="45"/>
+                                        <rect key="frame" x="0.0" y="390" width="320" height="45"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="10" y="0.0" width="300" height="43"/>
@@ -423,6 +455,7 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="设置" id="ghe-BX-xSq"/>
                     <connections>
+                        <outlet property="backgroundPlaySwith" destination="AKZ-zF-a5H" id="zrK-9j-ZZA"/>
                         <outlet property="backgroundSwitch" destination="viC-zM-YA0" id="0Zb-Sy-ima"/>
                         <outlet property="cellularSwitch" destination="TG2-r1-Ns5" id="XIP-HF-ZSz"/>
                         <outlet property="feedBackCell" destination="7vZ-2Y-wjE" id="ppl-ge-iIc"/>
@@ -454,7 +487,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="back.png" width="29" height="17"/>
+        <image name="back.png" width="103" height="64"/>
         <image name="forward.png" width="29" height="17"/>
         <image name="global_blue.png" width="28" height="28"/>
         <image name="my_blue.png" width="28" height="33"/>
@@ -500,7 +533,9 @@
             <source key="sourceIdentifier" type="project" relativePath="./Classes/APSettingController.h"/>
             <relationships>
                 <relationship kind="action" name="toggleBackgroundDownload:"/>
+                <relationship kind="action" name="toggleBackgroundPlay:"/>
                 <relationship kind="action" name="toggleCellularData:"/>
+                <relationship kind="outlet" name="backgroundPlaySwith" candidateClass="UISwitch"/>
                 <relationship kind="outlet" name="backgroundSwitch" candidateClass="UISwitch"/>
                 <relationship kind="outlet" name="cellularSwitch" candidateClass="UISwitch"/>
                 <relationship kind="outlet" name="feedBackCell" candidateClass="UITableViewCell"/>

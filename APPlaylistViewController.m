@@ -55,7 +55,7 @@
     
     self.audioList = [[NSMutableArray alloc] init];
     self.fileManager = [APFileManager instance];
-    [self loadFeedFirstTime:YES];
+    [self reloadTableViewDataSource:YES];
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
  
@@ -158,8 +158,6 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSLog(@"clicked");
-    APAudioPlayerViewController *playerView = [APAudioPlayerViewController getInstance];
-    playerView.previousNav = [self navigationController];
     APAudioFile *file = [self.audioList objectAtIndex:indexPath.row];
     NSURL *localStorage = nil;
     NSLog(@"%d %d", file.status, FINISHED);
@@ -171,8 +169,14 @@
 //        NSLog(@"%@ %@", path, [localStorage description]);
         
     }
-    [playerView setAudioFile: file withLocalStorage:localStorage withPlayList:self.audioList];
-    [playerView playButtonClicked:nil];
+    APAudioPlayerViewController *playerView =  [APAudioPlayerViewController getInstance];
+    if (![APAudioPlayerViewController isCurrentPlaying:file.fileId]) {
+        [playerView reset];
+        [playerView setAudioFile: file withLocalStorage:localStorage withPlayList:self.audioList];
+    } else {
+        [playerView changePlayList:self.audioList];
+    }
+    playerView.previousNav = [self navigationController];
     [[self navigationController] presentViewController:playerView animated:YES completion:nil];
 }
 
@@ -212,7 +216,7 @@
             dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
                 // Do something...
                 [MBProgressHUD hideHUDForView:self.view animated:YES];
-        });
+            });
         }
     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
         NSLog(@"fetch feed failed");
@@ -235,16 +239,17 @@
 }
 
 
-
 #pragma mark -
 #pragma mark Data Source Loading / Reloading Methods
 
-- (void)reloadTableViewDataSource{
+- (void)reloadTableViewDataSource:(BOOL) firstTime{
     
     //  should be calling your tableviews data source model to reload
     //  put here just for demo
+    if (_reloading == NO) {
     _reloading = YES;
-    [self loadFeedFirstTime:NO];
+    [self loadFeedFirstTime:firstTime];
+    }
     
 }
 
@@ -278,7 +283,7 @@
 
 - (void)egoRefreshTableHeaderDidTriggerRefresh:(EGORefreshTableHeaderView*)view{
     
-    [self reloadTableViewDataSource];
+    [self reloadTableViewDataSource:NO];
     
     
 }

@@ -26,6 +26,7 @@
 //    self.audioSwitch.on = self.setting.enablehighQuality;
     self.cellularSwitch.on = self.setting.enableCelluarData;
     self.backgroundSwitch.on = self.setting.enableBackground;
+    self.backgroundPlaySwith.on = self.setting.enableBackgroundPlay;
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
  
@@ -54,6 +55,12 @@
 -(IBAction) toggleBackgroundDownload:(id)sender
 {
     self.setting.enableBackground = self.backgroundSwitch.on;
+}
+
+
+-(IBAction) toggleBackgroundPlay:(id)sender
+{
+    self.setting.enableBackgroundPlay = self.backgroundPlaySwith.on;
 }
 
 

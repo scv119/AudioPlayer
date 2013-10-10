@@ -944,7 +944,6 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "AudioPlayerDemo/AudioPlayerDemo-Prefix.pch";
 				INFOPLIST_FILE = "AudioPlayerDemo/AudioPlayerDemo-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/AudioPlayerDemo/TestFlightSDK1.2.6\"",
@@ -968,7 +967,6 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "AudioPlayerDemo/AudioPlayerDemo-Prefix.pch";
 				INFOPLIST_FILE = "AudioPlayerDemo/AudioPlayerDemo-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/AudioPlayerDemo/TestFlightSDK1.2.6\"",

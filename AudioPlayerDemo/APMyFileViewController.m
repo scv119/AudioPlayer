@@ -171,8 +171,6 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSLog(@"clicked");
-    APAudioPlayerViewController *playerView = [APAudioPlayerViewController getInstance];
-    playerView.previousNav = [self navigationController];
     APAudioFile *file = [self.current objectAtIndex:indexPath.row];
     NSURL *localStorage = nil;
     NSLog(@"%d %d", file.status, FINISHED);
@@ -184,9 +182,16 @@
         //        NSLog(@"%@ %@", path, [localStorage description]);
         
     }
-    [playerView setAudioFile: file withLocalStorage:localStorage withPlayList:self.current];
+    
+    APAudioPlayerViewController *playerView =  [APAudioPlayerViewController getInstance];
+    if (![APAudioPlayerViewController isCurrentPlaying:file.fileId]) {
+        [playerView reset];
+        [playerView setAudioFile: file withLocalStorage:localStorage withPlayList:self.current];
+    } else {
+        [playerView changePlayList:self.current];
+    }
+    playerView.previousNav = [self navigationController];
     [[self navigationController] presentViewController:playerView animated:YES completion:nil];
-    [playerView playButtonClicked:nil];
 }
 
 -(void) segmentAction:(UISegmentedControl *) seg

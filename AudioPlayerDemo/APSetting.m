@@ -15,6 +15,7 @@ static id sharedInstance;
 
 @synthesize enableBackground = _backGround;
 @synthesize enableCelluarData = _celluarData;
+@synthesize enableBackgroundPlay = _backGroundPlay;
 //@synthesize enablehighQuality = _highQuality;
 
 -(id) init
@@ -26,6 +27,7 @@ static id sharedInstance;
     self = [super init];
     _celluarData =[[NSUserDefaults standardUserDefaults] boolForKey:@"cellularData"];
     _backGround =[[NSUserDefaults standardUserDefaults] boolForKey:@"backgroundDownload"];
+     _backGroundPlay =[[NSUserDefaults standardUserDefaults] boolForKey:@"backgroundPlay"];
 //    _highQuality =[[NSUserDefaults standardUserDefaults] boolForKey:@"audioQuality"];
     return self;
 }
@@ -57,6 +59,15 @@ static id sharedInstance;
     [[NSUserDefaults standardUserDefaults] synchronize];
     [self notifyStatusChange];
     NSLog(@"cellularData changed %d", val);
+}
+
+-(void) setEnableBackgroundPlay:(BOOL) val
+{
+    _backGroundPlay = val;
+    [[NSUserDefaults standardUserDefaults] setBool:val forKey:@"backgroundPlay"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    [self notifyStatusChange];
+    NSLog(@"backgroundPlay changed %d", val);
 }
 
 //-(void) setEnablehighQuality:(BOOL) val

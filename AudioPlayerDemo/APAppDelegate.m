@@ -12,12 +12,15 @@
 #import "APNetworkManager.h"
 #import "APSetting.h"
 #import "MobClick.h"
+#import "APPlaylistViewController.h"
 
 @implementation APAppDelegate{
     APDownloadManager *downloadManager;
     APSetting *setting;
     APFileManager *fileManager;
     APNetworkManager *networkManager;
+    APAudioPlayerViewController *playerView;
+    BOOL isPlaying;
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -50,6 +53,7 @@
     downloadManager = [APDownloadManager instance];
     fileManager = [APFileManager instance];
     networkManager = [APNetworkManager instance];
+    playerView = [APAudioPlayerViewController getInstance];
     setting = [APSetting instance];
     if ([self networkPermitDownload])
         [downloadManager start];
@@ -71,6 +75,13 @@
     }
     
     [fileManager flush];
+    
+    if (!setting.enableBackgroundPlay) {
+        isPlaying = [playerView isPlaying];
+        if (isPlaying) {
+            [playerView pauseButtonClicked:nil];
+        }
+    }
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
 }
@@ -79,6 +90,11 @@
 {
     if ([self networkPermitDownload])
         [downloadManager start];
+    
+    
+    if (!setting.enableBackgroundPlay && isPlaying) {
+        [playerView playButtonClicked:nil];
+    }
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
 }
 

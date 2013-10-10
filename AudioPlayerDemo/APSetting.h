@@ -14,11 +14,14 @@ extern NSString *settingChangedNotification;
 //    BOOL _highQuality;
     BOOL _celluarData;
     BOOL _backGround;
+    BOOL _backGroundPlay;
 }
 
 //@property (nonatomic) BOOL enablehighQuality;
 @property (nonatomic) BOOL enableCelluarData;
 @property (nonatomic) BOOL enableBackground;
+@property (nonatomic) BOOL enableBackgroundPlay;
+
 
 
 +(APSetting *) instance;
