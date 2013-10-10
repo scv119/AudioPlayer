@@ -8,6 +8,7 @@
 
 #import "APAudioPlayerViewController.h"
 #import "MBProgressHUD.h"
+#import <math.h>
 
 NSString* playerNotification = @"PLAYER_PLAYED_NOTIFICATION";
 
@@ -141,12 +142,9 @@ static id sharedInstance;
             NSDate *time0 = [[NSDate alloc] init];
             while (seconds > 0.0f) {
                 Float64 available = [self availableSeconds];
-                if (available > 5.0f) {
-                    failed = NO;
-                    break;
-                }
-                Float64 availableP = available / seconds;
-                if (availableP > 0.1) {
+                
+                
+                if (available > 2.0f) {
                     failed = NO;
                     break;
                 }
@@ -156,8 +154,12 @@ static id sharedInstance;
                 if ([time1 timeIntervalSinceDate:time0] > 10.0)
                     break;
                 
-                NSLog(@"sleep because:%f %f", available, availableP);
-                [NSThread sleepForTimeInterval:0.1];
+                if (available == NAN) {
+                    NSLog(@"strange!");
+                }
+                
+                NSLog(@"sleep because:%f", available);
+                [NSThread sleepForTimeInterval:0.2];
             }
             
             NSLog(@"%f is duration", seconds);
@@ -215,6 +217,11 @@ static id sharedInstance;
     for (id item in loadedTimeRanges) {
         CMTimeRange timeRange = [item CMTimeRangeValue];
         result += (CMTimeGetSeconds(timeRange.start) + CMTimeGetSeconds(timeRange.duration));
+    }
+    
+    if (isnan(result)) {
+        NSLog(@"nan got!");
+        result = 0;
     }
     return result;
     
