@@ -299,7 +299,11 @@ static id sharedInstance;
     
     if (self.item_loaded) {
         CMTime time = CMTimeMakeWithSeconds(CMTimeGetSeconds(self.player.currentItem.duration) * self.slider.value, 1);
+        self.hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        self.hud.labelText = @"正在加载";
+        
         [self.player seekToTime:time completionHandler: ^(BOOL finished){
+            [MBProgressHUD hideHUDForView:self.view animated:YES];
             self.slideWithProgress = YES;
         }];
     }
