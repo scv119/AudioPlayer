@@ -33,8 +33,6 @@
 		231E960317F435E400D8ED36 /* umFeedback.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 231E960017F435E400D8ED36 /* umFeedback.bundle */; };
 		232F315317E6FD0800A01C45 /* STLiti.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 232F315217E6FCFE00A01C45 /* STLiti.ttf */; };
 		232F315617E6FE9A00A01C45 /* APNavigationBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 232F315517E6FE9A00A01C45 /* APNavigationBar.m */; };
-		232F315817E705A900A01C45 /* icon_playnow.png in Resources */ = {isa = PBXBuildFile; fileRef = 232F315717E705A900A01C45 /* icon_playnow.png */; };
-		232F315F17E72CB500A01C45 /* tabbar_global_unactive.png in Resources */ = {isa = PBXBuildFile; fileRef = 232F315917E72CB500A01C45 /* tabbar_global_unactive.png */; };
 		232F316717E72DDC00A01C45 /* APTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 232F316617E72DDC00A01C45 /* APTabBarController.m */; };
 		239E9E311801DBFD001FC0C3 /* util.m in Sources */ = {isa = PBXBuildFile; fileRef = 239E9E301801DBFD001FC0C3 /* util.m */; };
 		239E9E351801DFD2001FC0C3 /* back.png in Resources */ = {isa = PBXBuildFile; fileRef = 239E9E331801DFD2001FC0C3 /* back.png */; };
@@ -106,22 +104,10 @@
 		23E04BE717A67C4300012192 /* UIImageView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 23E04BDE17A67C4300012192 /* UIImageView+AFNetworking.m */; };
 		23E04BEB17A681A200012192 /* APAudioTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 23E04BEA17A681A200012192 /* APAudioTableCell.m */; };
 		23E04BF517A794F900012192 /* APDownloadManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 23E04BF417A794F900012192 /* APDownloadManager.m */; };
-		23F0632717B9085F00231675 /* icon_download.png in Resources */ = {isa = PBXBuildFile; fileRef = 23F0631417B9085F00231675 /* icon_download.png */; };
-		23F0632917B9085F00231675 /* icon_drawback.png in Resources */ = {isa = PBXBuildFile; fileRef = 23F0631617B9085F00231675 /* icon_drawback.png */; };
-		23F0632B17B9085F00231675 /* icon_forward.png in Resources */ = {isa = PBXBuildFile; fileRef = 23F0631817B9085F00231675 /* icon_forward.png */; };
-		23F0632D17B9085F00231675 /* icon_play.png in Resources */ = {isa = PBXBuildFile; fileRef = 23F0631A17B9085F00231675 /* icon_play.png */; };
-		23F0633117B9085F00231675 /* icon_share.png in Resources */ = {isa = PBXBuildFile; fileRef = 23F0631E17B9085F00231675 /* icon_share.png */; };
-		23F0633317B9085F00231675 /* icon_time.png in Resources */ = {isa = PBXBuildFile; fileRef = 23F0632017B9085F00231675 /* icon_time.png */; };
-		23F0633717B9085F00231675 /* playbackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 23F0632417B9085F00231675 /* playbackground.png */; };
 		23F0633B17B908D700231675 /* appicon_2_retina.png in Resources */ = {isa = PBXBuildFile; fileRef = 23F0633A17B908D700231675 /* appicon_2_retina.png */; };
 		23F0633D17B909D000231675 /* appicon_2.png in Resources */ = {isa = PBXBuildFile; fileRef = 23F0633C17B909D000231675 /* appicon_2.png */; };
-		23F0633F17B91BC500231675 /* icon_return.png in Resources */ = {isa = PBXBuildFile; fileRef = 23F0633E17B91BC500231675 /* icon_return.png */; };
-		23F0634117B91C5B00231675 /* icon_playlist.png in Resources */ = {isa = PBXBuildFile; fileRef = 23F0634017B91C5B00231675 /* icon_playlist.png */; };
 		23F0634317B9215300231675 /* icon_playscreen.png in Resources */ = {isa = PBXBuildFile; fileRef = 23F0634217B9215300231675 /* icon_playscreen.png */; };
 		23F0634517B9284500231675 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23F0634417B9284400231675 /* MediaPlayer.framework */; };
-		23F0634717B92B3B00231675 /* icon_volumn.png in Resources */ = {isa = PBXBuildFile; fileRef = 23F0634617B92B3B00231675 /* icon_volumn.png */; };
-		23F0634917B92D2E00231675 /* icon_volumn1.png in Resources */ = {isa = PBXBuildFile; fileRef = 23F0634817B92D2E00231675 /* icon_volumn1.png */; };
-		23F0634B17B9375F00231675 /* slider-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 23F0634A17B9375F00231675 /* slider-icon.png */; };
 		23F0635317B93D7400231675 /* libTestFlight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 23F0634E17B93D7400231675 /* libTestFlight.a */; };
 		23F0635417B93D7400231675 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 23F0634F17B93D7400231675 /* README.md */; };
 		23F0635517B93D7400231675 /* release_notes.md in Resources */ = {isa = PBXBuildFile; fileRef = 23F0635017B93D7400231675 /* release_notes.md */; };
@@ -165,8 +151,6 @@
 		232F315217E6FCFE00A01C45 /* STLiti.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = STLiti.ttf; sourceTree = "<group>"; };
 		232F315417E6FE9A00A01C45 /* APNavigationBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APNavigationBar.h; sourceTree = "<group>"; };
 		232F315517E6FE9A00A01C45 /* APNavigationBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APNavigationBar.m; sourceTree = "<group>"; };
-		232F315717E705A900A01C45 /* icon_playnow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_playnow.png; sourceTree = "<group>"; };
-		232F315917E72CB500A01C45 /* tabbar_global_unactive.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tabbar_global_unactive.png; sourceTree = "<group>"; };
 		232F316517E72DDC00A01C45 /* APTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APTabBarController.h; sourceTree = "<group>"; };
 		232F316617E72DDC00A01C45 /* APTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APTabBarController.m; sourceTree = "<group>"; };
 		239E9E301801DBFD001FC0C3 /* util.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = util.m; sourceTree = "<group>"; };
@@ -223,7 +207,9 @@
 		23C1441817B2365700AD90E2 /* APAudioPlayerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APAudioPlayerViewController.m; sourceTree = "<group>"; };
 		23C1441A17B2436E00AD90E2 /* APDownloadViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APDownloadViewController.h; sourceTree = "<group>"; };
 		23C1441B17B2436E00AD90E2 /* APDownloadViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APDownloadViewController.m; sourceTree = "<group>"; };
-		23E04B7A17A663EC00012192 /* AudioPlayerDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AudioPlayerDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		23D09C25180836F100F8B256 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		23D09C26180836F100F8B256 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = "zh-Hans"; path = "zh-Hans.lproj/MainStoryboard.storyboard"; sourceTree = "<group>"; };
+		23E04B7A17A663EC00012192 /* Huaxingtan.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Huaxingtan.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		23E04B7D17A663EC00012192 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		23E04B7F17A663EC00012192 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		23E04B8117A663EC00012192 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -263,22 +249,10 @@
 		23E04BEA17A681A200012192 /* APAudioTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APAudioTableCell.m; sourceTree = "<group>"; };
 		23E04BF317A794F900012192 /* APDownloadManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APDownloadManager.h; sourceTree = "<group>"; };
 		23E04BF417A794F900012192 /* APDownloadManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APDownloadManager.m; sourceTree = "<group>"; };
-		23F0631417B9085F00231675 /* icon_download.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_download.png; sourceTree = "<group>"; };
-		23F0631617B9085F00231675 /* icon_drawback.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_drawback.png; sourceTree = "<group>"; };
-		23F0631817B9085F00231675 /* icon_forward.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_forward.png; sourceTree = "<group>"; };
-		23F0631A17B9085F00231675 /* icon_play.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_play.png; sourceTree = "<group>"; };
-		23F0631E17B9085F00231675 /* icon_share.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_share.png; sourceTree = "<group>"; };
-		23F0632017B9085F00231675 /* icon_time.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_time.png; sourceTree = "<group>"; };
-		23F0632417B9085F00231675 /* playbackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = playbackground.png; sourceTree = "<group>"; };
 		23F0633A17B908D700231675 /* appicon_2_retina.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = appicon_2_retina.png; path = ../appicon_2_retina.png; sourceTree = "<group>"; };
 		23F0633C17B909D000231675 /* appicon_2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = appicon_2.png; path = ../appicon_2.png; sourceTree = "<group>"; };
-		23F0633E17B91BC500231675 /* icon_return.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_return.png; sourceTree = "<group>"; };
-		23F0634017B91C5B00231675 /* icon_playlist.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_playlist.png; sourceTree = "<group>"; };
 		23F0634217B9215300231675 /* icon_playscreen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_playscreen.png; sourceTree = "<group>"; };
 		23F0634417B9284400231675 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
-		23F0634617B92B3B00231675 /* icon_volumn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_volumn.png; sourceTree = "<group>"; };
-		23F0634817B92D2E00231675 /* icon_volumn1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_volumn1.png; sourceTree = "<group>"; };
-		23F0634A17B9375F00231675 /* slider-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "slider-icon.png"; sourceTree = "<group>"; };
 		23F0634E17B93D7400231675 /* libTestFlight.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libTestFlight.a; sourceTree = "<group>"; };
 		23F0634F17B93D7400231675 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
 		23F0635017B93D7400231675 /* release_notes.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = release_notes.md; sourceTree = "<group>"; };
@@ -472,7 +446,7 @@
 		23E04B7B17A663EC00012192 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				23E04B7A17A663EC00012192 /* AudioPlayerDemo.app */,
+				23E04B7A17A663EC00012192 /* Huaxingtan.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -613,21 +587,7 @@
 		23F0631317B9085F00231675 /* other */ = {
 			isa = PBXGroup;
 			children = (
-				232F315717E705A900A01C45 /* icon_playnow.png */,
-				23F0634817B92D2E00231675 /* icon_volumn1.png */,
-				23F0634617B92B3B00231675 /* icon_volumn.png */,
-				23F0634A17B9375F00231675 /* slider-icon.png */,
 				23F0634217B9215300231675 /* icon_playscreen.png */,
-				23F0633E17B91BC500231675 /* icon_return.png */,
-				23F0631417B9085F00231675 /* icon_download.png */,
-				23F0631617B9085F00231675 /* icon_drawback.png */,
-				23F0634017B91C5B00231675 /* icon_playlist.png */,
-				23F0631817B9085F00231675 /* icon_forward.png */,
-				232F315917E72CB500A01C45 /* tabbar_global_unactive.png */,
-				23F0631A17B9085F00231675 /* icon_play.png */,
-				23F0631E17B9085F00231675 /* icon_share.png */,
-				23F0632017B9085F00231675 /* icon_time.png */,
-				23F0632417B9085F00231675 /* playbackground.png */,
 			);
 			name = other;
 			path = ../../../../Dropbox/huaxingtan/icon;
@@ -664,7 +624,7 @@
 			);
 			name = AudioPlayerDemo;
 			productName = AudioPlayerDemo;
-			productReference = 23E04B7A17A663EC00012192 /* AudioPlayerDemo.app */;
+			productReference = 23E04B7A17A663EC00012192 /* Huaxingtan.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -703,25 +663,11 @@
 				232F315317E6FD0800A01C45 /* STLiti.ttf in Resources */,
 				23E04B8817A663EC00012192 /* InfoPlist.strings in Resources */,
 				23E04B9717A663EC00012192 /* MainStoryboard.storyboard in Resources */,
-				23F0632717B9085F00231675 /* icon_download.png in Resources */,
-				23F0632917B9085F00231675 /* icon_drawback.png in Resources */,
-				23F0632B17B9085F00231675 /* icon_forward.png in Resources */,
-				23F0632D17B9085F00231675 /* icon_play.png in Resources */,
-				23F0633117B9085F00231675 /* icon_share.png in Resources */,
-				23F0633317B9085F00231675 /* icon_time.png in Resources */,
-				23F0633717B9085F00231675 /* playbackground.png in Resources */,
 				23F0633B17B908D700231675 /* appicon_2_retina.png in Resources */,
 				23F0633D17B909D000231675 /* appicon_2.png in Resources */,
-				23F0633F17B91BC500231675 /* icon_return.png in Resources */,
-				23F0634117B91C5B00231675 /* icon_playlist.png in Resources */,
 				23F0634317B9215300231675 /* icon_playscreen.png in Resources */,
-				23F0634717B92B3B00231675 /* icon_volumn.png in Resources */,
-				23F0634917B92D2E00231675 /* icon_volumn1.png in Resources */,
-				23F0634B17B9375F00231675 /* slider-icon.png in Resources */,
 				23F0635417B93D7400231675 /* README.md in Resources */,
 				23F0635517B93D7400231675 /* release_notes.md in Resources */,
-				232F315817E705A900A01C45 /* icon_playnow.png in Resources */,
-				232F315F17E72CB500A01C45 /* tabbar_global_unactive.png in Resources */,
 				2316316517F01BEC003028BD /* download.png in Resources */,
 				2316316617F01BEC003028BD /* download@2x.png in Resources */,
 				2316316717F01BEC003028BD /* downloadfinish.png in Resources */,
@@ -858,6 +804,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				23E04B8717A663EC00012192 /* en */,
+				23D09C25180836F100F8B256 /* zh-Hans */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -866,6 +813,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				23E04B9617A663EC00012192 /* en */,
+				23D09C26180836F100F8B256 /* zh-Hans */,
 			);
 			name = MainStoryboard.storyboard;
 			sourceTree = "<group>";
@@ -919,7 +867,8 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -927,6 +876,8 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos6.1;
 				VALIDATE_PRODUCT = YES;
 				VALID_ARCHS = "arm64 armv7 armv7s armv6";
@@ -951,7 +902,7 @@
 					"\"$(SRCROOT)/UMSocial_Sdk_3.0/frameworks/Wechat\"",
 					"\"$(SRCROOT)/UMSocial_Sdk_3.0\"",
 				);
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = Huaxingtan;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -974,7 +925,7 @@
 					"\"$(SRCROOT)/UMSocial_Sdk_3.0/frameworks/Wechat\"",
 					"\"$(SRCROOT)/UMSocial_Sdk_3.0\"",
 				);
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = Huaxingtan;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

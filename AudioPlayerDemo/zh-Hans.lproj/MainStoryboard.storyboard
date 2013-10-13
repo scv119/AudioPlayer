@@ -259,8 +259,8 @@
                                             <rect key="frame" x="10" y="1" width="300" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="io使用移动网络" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="eiS-9T-ejU">
-                                                    <rect key="frame" x="10" y="11" width="118" height="21"/>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="使用移动网络" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="eiS-9T-ejU">
+                                                    <rect key="frame" x="10" y="11" width="102" height="21"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -410,7 +410,7 @@
                         <outlet property="backgroundPlaySwith" destination="AKZ-zF-a5H" id="zrK-9j-ZZA"/>
                         <outlet property="backgroundSwitch" destination="viC-zM-YA0" id="0Zb-Sy-ima"/>
                         <outlet property="cellularSwitch" destination="TG2-r1-Ns5" id="XIP-HF-ZSz"/>
-                        <outlet property="commentCell" destination="L9q-e8-mNd" id="i6v-Iv-Yp7"/>
+                        <outlet property="commentCell" destination="L9q-e8-mNd" id="ecs-YU-ntH"/>
                         <outlet property="feedBackCell" destination="7vZ-2Y-wjE" id="ppl-ge-iIc"/>
                     </connections>
                 </tableViewController>
@@ -440,7 +440,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="back.png" width="103" height="64"/>
+        <image name="back.png" width="29" height="17"/>
         <image name="forward.png" width="29" height="17"/>
         <image name="global_blue.png" width="28" height="28"/>
         <image name="my_blue.png" width="28" height="33"/>

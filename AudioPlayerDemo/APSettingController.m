@@ -80,6 +80,14 @@
     self.setting.enableBackgroundPlay = self.backgroundPlaySwith.on;
 }
 
+
+-(IBAction) commentOnStore:(id)sender
+{
+    NSString *iTunesLink;
+    iTunesLink = @"https://itunes.apple.com/us/app/hua-xing-tan/id725215424?ls=1&mt=8";
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:iTunesLink]];
+}
+
 - (void) playerNotification:(NSNotification *)noti
 {
     NSNumber *number = noti.object;
@@ -103,6 +111,8 @@
     UITableViewCell *theCellClicked = [self.tableView cellForRowAtIndexPath:indexPath];
     if (theCellClicked == self.feedBackCell)
         [UMFeedback showFeedback:self withAppkey:@"5243fcf056240bea3500cfab"];
+    if (theCellClicked == self.commentCell)
+        [self commentOnStore:nil];
 }
 
 
