@@ -8,6 +8,8 @@
 
 #import "APDownloadManager.h"
 #import "AFDownloadRequestOperation.h"
+#import "util.h"
+
 
 NSString *downloadNotification = @"DOWNLOAD_NOTIFICATION";
 NSString *downloadStatusNotification = @"DOWNLOAD_STATUS_CHANGED";
@@ -150,6 +152,7 @@ static id sharedInstance;
 
     [self.operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"Successfully downloaded file to %@", path);
+        addSkipBackupAttributeToItemAtURL([NSURL fileURLWithPath:path]);
         APDownloadManager *downloadManager = [APDownloadManager instance];
         task.status = FINISHED;
         [downloadManager notifyTaskStatus:task noDelay:YES];

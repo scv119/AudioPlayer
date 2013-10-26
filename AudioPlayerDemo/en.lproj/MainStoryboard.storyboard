@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="3084" systemVersion="12F45" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="4">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="3084" systemVersion="13A603" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="4">
     <dependencies>
         <deployment version="1280" identifier="iOS"/>
         <development version="4600" identifier="xcode"/>
@@ -34,7 +34,7 @@
                                 <color key="backgroundColor" red="0.97265620750000004" green="1" blue="0.98315123429999995" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="tintColor" red="0.97265620750000004" green="1" blue="0.98315123429999995" alpha="1" colorSpace="calibratedRGB"/>
                                 <items>
-                                    <navigationItem title="Title" id="Ats-Di-Mqw">
+                                    <navigationItem id="Ats-Di-Mqw">
                                         <barButtonItem key="leftBarButtonItem" systemItem="reply" id="iSG-je-emo">
                                             <color key="tintColor" red="0.32450645849999998" green="0.33040729159999999" blue="0.34037449050000002" alpha="1" colorSpace="calibratedRGB"/>
                                             <connections>
@@ -45,7 +45,7 @@
                                 </items>
                             </navigationBar>
                             <progressView opaque="NO" contentMode="scaleToFill" id="ejh-XN-Z5G">
-                                <rect key="frame" x="46" y="523" width="222" height="9"/>
+                                <rect key="frame" x="46" y="522" width="222" height="9"/>
                             </progressView>
                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="1" id="uO7-ZS-CQ7">
                                 <rect key="frame" x="44" y="516" width="226" height="23"/>

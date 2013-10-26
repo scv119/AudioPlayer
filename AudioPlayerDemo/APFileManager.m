@@ -8,6 +8,7 @@
 
 #import "APFileManager.h"
 #import "APDownloadManager.h"
+#import "util.h"
 
 NSString *finishedListAddedNotification = @"FILE_MANAGER_FINISH_NOTIFICATION_ADD";
 NSString *downloadingListAddedNotification = @"FILE_MANAGER_DOWNLOA_CHANGED_ADD";
@@ -188,6 +189,7 @@ static id stringsPlistPath;
             [array addObject:[file toDict]];
         }
         [array writeToFile:stringsPlistPath atomically:YES];
+        addSkipBackupAttributeToItemAtURL([NSURL fileURLWithPath:stringsPlistPath]);
         self.timeStamp = [[NSDate alloc] init];
     }
 }
