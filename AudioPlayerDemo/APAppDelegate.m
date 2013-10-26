@@ -27,7 +27,7 @@
 {
     NSError *sessionError = nil;
     [[AVAudioSession sharedInstance] setDelegate:self];
-    [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayAndRecord error:&sessionError];
+    [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:&sessionError];
     
     /* Pick any one of them */
     // 1. Overriding the output audio route
