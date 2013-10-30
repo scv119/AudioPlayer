@@ -258,13 +258,14 @@ static UIImage *iconImage;
 
 -(void) displayHud:(NSString *)text withMode:(MBProgressHUDMode) mode
 {
-    MBProgressHUD *hud =[MBProgressHUD showHUDAddedTo:self.superview animated:YES];
+    UIView *superView = self.superview;
+    MBProgressHUD *hud =[MBProgressHUD showHUDAddedTo:superView animated:YES];
     hud.mode = mode;
     hud.labelText = text;
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, 0.3 * NSEC_PER_SEC);
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
         // Do something...
-        [MBProgressHUD hideHUDForView:self.superview animated:YES];
+        [MBProgressHUD hideHUDForView:superView animated:YES];
     });
 }
 
