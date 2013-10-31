@@ -14,8 +14,10 @@
 		<dict>
 			<key>CFBundleIconFiles</key>
 			<array>
-				<string>appicon_2_retina.png</string>
-				<string>appicon_2.png</string>
+				<string>57px.png</string>
+				<string>114px.png</string>
+				<string>60px.png</string>
+				<string>120px.png</string>
 			</array>
 			<key>UIPrerenderedIcon</key>
 			<true/>
