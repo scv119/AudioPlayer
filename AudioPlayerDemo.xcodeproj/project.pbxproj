@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		23128E7C18553BF5005B7663 /* background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 23128E7A18553BF5005B7663 /* background@2x.png */; };
+		23128E7D18553BF5005B7663 /* background.png in Resources */ = {isa = PBXBuildFile; fileRef = 23128E7B18553BF5005B7663 /* background.png */; };
 		2316316517F01BEC003028BD /* download.png in Resources */ = {isa = PBXBuildFile; fileRef = 2316315F17F01BEC003028BD /* download.png */; };
 		2316316617F01BEC003028BD /* download@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2316316017F01BEC003028BD /* download@2x.png */; };
 		2316316717F01BEC003028BD /* downloadfinish.png in Resources */ = {isa = PBXBuildFile; fileRef = 2316316117F01BEC003028BD /* downloadfinish.png */; };
@@ -132,6 +134,8 @@
 
 /* Begin PBXFileReference section */
 		11CE61322455495F9DACA556 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		23128E7A18553BF5005B7663 /* background@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "background@2x.png"; sourceTree = "<group>"; };
+		23128E7B18553BF5005B7663 /* background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = background.png; sourceTree = "<group>"; };
 		2316315F17F01BEC003028BD /* download.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = download.png; sourceTree = "<group>"; };
 		2316316017F01BEC003028BD /* download@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "download@2x.png"; sourceTree = "<group>"; };
 		2316316117F01BEC003028BD /* downloadfinish.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = downloadfinish.png; sourceTree = "<group>"; };
@@ -442,6 +446,8 @@
 		239E9E321801DEDD001FC0C3 /* play */ = {
 			isa = PBXGroup;
 			children = (
+				23128E7A18553BF5005B7663 /* background@2x.png */,
+				23128E7B18553BF5005B7663 /* background.png */,
 				239E9E671802E484001FC0C3 /* pause.png */,
 				239E9E681802E486001FC0C3 /* pause@2x.png */,
 				239E9E371801DFE1001FC0C3 /* download_finish1.png */,
@@ -783,6 +789,8 @@
 				23A26BC5182242790074A432 /* 144px.png in Resources */,
 				23A26BC6182242790074A432 /* 152px.png in Resources */,
 				23A26BC7182242790074A432 /* 1024px.png in Resources */,
+				23128E7C18553BF5005B7663 /* background@2x.png in Resources */,
+				23128E7D18553BF5005B7663 /* background.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

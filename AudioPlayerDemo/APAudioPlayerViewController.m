@@ -28,6 +28,7 @@ static UIImage* pauseHLImage;
 @property NSArray* playList;
 @property BOOL item_loaded;
 @property MBProgressHUD *hud;
+@property BOOL local;
 
 @end
 
@@ -60,7 +61,7 @@ static id sharedInstance;
 //    self.navBar.tintColor = [UIColor whiteColor];
     CGSize result = [[UIScreen mainScreen] bounds].size;
     NSLog(@"size is %f, %f", result.width, result.height);
-    self.imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon_playscreen"]];
+    self.imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"background"]];
     [self.imageView setFrame:CGRectMake(0 - (result.height - 480)/2, 42, result.height - 160, result.height - 140)];
     [self.view addSubview:self.imageView];
     [self.navBar setFrame:CGRectMake(0, 0, self.navBar.frame.size.width, self.navBar.frame.size.height)];
@@ -107,91 +108,97 @@ static id sharedInstance;
 -(void) setAudioFile:(APAudioFile *)file withLocalStorage:(NSURL *) path withPlayList:(NSArray *)list
 {
     
-        self.item_loaded = NO;
-        self.playList = list;
-        self.audioFile = file;
-        self.storage = path;
-        if (self.storage == nil)
-            self.storage = self.audioFile.fileUrl;
+    self.item_loaded = NO;
+    self.playList = list;
+    self.audioFile = file;
+    self.storage = path;
+    self.local = YES;
+    if (self.storage == nil) {
+        self.storage = self.audioFile.fileUrl;
+        self.local = NO;
+    }
+
+    NSLog(@"beging to load remote mp3");
     
-        NSLog(@"beging to load remote mp3");
-        
-        
-
-         NSLog(@"main thread done");
-        
-        self.player = [[AVPlayer alloc] initWithURL:self.storage];
-        NSLog(@"main thread done1");
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(itemDidFinishPlaying) name:AVPlayerItemDidPlayToEndTimeNotification object:self.player.currentItem];
-        NSLog(@"main thread done2");
     
-        
-        dispatch_async(dispatch_get_main_queue(), ^(void){
-            self.navBar.topItem.title = self.audioFile.name;
-            self.hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-            self.hud.labelText = @"正在加载";
-        });
-        self.item_loaded = YES;
-        NSLog(@"main thread done3");
-        
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            NSLog(@"here!");
-            Float64 seconds = CMTimeGetSeconds(self.player.currentItem.duration);
-            BOOL failed = YES;
-            
-            NSDate *time0 = [[NSDate alloc] init];
-            while (seconds > 0.0f) {
-                Float64 available = [self availableSeconds];
-                
-                
-                if (available > 2.0f) {
-                    failed = NO;
-                    break;
-                }
-                
-                NSDate *time1 = [[NSDate alloc] init];
-                
-                if ([time1 timeIntervalSinceDate:time0] > 10.0)
-                    break;
-                
-                if (available == NAN) {
-                    NSLog(@"strange!");
-                }
-                
-                NSLog(@"sleep because:%f", available);
-                [NSThread sleepForTimeInterval:0.2];
-            }
-            
-            NSLog(@"%f is duration", seconds);
 
-            if (!failed) {
+     NSLog(@"main thread done");
+    
+    self.player = [[AVPlayer alloc] initWithURL:self.storage];
+    NSLog(@"main thread done1");
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(itemDidFinishPlaying) name:AVPlayerItemDidPlayToEndTimeNotification object:self.player.currentItem];
+    NSLog(@"main thread done2");
 
-                self.item_loaded = YES;
-                dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, 0 * NSEC_PER_SEC);
-                dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-                    // Do something...
-                    [MBProgressHUD hideHUDForView:self.view animated:YES];
-                    [self.player play];
-                    [self.playButton setHidden:YES];
-                    [self.pauseButton setHidden:NO];
-                    NSLog(@"playing status, isplaying=%d, available_time=%f", [self isPlaying], [self availablePercentage]);
-                    [[NSNotificationCenter defaultCenter] postNotificationName:playerNotification object:[NSNumber numberWithBool:[self isPlaying]]];
-                });
-            }
-            else {
-                self.item_loaded = NO;
-                self.hud.mode = MBProgressHUDModeText;
-                self.hud.labelText = @"加载失败";
-                dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, 2 * NSEC_PER_SEC);
-                dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-                    [MBProgressHUD hideHUDForView:self.view animated:YES];
-                });
-
-            }
-            NSLog(@"async finish to load remote mp3");
-        });
-        NSLog(@"set finished");
+    
+    dispatch_async(dispatch_get_main_queue(), ^(void){
         self.navBar.topItem.title = self.audioFile.name;
+        self.hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        if (self.local)
+            self.hud.labelText = @"正在加载本地资源";
+        else
+            self.hud.labelText = @"正在加载网络资源";
+    });
+    self.item_loaded = YES;
+    NSLog(@"main thread done3");
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        NSLog(@"here!");
+        Float64 seconds = CMTimeGetSeconds(self.player.currentItem.duration);
+        BOOL failed = YES;
+        
+        NSDate *time0 = [[NSDate alloc] init];
+        while (seconds > 0.0f) {
+            Float64 available = [self availableSeconds];
+            
+            
+            if (available > 2.0f) {
+                failed = NO;
+                break;
+            }
+            
+            NSDate *time1 = [[NSDate alloc] init];
+            
+            if ([time1 timeIntervalSinceDate:time0] > 10.0)
+                break;
+            
+            if (available == NAN) {
+                NSLog(@"strange!");
+            }
+            
+            NSLog(@"sleep because:%f", available);
+            [NSThread sleepForTimeInterval:0.2];
+        }
+        
+        NSLog(@"%f is duration", seconds);
+
+        if (!failed) {
+
+            self.item_loaded = YES;
+            dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, 0.5 * NSEC_PER_SEC);
+            dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+                // Do something...
+                [MBProgressHUD hideHUDForView:self.view animated:YES];
+                [self.player play];
+                [self.playButton setHidden:YES];
+                [self.pauseButton setHidden:NO];
+                NSLog(@"playing status, isplaying=%d, available_time=%f", [self isPlaying], [self availablePercentage]);
+                [[NSNotificationCenter defaultCenter] postNotificationName:playerNotification object:[NSNumber numberWithBool:[self isPlaying]]];
+            });
+        }
+        else {
+            self.item_loaded = NO;
+            self.hud.mode = MBProgressHUDModeText;
+            self.hud.labelText = @"加载失败";
+            dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, 2 * NSEC_PER_SEC);
+            dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+                [MBProgressHUD hideHUDForView:self.view animated:YES];
+            });
+
+        }
+        NSLog(@"async finish to load remote mp3");
+    });
+    NSLog(@"set finished");
+    self.navBar.topItem.title = self.audioFile.name;
     
 
 }

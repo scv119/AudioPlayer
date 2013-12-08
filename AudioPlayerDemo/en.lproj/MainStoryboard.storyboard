@@ -259,8 +259,8 @@
                                             <rect key="frame" x="10" y="1" width="300" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="io使用移动网络" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="eiS-9T-ejU">
-                                                    <rect key="frame" x="10" y="11" width="118" height="21"/>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="使用移动网络" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="eiS-9T-ejU">
+                                                    <rect key="frame" x="10" y="11" width="102" height="21"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -448,6 +448,58 @@
         <image name="play.png" width="21" height="22"/>
         <image name="setting_blue.png" width="28" height="28"/>
     </resources>
+    <classes>
+        <class className="APAudioPlayerViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/APAudioPlayerViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="backClicked:"/>
+                <relationship kind="action" name="nextButtonClicked:"/>
+                <relationship kind="action" name="pauseButtonClicked:"/>
+                <relationship kind="action" name="playButtonClicked:"/>
+                <relationship kind="action" name="previousButtonClicked:"/>
+                <relationship kind="action" name="sliderRelease:"/>
+                <relationship kind="action" name="sliderTouched:"/>
+                <relationship kind="action" name="volumSliderChange:"/>
+                <relationship kind="outlet" name="backButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="imageView" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="navBar" candidateClass="UINavigationBar"/>
+                <relationship kind="outlet" name="nextButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="pauseButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="playButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="progressView" candidateClass="UIProgressView"/>
+                <relationship kind="outlet" name="slider" candidateClass="UISlider"/>
+                <relationship kind="outlet" name="timeLeftLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="timePlayedLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="volumeSlider" candidateClass="UISlider"/>
+            </relationships>
+        </class>
+        <class className="APMyFileViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/APMyFileViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="segmentControl" candidateClass="UISegmentedControl"/>
+            </relationships>
+        </class>
+        <class className="APPlaylistViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/APPlaylistViewController.h"/>
+        </class>
+        <class className="APSettingController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/APSettingController.h"/>
+            <relationships>
+                <relationship kind="action" name="commentOnStore:"/>
+                <relationship kind="action" name="toggleBackgroundDownload:"/>
+                <relationship kind="action" name="toggleBackgroundPlay:"/>
+                <relationship kind="action" name="toggleCellularData:"/>
+                <relationship kind="outlet" name="backgroundPlaySwith" candidateClass="UISwitch"/>
+                <relationship kind="outlet" name="backgroundSwitch" candidateClass="UISwitch"/>
+                <relationship kind="outlet" name="cellularSwitch" candidateClass="UISwitch"/>
+                <relationship kind="outlet" name="commentCell" candidateClass="UITableViewCell"/>
+                <relationship kind="outlet" name="feedBackCell" candidateClass="UITableViewCell"/>
+            </relationships>
+        </class>
+        <class className="APTabBarController" superclassName="UITabBarController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/APTabBarController.h"/>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
