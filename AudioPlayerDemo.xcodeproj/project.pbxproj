@@ -956,6 +956,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = C4BA35C1066440688119C51E /* Pods.xcconfig */;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/UMSocial_Sdk_3.0/frameworks/TencentOpenAPI\"",
@@ -979,6 +980,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = C4BA35C1066440688119C51E /* Pods.xcconfig */;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/UMSocial_Sdk_3.0/frameworks/TencentOpenAPI\"",
